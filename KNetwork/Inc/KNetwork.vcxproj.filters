@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{20d5fadc-746d-47a7-a0a8-eae99fdcfa14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{c494e18f-1338-44be-ba1b-bbcc884527d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1. Socket">
+      <UniqueIdentifier>{aff2ea0b-8a86-49b3-801a-2f8bc7bac93b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1. Socket\1. Address">
+      <UniqueIdentifier>{25ead001-fb3c-40ba-9285-7586e9c81994}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1. Socket\2. UDP">
+      <UniqueIdentifier>{31789e23-04c7-4385-b675-945d0d755f5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1. Socket\3. TCP">
+      <UniqueIdentifier>{b11ab7d7-526f-49d8-8207-062476e70291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. Stream">
+      <UniqueIdentifier>{e252d254-eef8-46d0-9dcf-ee7e24eb2556}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. Stream\1. Memory">
+      <UniqueIdentifier>{fb29776f-ba5c-4896-9818-344215920ed1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KNetwork.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\macro.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\socket_manager.h">
+      <Filter>1. Socket</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\socket_address.h">
+      <Filter>1. Socket\1. Address</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\udp_socket.h">
+      <Filter>1. Socket\2. UDP</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket\tcp_socket.h">
+      <Filter>1. Socket\3. TCP</Filter>
+    </ClInclude>
+    <ClInclude Include="Stream\memory_stream.h">
+      <Filter>2. Stream\1. Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\term.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="KNetwork.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\socket_manager.cpp">
+      <Filter>1. Socket</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\socket_address.cpp">
+      <Filter>1. Socket\1. Address</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\udp_socket.cpp">
+      <Filter>1. Socket\2. UDP</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket\tcp_socket.cpp">
+      <Filter>1. Socket\3. TCP</Filter>
+    </ClCompile>
+    <ClCompile Include="Stream\memory_stream.cpp">
+      <Filter>2. Stream\1. Memory</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Stream\memory_stream.inl">
+      <Filter>2. Stream\1. Memory</Filter>
+    </None>
+  </ItemGroup>
+</Project>

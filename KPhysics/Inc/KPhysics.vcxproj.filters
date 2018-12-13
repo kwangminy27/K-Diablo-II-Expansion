@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{fb4a7d11-06e5-4ba0-969c-914fbcece13b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{2399c329-0e5c-4819-ae8a-ec3dac720659}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KPhysics.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\macro.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="type.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="KPhysics.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="type.cpp" />
+  </ItemGroup>
+</Project>

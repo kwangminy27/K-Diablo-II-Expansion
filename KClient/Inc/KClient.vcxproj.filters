@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{f2518d6e-e575-48df-84e4-ffd6104347f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1. Level">
+      <UniqueIdentifier>{53ba24de-5e67-4c6f-8f67-113714e70984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2. Actor">
+      <UniqueIdentifier>{b4181274-a3e2-4975-83fa-85cda733d8af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3. Component">
+      <UniqueIdentifier>{21320a94-4a35-43a0-9b64-b85eb764cf3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{5e0356c0-87eb-4f03-85d7-66699078f11a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KClient.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Level\default_level.h">
+      <Filter>1. Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\default_actor.h">
+      <Filter>2. Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\default_component.h">
+      <Filter>3. Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\enum.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="KClient.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Level\default_level.cpp">
+      <Filter>1. Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\default_actor.cpp">
+      <Filter>2. Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\default_component.cpp">
+      <Filter>3. Component</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
