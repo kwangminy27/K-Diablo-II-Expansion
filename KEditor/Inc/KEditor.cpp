@@ -12,6 +12,7 @@
 #include "KEditorFormView.h"
 
 #include "Level/default_level.h"
+#include "Level/tile_set_level.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -121,6 +122,7 @@ BOOL CKEditorApp::InitInstance()
 
 	K::Core::singleton()->Initialize(m_hInstance, view->m_hWnd);
 	K::WorldManager::singleton()->CreateLevel<K::DefaultLevel>({ "DefaultLevel", 0 });
+	K::WorldManager::singleton()->CreateLevel<K::TileSetLevel>({ "TileSetLevel", 0 });
 
 	return TRUE;
 }
@@ -187,5 +189,6 @@ BOOL CKEditorApp::OnIdle(LONG lCount)
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	K::Core::singleton()->Logic();
 
-	return CWinApp::OnIdle(lCount);
+	return true;
 }
+

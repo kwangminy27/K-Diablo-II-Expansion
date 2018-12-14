@@ -10,10 +10,8 @@ void K::CollisionManager::Initialize()
 {
 	try
 	{
-		Vector3 resolution = { static_cast<float>(RESOLUTION::WIDTH), static_cast<float>(RESOLUTION::HEIGHT), 1.f };
-
-		_CreateCollisionGroup(UI, Vector3::Zero, resolution, 4, 4, 1);
-		_CreateCollisionGroup(DEFAULT, Vector3::Zero, resolution, 4, 4, 1);
+		_CreateCollisionGroup(UI, -Vector3{ 10000.f, 10000.f, 0.f }, Vector3{ 10000.f, 10000.f, 1.f }, 40, 40, 1);
+		_CreateCollisionGroup(DEFAULT, -Vector3{ 10000.f, 10000.f, 0.f }, Vector3{ 10000.f, 10000.f, 1.f }, 40, 40, 1);
 	}
 	catch (std::exception const& _e)
 	{
@@ -34,6 +32,9 @@ void K::CollisionManager::Collision(float _time)
 		for (auto i = 0; i < collision_group->total_count; ++i)
 		{
 			auto& section = collision_group->section[i];
+
+			if (section.empty())
+				continue;
 
 			for (auto const& collider : section)
 				collider->_UpdateCollidedCollider(_time);

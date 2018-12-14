@@ -19,11 +19,11 @@ void K::ResourceManager::Initialize()
 		VertexTex tex_rect_vertices[4]{
 			{ { -0.5f, -0.5f, 0.f }, { 0.f, 1.f } },
 			{ { -0.5f, 0.5f, 0.f }, { 0.f, 0.f } },
-			{ { 0.5f, 0.5f, 0.f }, { 1.f, 1.f } },
-			{ { 0.5f, -0.5f, 0.f }, { 1.f, 0.f } }
+			{ { 0.5f, 0.5f, 0.f }, { 1.f, 0.f } },
+			{ { 0.5f, -0.5f, 0.f }, { 1.f, 1.f } }
 		};
 
-		uint16_t tex_rect_indices[6]{ 0, 1, 2, 1, 3, 2 };
+		uint16_t tex_rect_indices[6]{ 0, 1, 2, 0, 2, 3 };
 
 		_CreateMesh(
 			TEX_RECT, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
@@ -56,22 +56,25 @@ void K::ResourceManager::Initialize()
 		VertexTex instance_tex_rect_vertices[4]{
 			{ { -0.5f, -0.5f, 0.f }, { 0.f, 1.f } },
 			{ { -0.5f, 0.5f, 0.f }, { 0.f, 0.f } },
-			{ { 0.5f, 0.5f, 0.f }, { 1.f, 1.f } },
-			{ { 0.5f, -0.5f, 0.f }, { 1.f, 0.f } }
+			{ { 0.5f, 0.5f, 0.f }, { 1.f, 0.f } },
+			{ { 0.5f, -0.5f, 0.f }, { 1.f, 1.f } }
 		};
 
-		uint16_t instance_tex_rect_indices[6]{ 0, 1, 2, 1, 3, 2 };
+		uint16_t instance_tex_rect_indices[6]{ 0, 1, 2, 0, 2, 3 };
 
-		Matrix instance_tex_rect_instances[10000]{};
+		MatrixTex instance_tex_rect_instances[10000]{};
 		_CreateMesh(
 			INSTANCE_TEX_RECT, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
 			instance_tex_rect_vertices, sizeof(VertexTex), 4, D3D11_USAGE_DEFAULT,
 			instance_tex_rect_indices, sizeof(uint16_t), 6, D3D11_USAGE_DEFAULT, DXGI_FORMAT_R16_UINT,
-			instance_tex_rect_instances, sizeof(Matrix), 10000, D3D11_USAGE_DYNAMIC
+			instance_tex_rect_instances, sizeof(MatrixTex), 10000, D3D11_USAGE_DYNAMIC
 		);
 #pragma endregion
 
 #pragma region Texture
+		_CreateTexture2D("base", L"base.bmp", TEXTURE_PATH);
+		_CreateTexture2D("empty", L"empty.png", TEXTURE_PATH);
+		_CreateTexture2D("catacomb floor", L"catacomb floor.png", TEXTURE_PATH);
 #pragma endregion
 
 #pragma region Sampler

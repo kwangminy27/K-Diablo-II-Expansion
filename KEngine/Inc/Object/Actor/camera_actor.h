@@ -30,5 +30,7 @@ namespace K
 		CameraActor& operator=(CameraActor&&) noexcept = default;
 
 		virtual void _Finalize() override;
+
+		virtual void _Update(float _time) override;
 	};
 }

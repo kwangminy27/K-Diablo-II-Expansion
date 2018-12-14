@@ -130,6 +130,9 @@ void K::Transform::UpdateConstantBuffer()
 	else
 		camera = WorldManager::singleton()->FindCamera(TAG{ DEFAULT_CAMERA, 0 });
 
+	auto camera_position = CPTR_CAST<Transform>(camera->FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
+	camera->CreateView(camera_position - Vector3(0.f, 0.f, 5.f), camera_position, Vector3::UnitY);
+
 	TransformConstantBuffer transform_CB{};
 	transform_CB.world = world_;
 	transform_CB.view = camera->view();

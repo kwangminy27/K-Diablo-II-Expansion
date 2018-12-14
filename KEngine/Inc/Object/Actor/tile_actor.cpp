@@ -13,11 +13,15 @@ void K::TileActor::Initialize()
 		AddComponent(transform);
 
 		auto material = ObjectManager::singleton()->CreateComponent<Material>(TAG{ MATERIAL, 0 });
+
+		CPTR_CAST<Material>(material)->SetTexture("catacomb floor", 0, 0, 0);
 		CPTR_CAST<Material>(material)->SetSampler(LINEAR_SAMPLER, 0, 0, 0);
+
 		MaterialConstantBuffer Material_CB{};
 		Material_CB.diffuse = DirectX::Colors::White.v;
 		CPTR_CAST<Material>(material)->SetMaterialConstantBuffer(Material_CB, 0, 0);
-		AddComponent(transform);
+
+		AddComponent(material);
 	}
 	catch (std::exception const& _e)
 	{
@@ -39,21 +43,36 @@ K::APTR K::TileActor::Clone() const
 
 void K::TileActor::Serialize(InputMemoryStream& _imstream)
 {
-	_imstream.Serialize(option_);
+	_imstream.Serialize(LT_.x);
+	_imstream.Serialize(LT_.y);
+	_imstream.Serialize(RB_.x);
+	_imstream.Serialize(RB_.y);
 
-	_imstream.Serialize(texture_tag_);
-	set_texture_tag(texture_tag_);
+	_imstream.Serialize(option_);
 
 	CPTR_CAST<Transform>(FindComponent(TAG{ TRANSFORM, 0 }))->Serialize(_imstream);
 }
 
 void K::TileActor::Serialize(OutputMemoryStream& _omstream)
 {
+	_omstream.Serialize(LT_.x);
+	_omstream.Serialize(LT_.y);
+	_omstream.Serialize(RB_.x);
+	_omstream.Serialize(RB_.y);
+
 	_omstream.Serialize(option_);
 
-	_omstream.Serialize(texture_tag_);
-
 	CPTR_CAST<Transform>(FindComponent(TAG{ TRANSFORM, 0 }))->Serialize(_omstream);
+}
+
+K::Vector2 const& K::TileActor::LT() const
+{
+	return LT_;
+}
+
+K::Vector2 const& K::TileActor::RB() const
+{
+	return RB_;
 }
 
 K::TILE_OPTION K::TileActor::option() const
@@ -61,11 +80,14 @@ K::TILE_OPTION K::TileActor::option() const
 	return option_;
 }
 
-void K::TileActor::set_texture_tag(std::string const& _tag)
+void K::TileActor::set_LT(Vector2 const& _LT)
 {
-	texture_tag_ = _tag;
+	LT_ = _LT;
+}
 
-	CPTR_CAST<Material>(FindComponent(TAG{ MATERIAL, 0 }))->SetTexture(_tag, 0, 0, 0);
+void K::TileActor::set_RB(Vector2 const& _RB)
+{
+	RB_ = _RB;
 }
 
 void K::TileActor::set_option(TILE_OPTION _option)
@@ -75,14 +97,16 @@ void K::TileActor::set_option(TILE_OPTION _option)
 
 K::TileActor::TileActor(TileActor const& _other) : Actor(_other)
 {
+	LT_ = _other.LT_;
+	RB_ = _other.RB_;
 	option_ = _other.option_;
-	texture_tag_ = _other.texture_tag_;
 }
 
 K::TileActor::TileActor(TileActor&& _other) noexcept : Actor(std::move(_other))
 {
+	LT_ = std::move(_other.LT_);
+	RB_ = std::move(_other.RB_);
 	option_ = std::move(_other.option_);
-	texture_tag_ = std::move(_other.texture_tag_);
 }
 
 void K::TileActor::_Finalize()

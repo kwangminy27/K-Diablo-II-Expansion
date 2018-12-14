@@ -135,25 +135,49 @@ T K::ByteSwapper<T, 1>::Swap(T _data) const
 template<typename T>
 T K::ByteSwapper<T, 2>::Swap(T _data) const
 {
-	return static_cast<T>((static_cast<uint16_t>(_data) >> 8) | (static_cast<uint16_t>(_data) << 8));
+	T result{};
+
+	char* src = reinterpret_cast<char*>(&_data);
+	char* dest = reinterpret_cast<char*>(&result);
+
+	dest[0] = src[1];
+	dest[1] = src[0];
+
+	return result;
 }
 
 template<typename T>
 T K::ByteSwapper<T, 4>::Swap(T _data) const
 {
-	return static_cast<T>((static_cast<uint32_t>(_data) >> 24) | (static_cast<uint32_t>(_data) << 24) |
-		((static_cast<uint32_t>(_data) >> 8) & 0x0000'FF00) |
-		((static_cast<uint32_t>(_data) << 8) & 0x00FF'0000));
+	T result{};
+
+	char* src = reinterpret_cast<char*>(&_data);
+	char* dest = reinterpret_cast<char*>(&result);
+
+	dest[0] = src[3];
+	dest[1] = src[2];
+	dest[2] = src[1];
+	dest[3] = src[0];
+
+	return result;
 }
 
 template<typename T>
 T K::ByteSwapper<T, 8>::Swap(T _data) const
 {
-	return static_cast<T>((static_cast<uint64_t>(_data) >> 56) | (static_cast<uint64_t>(_data) << 56) |
-		((static_cast<uint64_t>(_data) >> 40) & 0x0000'0000'0000'FF00) |
-		((static_cast<uint64_t>(_data) >> 24) & 0x0000'0000'00FF'0000) |
-		((static_cast<uint64_t>(_data) >> 8) & 0x0000'0000'FF00'0000) |
-		((static_cast<uint64_t>(_data) << 8) & 0x0000'00FF'0000'0000) |
-		((static_cast<uint64_t>(_data) << 24) & 0x0000'FF00'0000'0000) |
-		((static_cast<uint64_t>(_data) << 40) & 0x00FF'0000'0000'0000));
+	T result{};
+
+	char* src = reinterpret_cast<char*>(&_data);
+	char* dest = reinterpret_cast<char*>(&result);
+
+	dest[0] = src[7];
+	dest[1] = src[6];
+	dest[2] = src[5];
+	dest[3] = src[4];
+	dest[4] = src[3];
+	dest[5] = src[2];
+	dest[6] = src[1];
+	dest[7] = src[0];
+
+	return result;
 }

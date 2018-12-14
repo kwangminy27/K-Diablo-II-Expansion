@@ -5,6 +5,7 @@ namespace K
 	class Level;
 	class Layer;
 	class CameraActor;
+	class MouseActor;
 
 	class K_ENGINE_DLL WorldManager final : public Singleton<WorldManager>
 	{
@@ -24,6 +25,8 @@ namespace K
 
 		template <typename T> void CreateLevel(TAG const& _tag);
 
+		std::shared_ptr<MouseActor> mouse() const;
+
 		static std::shared_ptr<Level> level_dummy_;
 		static std::shared_ptr<CameraActor> camera_dummy_;
 
@@ -40,6 +43,7 @@ namespace K
 
 		std::list<std::shared_ptr<Level>> level_list_{};
 		std::list<std::shared_ptr<CameraActor>> camera_list_{};
+		std::shared_ptr<MouseActor> mouse_{};
 	};
 }
 

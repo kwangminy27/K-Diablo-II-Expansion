@@ -6,6 +6,7 @@ namespace K
 {
 	class K_ENGINE_DLL ColliderCircle final : public Collider
 	{
+		friend class ObjectManager;
 		friend class CollisionManager;
 	public:
 		virtual void Initialize() override;

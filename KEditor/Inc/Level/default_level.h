@@ -2,6 +2,13 @@
 
 namespace K
 {
+	enum class EDITOR_STATE
+	{
+		NONE,
+		TILE,
+		OPTION
+	};
+
 	class DefaultLevel final : public Level
 	{
 		friend class WorldManager;
@@ -16,5 +23,11 @@ namespace K
 		DefaultLevel& operator=(DefaultLevel&&) noexcept = default;
 
 		virtual void _Finalize() override;
+
+		virtual void _Input(float _time) override;
+		virtual void _Update(float _time) override;
+		virtual void _Render(float _time) override;
+
+		EDITOR_STATE state_{};
 	};
 }

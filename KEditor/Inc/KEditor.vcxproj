@@ -80,7 +80,7 @@
     <IntDir>../Obj/</IntDir>
     <TargetName>$(ProjectName)_Debug</TargetName>
     <IncludePath>$(SolutionDir)Common/Inc/;$(SolutionDir)Physics/Inc/;$(SolutionDir)Network/Inc/;$(SolutionDir)Engine/Inc/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Common/Bin/;$(SolutionDir)Physics/Bin/;$(SolutionDir)Engine/Bin/;$(SolutionDir)Network/Bin/;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)Common/Bin/;$(SolutionDir)Physics/Bin/;$(SolutionDir)Network/Bin/;$(SolutionDir)Engine/Bin/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -93,7 +93,7 @@
     <OutDir>../Bin/</OutDir>
     <IntDir>../Obj/</IntDir>
     <IncludePath>$(SolutionDir)Common/Inc/;$(SolutionDir)Physics/Inc/;$(SolutionDir)Network/Inc/;$(SolutionDir)Engine/Inc/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Common/Bin/;$(SolutionDir)Physics/Bin/;$(SolutionDir)Engine/Bin/;$(SolutionDir)Network/Bin/;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)Common/Bin/;$(SolutionDir)Physics/Bin/;$(SolutionDir)Network/Bin/;$(SolutionDir)Engine/Bin/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -107,6 +107,14 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <StackReserveSize>
+      </StackReserveSize>
+      <HeapReserveSize>
+      </HeapReserveSize>
+      <HeapCommitSize>
+      </HeapCommitSize>
+      <StackCommitSize>
+      </StackCommitSize>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -118,6 +126,9 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
+    <PostBuildEvent>
+      <Command>call "$(SolutionDir)"App.bat</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -183,6 +194,14 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <StackReserveSize>
+      </StackReserveSize>
+      <HeapReserveSize>
+      </HeapReserveSize>
+      <HeapCommitSize>
+      </HeapCommitSize>
+      <StackCommitSize>
+      </StackCommitSize>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -194,9 +213,14 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
+    <PostBuildEvent>
+      <Command>call "$(SolutionDir)"App.bat</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Actor\default_actor.h" />
+    <ClInclude Include="Actor\image_actor.h" />
+    <ClInclude Include="Actor\text_actor.h" />
     <ClInclude Include="Base\enum.h" />
     <ClInclude Include="Component\default_component.h" />
     <ClInclude Include="KEditor.h" />
@@ -204,6 +228,7 @@
     <ClInclude Include="KEditorFormView.h" />
     <ClInclude Include="KEditorView.h" />
     <ClInclude Include="Level\default_level.h" />
+    <ClInclude Include="Level\tile_set_level.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -211,12 +236,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor\default_actor.cpp" />
+    <ClCompile Include="Actor\image_actor.cpp" />
+    <ClCompile Include="Actor\text_actor.cpp" />
     <ClCompile Include="Component\default_component.cpp" />
     <ClCompile Include="KEditor.cpp" />
     <ClCompile Include="KEditorDoc.cpp" />
     <ClCompile Include="KEditorFormView.cpp" />
     <ClCompile Include="KEditorView.cpp" />
     <ClCompile Include="Level\default_level.cpp" />
+    <ClCompile Include="Level\tile_set_level.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -244,6 +272,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\KEngine\Inc\KEngine.vcxproj">
       <Project>{118a1b7f-3bd4-4d48-8c7e-b5fb11d62f99}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KNetwork\Inc\KNetwork.vcxproj">
+      <Project>{30474b79-c1d5-44d1-a0c9-290d0f3fda6f}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\KPhysics\Inc\KPhysics.vcxproj">
       <Project>{1173c0c8-dfa5-41d5-92f8-4abd2eecba9c}</Project>

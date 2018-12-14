@@ -2,6 +2,7 @@
 #include "level.h"
 
 #include "layer.h"
+#include "collision_manager.h"
 
 std::shared_ptr<K::Layer> K::Level::layer_dummy_{};
 
@@ -75,6 +76,24 @@ void K::Level::_Finalize()
 
 void K::Level::_Input(float _time)
 {
+}
+
+void K::Level::_Update(float _time)
+{
+}
+
+void K::Level::_Collision(float _time)
+{
+}
+
+void K::Level::_Render(float _time)
+{
+}
+
+void K::Level::__Input(float _time)
+{
+	_Input(_time);
+
 	for (auto iter = layer_list_.begin(); iter != layer_list_.end();)
 	{
 		switch ((*iter)->tag_state())
@@ -95,8 +114,10 @@ void K::Level::_Input(float _time)
 	}
 }
 
-void K::Level::_Update(float _time)
+void K::Level::__Update(float _time)
 {
+	_Update(_time);
+
 	for (auto iter = layer_list_.begin(); iter != layer_list_.end();)
 	{
 		switch ((*iter)->tag_state())
@@ -117,8 +138,10 @@ void K::Level::_Update(float _time)
 	}
 }
 
-void K::Level::_Collision(float _time)
+void K::Level::__Collision(float _time)
 {
+	_Collision(_time);
+
 	for (auto iter = layer_list_.begin(); iter != layer_list_.end();)
 	{
 		switch ((*iter)->tag_state())
@@ -137,10 +160,14 @@ void K::Level::_Collision(float _time)
 			break;
 		}
 	}
+
+	CollisionManager::singleton()->Collision(_time);
 }
 
-void K::Level::_Render(float _time)
+void K::Level::__Render(float _time)
 {
+	_Render(_time);
+
 	for (auto iter = layer_list_.begin(); iter != layer_list_.end();)
 	{
 		switch ((*iter)->tag_state())

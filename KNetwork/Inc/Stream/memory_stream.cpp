@@ -4,7 +4,12 @@
 K::MemoryStream::MemoryStream()
 {
 	buffer_ = std::make_shared<std::vector<uint8_t>>();
-	buffer_->resize(MAX_PACKET_SIZE);
+	buffer_->resize(DEFAULT_MEMORY_STREAM_SIZE);
+}
+
+void K::MemoryStream::Resize(size_t _size)
+{
+	buffer_->resize(_size);
 }
 
 void K::MemoryStream::Clear()
@@ -52,6 +57,11 @@ void K::OutputMemoryStream::_Serialize(void* _data, uint32_t _size)
 
 void K::OutputMemoryStream::_Write(void const* _data, uint32_t _size)
 {
+	size_t capacity = buffer_->capacity();
+
+	if (head_ + _size >= capacity)
+		Resize(capacity * 2);
+
 	memcpy_s(buffer_->data() + head_, _size, _data, _size);
 
 	head_ += _size;

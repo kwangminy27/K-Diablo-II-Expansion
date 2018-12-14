@@ -1,3 +1,3 @@
 #pragma once
 
-constexpr auto MAX_PACKET_SIZE = 1024;
+constexpr auto DEFAULT_MEMORY_STREAM_SIZE = 1024;

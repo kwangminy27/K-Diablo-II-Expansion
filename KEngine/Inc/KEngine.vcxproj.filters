@@ -426,5 +426,8 @@
     <FxCompile Include="Rendering\HLSL\InstanceTexVS.hlsl">
       <Filter>08. Rendering\1. Shader\1. HLSL\3. Instancing</Filter>
     </FxCompile>
+    <FxCompile Include="Rendering\HLSL\InstanceTexPS.hlsl">
+      <Filter>08. Rendering\1. Shader\1. HLSL\3. Instancing</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

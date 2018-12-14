@@ -8,7 +8,8 @@ namespace K
 	using APTR = std::shared_ptr<Actor>;
 	using CPTR = std::unique_ptr<Component, std::function<void(Component*)>>;
 
-	template <typename T> constexpr auto CPTR_CAST(CPTR const& p) { return static_cast<T*>(p.get()); }
+	template <typename T> constexpr auto APTR_CAST(APTR const& _p) { return std::static_pointer_cast<T>(_p); }
+	template <typename T> constexpr auto CPTR_CAST(CPTR const& _p) { return static_cast<T*>(_p.get()); }
 
 	//////////////////// Path Key ////////////////////
 	constexpr auto ROOT_PATH = "RootPath";
@@ -55,6 +56,7 @@ namespace K
 	constexpr auto RENDERER = "Renderer";
 	constexpr auto ANIMATION_2D = "Animation2D";
 	constexpr auto COLLIDER = "Collider";
+	constexpr auto OPTION = "Option";
 
 	struct VertexColor
 	{
@@ -66,6 +68,14 @@ namespace K
 	{
 		Vector3 position;
 		Vector2 uv;
+	};
+
+	struct MatrixTex
+	{
+		Vector2 LT;
+		Vector2 RB;
+		Matrix world;
+		Vector4 option;
 	};
 
 	struct CSO_DESC
@@ -109,5 +119,10 @@ namespace K
 	{
 		Vector2 LT;
 		Vector2 RB;
+	};
+
+	struct OptionConstantBuffer
+	{
+		int option;
 	};
 }

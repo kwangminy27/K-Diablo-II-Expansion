@@ -43,14 +43,13 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-
 // 생성된 메시지 맵 함수
 protected:
 	DECLARE_MESSAGE_MAP()
 
 	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 private:
-	K::Splitter splitter_;
+	K::Splitter splitter_{};
 public:
 	K::Splitter const& splitter();
 };

@@ -24,7 +24,7 @@ void K::DeviceManager::Initialize(HWND _window)
 
 void K::DeviceManager::Clear()
 {
-	context_->ClearRenderTargetView(RTV_.Get(), DirectX::Colors::MediumSlateBlue);
+	context_->ClearRenderTargetView(RTV_.Get(), DirectX::Colors::Black);
 	context_->ClearDepthStencilView(DSV_.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
 }
 

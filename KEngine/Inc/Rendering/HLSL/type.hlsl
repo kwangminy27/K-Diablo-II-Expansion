@@ -18,8 +18,10 @@ struct VS_INPUT_POSITION_TEX
 struct VS_INPUT_POSITION_TEX_INSTANCE
 {
 	float3 position : POSITION;
-	float2 uv : TEXCOORD;
+	float2 LT : TEXCOORD;
+	float2 RB : TEXCOORD1;
 	float4x4 world : WORLD;
+	float4 option : OPTION;
 };
 
 struct VS_OUTPUT_POSITION
@@ -37,6 +39,13 @@ struct VS_OUTPUT_POSITION_TEX
 {
 	float4 position : SV_POSITION;
 	float2 uv : TEXCOORD;
+};
+
+struct VS_OUTPUT_POSITION_TEX_INSTANCE
+{
+	float4 position : SV_POSITION;
+	float2 uv : TEXCOORD;
+	float4 option : OPTION;
 };
 
 struct PS_OUTPUT_SINGLE_TARGET

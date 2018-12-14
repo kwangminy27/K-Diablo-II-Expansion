@@ -5,6 +5,7 @@
 #include "layer.h"
 #include "Object/object_manager.h"
 #include "Object/Actor/camera_actor.h"
+#include "Object/Component/transform.h"
 
 std::shared_ptr<K::Level> K::WorldManager::level_dummy_{};
 std::shared_ptr<K::CameraActor> K::WorldManager::camera_dummy_{};
@@ -38,7 +39,7 @@ void K::WorldManager::Input(float _time)
 		switch ((*iter)->tag_state())
 		{
 		case TAG_STATE::NORMAL:
-			(*iter)->_Input(_time);
+			(*iter)->__Input(_time);
 			++iter;
 			break;
 
@@ -60,7 +61,7 @@ void K::WorldManager::Update(float _time)
 		switch ((*iter)->tag_state())
 		{
 		case TAG_STATE::NORMAL:
-			(*iter)->_Update(_time);
+			(*iter)->__Update(_time);
 			++iter;
 			break;
 
@@ -82,7 +83,7 @@ void K::WorldManager::Collision(float _time)
 		switch ((*iter)->tag_state())
 		{
 		case TAG_STATE::NORMAL:
-			(*iter)->_Collision(_time);
+			(*iter)->__Collision(_time);
 			++iter;
 			break;
 
@@ -104,7 +105,7 @@ void K::WorldManager::Render(float _time)
 		switch ((*iter)->tag_state())
 		{
 		case TAG_STATE::NORMAL:
-			(*iter)->_Render(_time);
+			(*iter)->__Render(_time);
 			++iter;
 			break;
 
@@ -163,6 +164,11 @@ std::shared_ptr<K::CameraActor> const& K::WorldManager::FindCamera(TAG const& _t
 		return camera_dummy_;
 	
 	return *iter;
+}
+
+std::shared_ptr<K::MouseActor> K::WorldManager::mouse() const
+{
+	return mouse_;
 }
 
 void K::WorldManager::_Finalize()

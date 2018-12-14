@@ -2,6 +2,7 @@
 #include "camera_actor.h"
 
 #include "Object/object_manager.h"
+#include "Object/Component/transform.h"
 #include "Object/Component/camera.h"
 
 void K::CameraActor::Initialize()
@@ -10,7 +11,10 @@ void K::CameraActor::Initialize()
 	{
 		auto const& object_manager = ObjectManager::singleton();
 
-		auto camera = object_manager->CreateComponent<Camera>({ CAMERA, 0 });
+		auto transform = object_manager->CreateComponent<Transform>(TAG{ TRANSFORM, 0 });
+		AddComponent(transform);
+
+		auto camera = object_manager->CreateComponent<Camera>(TAG{ CAMERA, 0 });
 		AddComponent(camera);
 	}
 	catch (std::exception const& _e)
@@ -73,5 +77,9 @@ K::CameraActor::CameraActor(CameraActor&& _other) noexcept : Actor(std::move(_ot
 }
 
 void K::CameraActor::_Finalize()
+{
+}
+
+void K::CameraActor::_Update(float _time)
 {
 }

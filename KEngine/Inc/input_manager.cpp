@@ -8,6 +8,27 @@ void K::InputManager::Initialize()
 	try
 	{
 		_CreateKeyDesc(std::string{ "ESC" }, VK_ESCAPE);
+
+		_CreateKeyDesc(std::string{ "W" }, 'W');
+		_CreateKeyDesc(std::string{ "S" }, 'S');
+		_CreateKeyDesc(std::string{ "A" }, 'A');
+		_CreateKeyDesc(std::string{ "D" }, 'D');
+
+		_CreateKeyDesc(std::string{ "O" }, 'O');
+		_CreateKeyDesc(std::string{ "P" }, 'P');
+
+		_CreateKeyDesc(std::string{ "Up" }, VK_UP);
+		_CreateKeyDesc(std::string{ "Down" }, VK_DOWN);
+		_CreateKeyDesc(std::string{ "Left" }, VK_LEFT);
+		_CreateKeyDesc(std::string{ "Right" }, VK_RIGHT);
+
+		_CreateKeyDesc(std::string{ "LButton" }, VK_LBUTTON);
+
+		_CreateKeyDesc(std::string{ "F1" }, VK_F1 );
+		_CreateKeyDesc(std::string{ "F2" }, VK_F2 );
+		_CreateKeyDesc(std::string{ "F3" }, VK_F3 );
+		_CreateKeyDesc(std::string{ "F5" }, VK_F5 );
+		_CreateKeyDesc(std::string{ "F6" }, VK_F6 );
 	}
 	catch (std::exception const& _e)
 	{

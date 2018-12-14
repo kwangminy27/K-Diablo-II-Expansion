@@ -6,3 +6,4 @@ xcopy KNetwork\Bin\*.* Network\Bin\ /d /s /y /exclude:ignore.txt
 xcopy KNetwork\Bin\*.* KEngine\Bin\ /d /s /y /exclude:ignore.txt
 xcopy KNetwork\Bin\*.* KClient\Bin\ /d /s /y /exclude:ignore.txt
 xcopy KNetwork\Bin\*.* KServer\Bin\ /d /s /y /exclude:ignore.txt
+xcopy KNetwork\Bin\*.* KEditor\Bin\ /d /s /y /exclude:ignore.txt

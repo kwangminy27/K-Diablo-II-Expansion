@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7. Common", "7. Common", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8. Automation", "8. Automation", "{C62E7C30-7739-485E-A892-B3A40CDD579B}"
 	ProjectSection(SolutionItems) = preProject
+		App.bat = App.bat
 		ignore.txt = ignore.txt
 		KCommon.bat = KCommon.bat
 		KEngine.bat = KEngine.bat

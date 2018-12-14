@@ -44,6 +44,7 @@ namespace K
 
 	class K_ENGINE_DLL Collider : public Component
 	{
+		friend class ObjectManager;
 		friend class CollisionManager;
 	public:
 		virtual void Initialize() = 0;

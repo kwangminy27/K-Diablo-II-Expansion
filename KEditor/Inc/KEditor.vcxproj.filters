@@ -63,6 +63,15 @@
     <ClInclude Include="Base\enum.h">
       <Filter>Base</Filter>
     </ClInclude>
+    <ClInclude Include="Actor\text_actor.h">
+      <Filter>2. Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Level\tile_set_level.h">
+      <Filter>1. Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\image_actor.h">
+      <Filter>2. Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KEditor.cpp">
@@ -91,6 +100,15 @@
     </ClCompile>
     <ClCompile Include="Component\default_component.cpp">
       <Filter>3. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\text_actor.cpp">
+      <Filter>2. Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Level\tile_set_level.cpp">
+      <Filter>1. Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\image_actor.cpp">
+      <Filter>2. Actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

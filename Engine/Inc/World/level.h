@@ -27,10 +27,15 @@ namespace K
 
 		virtual void _Finalize() override;
 
-		void _Input(float _time);
-		void _Update(float _time);
-		void _Collision(float _time);
-		void _Render(float _time);
+		virtual void _Input(float _time);
+		virtual void _Update(float _time);
+		virtual void _Collision(float _time);
+		virtual void _Render(float _time);
+
+		void __Input(float _time);
+		void __Update(float _time);
+		void __Collision(float _time);
+		void __Render(float _time);
 
 	private:
 		std::list<std::shared_ptr<Layer>> layer_list_{};

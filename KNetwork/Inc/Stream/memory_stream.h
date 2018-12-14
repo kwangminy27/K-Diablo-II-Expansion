@@ -22,6 +22,7 @@ namespace K
 		template <> void Serialize(std::wstring& _data);
 		template <typename T> void Serialize(std::vector<T>& _data_vector);
 
+		void Resize(size_t _size);
 		void Clear();
 
 		std::shared_ptr<std::vector<uint8_t>> const& buffer() const;

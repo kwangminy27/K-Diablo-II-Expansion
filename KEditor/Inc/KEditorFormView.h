@@ -44,6 +44,31 @@ protected:
 // 생성된 메시지 맵 함수
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedButtonCreate();
+	afx_msg void OnCbnSelchangeComboType();
+	afx_msg void OnCbnSelchangeComboOption();
+	afx_msg void OnEnChangeEditCountX();
+	afx_msg void OnEnChangeEditCountY();
+	afx_msg void OnEnChangeEditSizeX();
+	afx_msg void OnEnChangeEditSizeY();
+	afx_msg void OnBnClickedButtonDestroy();
+	afx_msg void OnBnClickedButtonSave();
+	afx_msg void OnBnClickedButtonLoad();
+
+	K::TILE_OPTION GetTileOption() const;
+
+	void SaveTileMap(CString const& _path);
+	void LoadTileMap(CString const& _path);
+
+	CComboBox& option_combo_box();
+
+	CComboBox type_combo_box_;
+	CComboBox option_combo_box_;
+	int count_x_{};
+	int count_y_{};
+	float size_x_{};
+	float size_y_{};
 };
 
 #ifndef _DEBUG  // KEditorFormView.cpp의 디버그 버전
