@@ -42,6 +42,7 @@ void K::ColliderOOBB::Update(float _time)
 	auto rotation_matrix = Matrix::CreateFromQuaternion(absolute_info_.rotation);
 
 	absolute_info_.center = transform->world().Translation() + Vector3::Transform(relative_info_.center, rotation_matrix);
+	absolute_info_.extent = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling() * 0.5f;
 
 	auto v1 = -rotation_matrix.Right() * absolute_info_.extent.x - rotation_matrix.Up() * absolute_info_.extent.y - rotation_matrix.Forward() * absolute_info_.extent.z;
 	auto v2 = -rotation_matrix.Right() * absolute_info_.extent.x + rotation_matrix.Up() * absolute_info_.extent.y - rotation_matrix.Forward() * absolute_info_.extent.z;

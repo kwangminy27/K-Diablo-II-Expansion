@@ -2,6 +2,10 @@
 #include "default_level.h"
 
 #include "Actor/default_actor.h"
+#include <Object/Actor/Monster/cow.h>
+#include <Object/Actor/Monster/wendigo.h>
+#include <Object/Actor/Monster/fallen_shaman.h>
+#include <Object/Actor/Monster/andariel.h>
 
 void K::DefaultLevel::Initialize()
 {
@@ -17,8 +21,23 @@ void K::DefaultLevel::Initialize()
 		});
 
 		auto tile_map = object_manager->CreateActor<TileMapActor>(TAG{ TILE_MAP, 0 });
-		std::static_pointer_cast<TileMapActor>(tile_map)->CreateMap(TILE_TYPE::ISOMETRIC, 100, 100, Vector2{ 16.f, 8.f });
+		std::static_pointer_cast<TileMapActor>(tile_map)->CreateMap(TILE_TYPE::ISOMETRIC, 10, 10, Vector2{ 160.f, 80.f });
 		layer->AddActor(tile_map);
+
+		auto cow = object_manager->CreateActor<Cow>(TAG{ "Cow", 0 });
+		layer->AddActor(cow);
+
+		auto wendigo = object_manager->CreateActor<Wendigo>(TAG{ "Wendigo", 0 });
+		CPTR_CAST<Transform>(wendigo->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ -100.f, 150.f, 0.f });
+		layer->AddActor(wendigo);
+
+		auto fallen_shaman = object_manager->CreateActor<FallenShaman>(TAG{ "FallenShaman", 0 });
+		CPTR_CAST<Transform>(fallen_shaman->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 100.f, 150.f, 0.f });
+		layer->AddActor(fallen_shaman);
+
+		auto andariel = object_manager->CreateActor<Andariel>(TAG{ "Andariel", 0 });
+		CPTR_CAST<Transform>(andariel->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, 300.f, 0.f });
+		layer->AddActor(andariel);
 	}
 	catch (std::exception const& _e)
 	{

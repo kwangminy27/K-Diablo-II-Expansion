@@ -19,7 +19,13 @@ namespace K
 
 		void UpdateConstantBuffer(float _time);
 
-		static std::shared_ptr<ANIMATION_2D_CLIP_DESC> animation_2d_clip_desc_dummy_;
+		std::shared_ptr<ANIMATION_2D_CLIP_DESC> const& FindClip(std::string const& _tag);
+
+		void AddClip(std::string const& _tag);
+		void SetCurrentClip(std::string const& _tag);
+		void SetDefaultClip(std::string const& _tag);
+
+		static std::shared_ptr<ANIMATION_2D_CLIP_DESC> animation_2d_clip_dummy_;
 
 	private:
 		Animation2D() = default;

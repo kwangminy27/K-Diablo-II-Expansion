@@ -24,6 +24,16 @@
 #define IDC_STATIC_TYPE                 1026
 #define IDC_STATIC_TEXTURE              1027
 #define IDC_STATIC_OPTION               1029
+#define IDC_COMBO_MONSTER_TYPE          1034
+#define IDC_EDIT_SCALING_X              1035
+#define IDC_EDIT_SCALING_Y              1036
+#define IDC_EDIT_SCALING_Z              1037
+#define IDC_EDIT_ROTATION_X             1038
+#define IDC_EDIT_ROTATION_Y             1039
+#define IDC_EDIT_ROTATION_Z             1040
+#define IDC_EDIT_TRANSLATION_X          1041
+#define IDC_EDIT_TRANSLATION_Y          1042
+#define IDC_EDIT_TRANSLATION_Z          1043
 
 // Next default values for new objects
 // 
@@ -31,7 +41,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        313
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1034
+#define _APS_NEXT_CONTROL_VALUE         1045
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

@@ -17,6 +17,7 @@ namespace K
 	constexpr auto AUDIO_PATH = "AudioPath";
 	constexpr auto VIDEO_PATH = "VideoPath";
 	constexpr auto SHADER_PATH = "ShaderPath";
+	constexpr auto DATA_PATH = "DataPath";
 
 	//////////////////// Mesh Key ////////////////////
 	constexpr auto TEX_RECT = "TexRect";

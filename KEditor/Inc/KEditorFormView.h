@@ -48,27 +48,58 @@ public:
 	afx_msg void OnBnClickedButtonCreate();
 	afx_msg void OnCbnSelchangeComboType();
 	afx_msg void OnCbnSelchangeComboOption();
+	afx_msg void OnCbnSelchangeComboMonsterType();
 	afx_msg void OnEnChangeEditCountX();
 	afx_msg void OnEnChangeEditCountY();
 	afx_msg void OnEnChangeEditSizeX();
 	afx_msg void OnEnChangeEditSizeY();
+	afx_msg void OnEnChangeEditScalingX();
+	afx_msg void OnEnChangeEditScalingY();
+	afx_msg void OnEnChangeEditScalingZ();
+	afx_msg void OnEnChangeEditRotationX();
+	afx_msg void OnEnChangeEditRotationY();
+	afx_msg void OnEnChangeEditRotationZ();
+	afx_msg void OnEnChangeEditTranslationX();
+	afx_msg void OnEnChangeEditTranslationY();
+	afx_msg void OnEnChangeEditTranslationZ();
 	afx_msg void OnBnClickedButtonDestroy();
 	afx_msg void OnBnClickedButtonSave();
 	afx_msg void OnBnClickedButtonLoad();
 
 	K::TILE_OPTION GetTileOption() const;
+	std::string GetMonsterType() const;
 
-	void SaveTileMap(CString const& _path);
-	void LoadTileMap(CString const& _path);
+	K::Vector3 GetScaling() const;
+	K::Vector3 GetRotation() const;
+	K::Vector3 GetTranslation() const;
+
+	void SaveLevel(CString const& _path);
+	void LoadLevel(CString const& _path);
 
 	CComboBox& option_combo_box();
+	std::list<K::APTR>& monster_list();
+
+	int count_x() const;
+	int count_y() const;
 
 	CComboBox type_combo_box_;
 	CComboBox option_combo_box_;
+	CComboBox monster_type_combo_box_;
 	int count_x_{};
 	int count_y_{};
 	float size_x_{};
 	float size_y_{};
+	float scaling_x_{};
+	float scaling_y_{};
+	float scaling_z_{};
+	float rotation_x_{};
+	float rotation_y_{};
+	float rotation_z_{};
+	float translation_x_{};
+	float translation_y_{};
+	float translation_z_{};
+
+	std::list<K::APTR> monster_list_{};
 };
 
 #ifndef _DEBUG  // KEditorFormView.cpp의 디버그 버전

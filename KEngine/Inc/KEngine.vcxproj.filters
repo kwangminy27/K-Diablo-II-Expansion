@@ -76,9 +76,6 @@
     <Filter Include="12. Object\2. Component\1. Transform">
       <UniqueIdentifier>{b43321db-e0e9-4829-945e-91cb429ef170}</UniqueIdentifier>
     </Filter>
-    <Filter Include="12. Object\1. Actor\1. CameraActor">
-      <UniqueIdentifier>{5a76b4bf-54da-4051-a462-0d064481e42e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="12. Object\2. Component\2. Camera">
       <UniqueIdentifier>{9dad187d-65fd-48f8-83eb-d24d1b44c43f}</UniqueIdentifier>
     </Filter>
@@ -115,11 +112,17 @@
     <Filter Include="08. Rendering\1. Shader\1. HLSL\2. Collider">
       <UniqueIdentifier>{69ba60c7-a50d-43c0-9c4f-ee81ce8d449e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="12. Object\1. Actor\2. TileMapActor">
-      <UniqueIdentifier>{f600faba-92ed-434e-83ad-9f11125827a9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="08. Rendering\1. Shader\1. HLSL\3. Instancing">
       <UniqueIdentifier>{e96d6f0d-31f4-4c45-9dd3-8ad4fe6dfea1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12. Object\1. Actor\3. Monster">
+      <UniqueIdentifier>{e747992d-6037-4d52-9e81-a616bd869b3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12. Object\1. Actor\2. TileMap">
+      <UniqueIdentifier>{f600faba-92ed-434e-83ad-9f11125827a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12. Object\1. Actor\1. Camera">
+      <UniqueIdentifier>{5a76b4bf-54da-4051-a462-0d064481e42e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -229,7 +232,7 @@
       <Filter>12. Object\2. Component\2. Camera</Filter>
     </ClInclude>
     <ClInclude Include="Object\Actor\camera_actor.h">
-      <Filter>12. Object\1. Actor\1. CameraActor</Filter>
+      <Filter>12. Object\1. Actor\1. Camera</Filter>
     </ClInclude>
     <ClInclude Include="Object\Component\animation_2d.h">
       <Filter>12. Object\2. Component\6. Animation2D</Filter>
@@ -253,10 +256,25 @@
       <Filter>12. Object\2. Component\7. Collider</Filter>
     </ClInclude>
     <ClInclude Include="Object\Actor\tile_actor.h">
-      <Filter>12. Object\1. Actor\2. TileMapActor</Filter>
+      <Filter>12. Object\1. Actor\2. TileMap</Filter>
     </ClInclude>
     <ClInclude Include="Object\Actor\tile_map_actor.h">
-      <Filter>12. Object\1. Actor\2. TileMapActor</Filter>
+      <Filter>12. Object\1. Actor\2. TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Monster\monster_actor.h">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Monster\wendigo.h">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Monster\cow.h">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Monster\fallen_shaman.h">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Monster\andariel.h">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -357,7 +375,7 @@
       <Filter>12. Object\2. Component\2. Camera</Filter>
     </ClCompile>
     <ClCompile Include="Object\Actor\camera_actor.cpp">
-      <Filter>12. Object\1. Actor\1. CameraActor</Filter>
+      <Filter>12. Object\1. Actor\1. Camera</Filter>
     </ClCompile>
     <ClCompile Include="Object\Component\animation_2d.cpp">
       <Filter>12. Object\2. Component\6. Animation2D</Filter>
@@ -381,10 +399,25 @@
       <Filter>12. Object\2. Component\7. Collider</Filter>
     </ClCompile>
     <ClCompile Include="Object\Actor\tile_actor.cpp">
-      <Filter>12. Object\1. Actor\2. TileMapActor</Filter>
+      <Filter>12. Object\1. Actor\2. TileMap</Filter>
     </ClCompile>
     <ClCompile Include="Object\Actor\tile_map_actor.cpp">
-      <Filter>12. Object\1. Actor\2. TileMapActor</Filter>
+      <Filter>12. Object\1. Actor\2. TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Monster\monster_actor.cpp">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Monster\wendigo.cpp">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Monster\cow.cpp">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Monster\fallen_shaman.cpp">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Monster\andariel.cpp">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

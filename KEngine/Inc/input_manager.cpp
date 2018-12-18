@@ -27,6 +27,7 @@ void K::InputManager::Initialize()
 		_CreateKeyDesc(std::string{ "F1" }, VK_F1 );
 		_CreateKeyDesc(std::string{ "F2" }, VK_F2 );
 		_CreateKeyDesc(std::string{ "F3" }, VK_F3 );
+		_CreateKeyDesc(std::string{ "F4" }, VK_F4);
 		_CreateKeyDesc(std::string{ "F5" }, VK_F5 );
 		_CreateKeyDesc(std::string{ "F6" }, VK_F6 );
 	}

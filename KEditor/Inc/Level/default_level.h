@@ -6,7 +6,8 @@ namespace K
 	{
 		NONE,
 		TILE,
-		OPTION
+		OPTION,
+		MONSTER
 	};
 
 	class DefaultLevel final : public Level

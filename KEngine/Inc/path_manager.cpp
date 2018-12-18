@@ -12,6 +12,7 @@ void K::PathManager::Initialize()
 		_CreatePath(AUDIO_PATH, "Audio\\");
 		_CreatePath(VIDEO_PATH, "Video\\");
 		_CreatePath(SHADER_PATH, "Shader\\");
+		_CreatePath(DATA_PATH, "Data\\");
 	}
 	catch (std::exception const& _e)
 	{
@@ -41,7 +42,9 @@ void K::PathManager::_CreateRootPath()
 {
 	std::filesystem::path path_buffer = std::filesystem::current_path();
 
-	path_buffer.replace_filename("Bin\\");
+	path_buffer = path_buffer.parent_path();
+	path_buffer = path_buffer.parent_path();
+	path_buffer /= "Resource\\";
 
 	_CreatePath(ROOT_PATH, path_buffer, "");
 }

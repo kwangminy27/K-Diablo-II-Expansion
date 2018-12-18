@@ -6,6 +6,11 @@
 
 #include "../MainFrm.h"
 
+#include <Object/Actor/Monster/cow.h>
+#include <Object/Actor/Monster/wendigo.h>
+#include <Object/Actor/Monster/fallen_shaman.h>
+#include <Object/Actor/Monster/andariel.h>
+
 extern K::Vector2 g_mouse_LT;
 extern K::Vector2 g_mouse_RB;
 
@@ -82,6 +87,9 @@ void K::DefaultLevel::_Input(float _time)
 	if (input_manager->KeyDown("F3"))
 		state_ = EDITOR_STATE::OPTION;
 
+	if (input_manager->KeyDown("F4"))
+		state_ = EDITOR_STATE::MONSTER;
+
 	auto const& tile_map = APTR_CAST<TileMapActor>(WorldManager::singleton()->FindActor(TAG{ TILE_MAP, 0 }));
 
 	CMainFrame* main_frame = static_cast<CMainFrame*>(AfxGetMainWnd());
@@ -112,6 +120,45 @@ void K::DefaultLevel::_Input(float _time)
 	if (input_manager->KeyPressed("LButton") && (state_ == EDITOR_STATE::TILE))
 		tile_map->SetTileUV(tile_idx, g_mouse_LT, g_mouse_RB);
 
+	if (input_manager->KeyDown("LButton") && (state_ == EDITOR_STATE::MONSTER))
+	{
+		if (tile_idx.first < 0 || tile_idx.first >= form_view->count_x() || tile_idx.second < 0 || tile_idx.second >= form_view->count_y())
+			return;
+
+		// 몬스터 생성
+		std::string monster_type = form_view->GetMonsterType();
+
+		Vector3 scaling = form_view->GetScaling();
+		Vector3 rotation = form_view->GetRotation();
+		Vector3 translation = tile_map->GetTilePosition(tile_idx);//form_view->GetTranslation();
+
+		auto const& object_manager = ObjectManager::singleton();
+
+		APTR monster{};
+		static uint32_t counter{};
+
+		if (monster_type == "Cow")
+			monster = object_manager->CreateActor<Cow>(TAG{ "Cow", counter++ });
+		else if (monster_type == "Wendigo")
+			monster = object_manager->CreateActor<Wendigo>(TAG{ "Wendigo", counter++ });
+		else if (monster_type == "Fallen Shaman")
+			monster = object_manager->CreateActor<FallenShaman>(TAG{ "FallenShaman", counter++ });
+		else if (monster_type == "Andariel")
+			monster = object_manager->CreateActor<Andariel>(TAG{ "Andariel", counter++ });
+
+		auto const& monster_transform = CPTR_CAST<Transform>(monster->FindComponent(TAG{ TRANSFORM, 0 }));
+
+		monster_transform->set_local_scaling(scaling);
+		monster_transform->set_local_rotation(Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(rotation.y), DirectX::XMConvertToRadians(rotation.x), DirectX::XMConvertToRadians(rotation.z)));
+		monster_transform->set_local_translation(translation);
+
+		auto const& layer = FindLayer(TAG{ "DefaultLayer", 0 });
+		layer->AddActor(monster);
+
+		auto& monster_list = form_view->monster_list(); 
+		monster_list.push_back(monster);
+	}
+
 	auto const& text = WorldManager::singleton()->FindActor(TAG{ "TextActor", 0 });
 	std::static_pointer_cast<TextActor>(text)->set_text(L"Tile Index: " + std::to_wstring(tile_idx.first) + L", " + std::to_wstring(tile_idx.second));
 
@@ -129,6 +176,10 @@ void K::DefaultLevel::_Input(float _time)
 
 	case EDITOR_STATE::OPTION:
 		mode_text = L"Option";
+		break;
+
+	case EDITOR_STATE::MONSTER:
+		mode_text = L"Monster";
 		break;
 	}
 

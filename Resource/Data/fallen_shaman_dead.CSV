@@ -1,0 +1,12 @@
+CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
+fallen_shaman_dead,fallen_shaman_dead,1,0,150,584,2
+,,,,,,
+LEFT,TOP,RIGHT,BOTTOM,,,
+0,0,150,73,,,
+0,73,150,146,,,
+0,146,150,219,,,
+0,219,150,292,,,
+0,292,150,365,,,
+0,365,150,438,,,
+0,438,150,511,,,
+0,511,150,584,,,

@@ -72,9 +72,40 @@ void K::ResourceManager::Initialize()
 #pragma endregion
 
 #pragma region Texture
-		_CreateTexture2D("base", L"base.bmp", TEXTURE_PATH);
-		_CreateTexture2D("empty", L"empty.png", TEXTURE_PATH);
 		_CreateTexture2D("catacomb floor", L"catacomb floor.png", TEXTURE_PATH);
+
+		_CreateTexture2D("cow_attack1", L"cow/cow_attack1.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_attack2", L"cow/cow_attack2.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_dead", L"cow/cow_dead.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_death", L"cow/cow_death.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_get_hit", L"cow/cow_get_hit.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_neutral", L"cow/cow_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_walk", L"cow/cow_walk.png", TEXTURE_PATH);
+
+		_CreateTexture2D("wendigo_attack1", L"wendigo/wendigo_attack1.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_attack2", L"wendigo/wendigo_attack2.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_dead", L"wendigo/wendigo_dead.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_death", L"wendigo/wendigo_death.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_neutral", L"wendigo/wendigo_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_walk", L"wendigo/wendigo_walk.png", TEXTURE_PATH);
+
+		_CreateTexture2D("fallen_shaman_attack1", L"fallen shaman/fallen_shaman_attack1.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_attack2", L"fallen shaman/fallen_shaman_attack2.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_attack2(overlay)", L"fallen shaman/fallen_shaman_attack2(overlay).png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_dead", L"fallen shaman/fallen_shaman_dead.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_death", L"fallen shaman/fallen_shaman_death.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_get_hit", L"fallen shaman/fallen_shaman_get_hit.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_neutral", L"fallen shaman/fallen_shaman_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_walk", L"fallen shaman/fallen_shaman_walk.png", TEXTURE_PATH);
+
+		_CreateTexture2D("andariel_attack1", L"andariel/andariel_attack1.png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_death", L"andariel/andariel_death.png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_death(overlay)", L"andariel/andariel_death(overlay).png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_get_hit", L"andariel/andariel_get_hit.png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_neutral", L"andariel/andariel_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_walk", L"andariel/andariel_walk.png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_special_cast", L"andariel/andariel_special_cast.png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_special_cast(overlay)", L"andariel/andariel_special_cast(overlay).png", TEXTURE_PATH);
 #pragma endregion
 
 #pragma region Sampler
@@ -88,6 +119,38 @@ void K::ResourceManager::Initialize()
 #pragma endregion
 
 #pragma region Animation2DClip
+		_CreateAnimation2DClip("cow_attack1", L"cow_attack1.csv", DATA_PATH);
+		_CreateAnimation2DClip("cow_attack2", L"cow_attack2.csv", DATA_PATH);
+		_CreateAnimation2DClip("cow_dead", L"cow_dead.csv", DATA_PATH);
+		_CreateAnimation2DClip("cow_death", L"cow_death.csv", DATA_PATH);
+		_CreateAnimation2DClip("cow_get_hit", L"cow_get_hit.csv", DATA_PATH);
+		_CreateAnimation2DClip("cow_neutral", L"cow_neutral.csv", DATA_PATH);
+		_CreateAnimation2DClip("cow_walk", L"cow_walk.csv", DATA_PATH);
+
+		_CreateAnimation2DClip("wendigo_attack1", L"wendigo_attack1.csv", DATA_PATH);
+		_CreateAnimation2DClip("wendigo_attack2", L"wendigo_attack2.csv", DATA_PATH);
+		_CreateAnimation2DClip("wendigo_dead", L"wendigo_dead.csv", DATA_PATH);
+		_CreateAnimation2DClip("wendigo_death", L"wendigo_death.csv", DATA_PATH);
+		_CreateAnimation2DClip("wendigo_neutral", L"wendigo_neutral.csv", DATA_PATH);
+		_CreateAnimation2DClip("wendigo_walk", L"wendigo_walk.csv", DATA_PATH);
+
+		_CreateAnimation2DClip("fallen_shaman_attack1", L"fallen_shaman_attack1.csv", DATA_PATH);
+		_CreateAnimation2DClip("fallen_shaman_attack2", L"fallen_shaman_attack2.csv", DATA_PATH);
+		_CreateAnimation2DClip("fallen_shaman_attack2(overlay)", L"fallen_shaman_attack2(overlay).csv", DATA_PATH);
+		_CreateAnimation2DClip("fallen_shaman_dead", L"fallen_shaman_dead.csv", DATA_PATH);
+		_CreateAnimation2DClip("fallen_shaman_death", L"fallen_shaman_death.csv", DATA_PATH);
+		_CreateAnimation2DClip("fallen_shaman_get_hit", L"fallen_shaman_get_hit.csv", DATA_PATH);
+		_CreateAnimation2DClip("fallen_shaman_neutral", L"fallen_shaman_neutral.csv", DATA_PATH);
+		_CreateAnimation2DClip("fallen_shaman_walk", L"fallen_shaman_walk.csv", DATA_PATH);
+
+		_CreateAnimation2DClip("andariel_attack1", L"andariel_attack1.csv", DATA_PATH);
+		_CreateAnimation2DClip("andariel_death", L"andariel_death.csv", DATA_PATH);
+		_CreateAnimation2DClip("andariel_death(overlay)", L"andariel_death(overlay).csv", DATA_PATH);
+		_CreateAnimation2DClip("andariel_get_hit", L"andariel_get_hit.csv", DATA_PATH);
+		_CreateAnimation2DClip("andariel_neutral", L"andariel_neutral.csv", DATA_PATH);
+		_CreateAnimation2DClip("andariel_walk", L"andariel_walk.csv", DATA_PATH);
+		_CreateAnimation2DClip("andariel_special_cast", L"andariel_special_cast.csv", DATA_PATH);
+		_CreateAnimation2DClip("andariel_special_cast(overlay)", L"andariel_special_cast(overlay).csv", DATA_PATH);
 #pragma endregion
 	}
 	catch (std::exception const& _e)
@@ -248,7 +311,6 @@ void K::ResourceManager::_CreateAnimation2DClip(std::string const& _tag, std::ws
 	std::getline(file, line);
 	std::getline(file, line);
 	line_stream.str(line);
-	std::getline(file, line);
 
 	std::string clip_tag{};
 	std::string texture_tag{};
@@ -278,6 +340,9 @@ void K::ResourceManager::_CreateAnimation2DClip(std::string const& _tag, std::ws
 	animation_2d_clip->height = std::stof(height);
 	animation_2d_clip->completion_time = std::stof(completion_time);
 
+	std::getline(file, line);
+	std::getline(file, line);
+
 	while (true)
 	{
 		line.clear();
@@ -288,7 +353,6 @@ void K::ResourceManager::_CreateAnimation2DClip(std::string const& _tag, std::ws
 		std::string right{};
 		std::string bottom{};
 
-		getline(file, line);
 		getline(file, line);
 		line_stream.str(line);
 
@@ -306,4 +370,6 @@ void K::ResourceManager::_CreateAnimation2DClip(std::string const& _tag, std::ws
 
 		animation_2d_clip->frame_vector.push_back(std::move(frame));
 	}
+
+	animation_2d_clip_map_.insert(std::make_pair(_tag, std::move(animation_2d_clip)));
 }

@@ -38,6 +38,7 @@ void K::ColliderCircle::Update(float _time)
 	auto position = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
 
 	absolute_info_.center = position + relative_info_.center;
+	absolute_info_.radius = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling().Length() * 0.5f;
 
 	min_ = absolute_info_.center - Vector3{ absolute_info_.radius, absolute_info_.radius, 0.f };
 	max_ = absolute_info_.center + Vector3{ absolute_info_.radius, absolute_info_.radius, 0.f };
