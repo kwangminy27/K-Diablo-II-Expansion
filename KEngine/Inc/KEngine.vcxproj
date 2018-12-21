@@ -186,6 +186,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Object\Actor\NPC\akara.h" />
+    <ClInclude Include="Object\Actor\NPC\npc_actor.h" />
+    <ClInclude Include="Object\Actor\Player\amazon.h" />
+    <ClInclude Include="Object\Actor\Player\player_actor.h" />
+    <ClInclude Include="Object\Actor\Player\sorceress.h" />
     <ClInclude Include="Object\Actor\tile_actor.h" />
     <ClInclude Include="Object\Actor\tile_map_actor.h" />
     <ClInclude Include="Object\Component\animation_2d.h" />
@@ -241,6 +246,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Object\Actor\NPC\akara.cpp" />
+    <ClCompile Include="Object\Actor\NPC\npc_actor.cpp" />
+    <ClCompile Include="Object\Actor\Player\amazon.cpp" />
+    <ClCompile Include="Object\Actor\Player\player_actor.cpp" />
+    <ClCompile Include="Object\Actor\Player\sorceress.cpp" />
     <ClCompile Include="Object\Actor\tile_actor.cpp" />
     <ClCompile Include="Object\Actor\tile_map_actor.cpp" />
     <ClCompile Include="Object\Component\animation_2d.cpp" />

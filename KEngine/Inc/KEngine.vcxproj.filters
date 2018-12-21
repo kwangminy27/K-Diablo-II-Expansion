@@ -124,6 +124,12 @@
     <Filter Include="12. Object\1. Actor\1. Camera">
       <UniqueIdentifier>{5a76b4bf-54da-4051-a462-0d064481e42e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="12. Object\1. Actor\4. NPC">
+      <UniqueIdentifier>{28982e7c-c530-48e2-a513-e42acbd827fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12. Object\1. Actor\5. Player">
+      <UniqueIdentifier>{81294501-2cdb-4ef1-a109-61e2f6158a9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KEngine.h">
@@ -276,6 +282,21 @@
     <ClInclude Include="Object\Actor\Monster\andariel.h">
       <Filter>12. Object\1. Actor\3. Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Actor\NPC\npc_actor.h">
+      <Filter>12. Object\1. Actor\4. NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\NPC\akara.h">
+      <Filter>12. Object\1. Actor\4. NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Player\player_actor.h">
+      <Filter>12. Object\1. Actor\5. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Player\sorceress.h">
+      <Filter>12. Object\1. Actor\5. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Player\amazon.h">
+      <Filter>12. Object\1. Actor\5. Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KEngine.cpp">
@@ -418,6 +439,21 @@
     </ClCompile>
     <ClCompile Include="Object\Actor\Monster\andariel.cpp">
       <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\NPC\npc_actor.cpp">
+      <Filter>12. Object\1. Actor\4. NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\NPC\akara.cpp">
+      <Filter>12. Object\1. Actor\4. NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Player\player_actor.cpp">
+      <Filter>12. Object\1. Actor\5. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Player\sorceress.cpp">
+      <Filter>12. Object\1. Actor\5. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Player\amazon.cpp">
+      <Filter>12. Object\1. Actor\5. Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

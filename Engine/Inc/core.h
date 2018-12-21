@@ -2,6 +2,8 @@
 
 namespace K
 {
+	class WorldManager;
+
 	class K_ENGINE_DLL Core final : public Singleton<Core>
 	{
 		friend class Singleton<Core>;

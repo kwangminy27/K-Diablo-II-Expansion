@@ -114,10 +114,10 @@ void K::Core::_Finalize()
 	ReplicationManager::singleton().reset();
 	RegistryManager::singleton().reset();
 	CollisionManager::singleton().reset();
-	ObjectManager::singleton().reset();
-	WorldManager::singleton().reset();
 	InputManager::singleton().reset();
 	TimeManager::singleton().reset();
+	ObjectManager::singleton().reset();
+	WorldManager::singleton().reset();
 	RenderingManager::singleton().reset();
 	ResourceManager::singleton().reset();
 	AudioManager::singleton().reset();

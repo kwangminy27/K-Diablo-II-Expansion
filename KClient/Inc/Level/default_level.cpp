@@ -6,6 +6,9 @@
 #include <Object/Actor/Monster/wendigo.h>
 #include <Object/Actor/Monster/fallen_shaman.h>
 #include <Object/Actor/Monster/andariel.h>
+#include <Object/Actor/NPC/akara.h>
+#include <Object/Actor/Player/sorceress.h>
+#include <Object/Actor/Player/amazon.h>
 
 void K::DefaultLevel::Initialize()
 {
@@ -38,6 +41,18 @@ void K::DefaultLevel::Initialize()
 		auto andariel = object_manager->CreateActor<Andariel>(TAG{ "Andariel", 0 });
 		CPTR_CAST<Transform>(andariel->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, 300.f, 0.f });
 		layer->AddActor(andariel);
+
+		auto akara = object_manager->CreateActor<Akara>(TAG{ "Akara", 0 });
+		CPTR_CAST<Transform>(akara->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ -200.f, 300.f, 0.f });
+		layer->AddActor(akara);
+
+		auto sorceress = object_manager->CreateActor<Sorceress>(TAG{ "Sorceress", 0 });
+		CPTR_CAST<Transform>(sorceress->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 200.f, 300.f, 0.f });
+		layer->AddActor(sorceress);
+
+		auto amazon = object_manager->CreateActor<Amazon>(TAG{ "Amazon", 0 });
+		CPTR_CAST<Transform>(amazon->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, -150.f, 0.f });
+		layer->AddActor(amazon);
 	}
 	catch (std::exception const& _e)
 	{

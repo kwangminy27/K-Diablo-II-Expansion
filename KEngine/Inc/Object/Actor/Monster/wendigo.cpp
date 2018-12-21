@@ -39,6 +39,7 @@ void K::Wendigo::Initialize()
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("wendigo_attack2");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("wendigo_dead");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("wendigo_death");
+		CPTR_CAST<Animation2D>(animation_2d)->AddClip("wendigo_get_hit");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("wendigo_neutral");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("wendigo_walk");
 		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("wendigo_walk");

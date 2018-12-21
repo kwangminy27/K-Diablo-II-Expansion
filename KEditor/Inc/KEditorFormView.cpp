@@ -16,6 +16,7 @@
 #include <Object/Actor/Monster/wendigo.h>
 #include <Object/Actor/Monster/fallen_shaman.h>
 #include <Object/Actor/Monster/andariel.h>
+#include <Object/Actor/NPC/akara.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -32,7 +33,7 @@ BEGIN_MESSAGE_MAP(CKEditorFormView, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON_LOAD, &CKEditorFormView::OnBnClickedButtonLoad)
 	ON_CBN_SELCHANGE(IDC_COMBO_TYPE, &CKEditorFormView::OnCbnSelchangeComboType)
 	ON_CBN_SELCHANGE(IDC_COMBO_OPTION, &CKEditorFormView::OnCbnSelchangeComboOption)
-	ON_CBN_SELCHANGE(IDC_COMBO_MONSTER_TYPE, &CKEditorFormView::OnCbnSelchangeComboMonsterType)
+	ON_CBN_SELCHANGE(IDC_COMBO_MONSTER_TYPE, &CKEditorFormView::OnCbnSelchangeComboActorType)
 	ON_EN_CHANGE(IDC_EDIT_COUNT_X, &CKEditorFormView::OnEnChangeEditCountX)
 	ON_EN_CHANGE(IDC_EDIT_COUNT_Y, &CKEditorFormView::OnEnChangeEditCountY)
 	ON_EN_CHANGE(IDC_EDIT_SIZE_X, &CKEditorFormView::OnEnChangeEditSizeX)
@@ -65,7 +66,7 @@ void CKEditorFormView::DoDataExchange(CDataExchange* pDX)
 	CFormView::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_COMBO_TYPE, type_combo_box_);
 	DDX_Control(pDX, IDC_COMBO_OPTION, option_combo_box_);
-	DDX_Control(pDX, IDC_COMBO_MONSTER_TYPE, monster_type_combo_box_);
+	DDX_Control(pDX, IDC_COMBO_MONSTER_TYPE, actor_type_combo_box_);
 	DDX_Text(pDX, IDC_EDIT_COUNT_X, count_x_);
 	DDX_Text(pDX, IDC_EDIT_COUNT_Y, count_y_);
 	DDX_Text(pDX, IDC_EDIT_SIZE_X, size_x_);
@@ -103,11 +104,12 @@ void CKEditorFormView::OnInitialUpdate()
 	option_combo_box_.AddString(L"2. Blocked");
 	option_combo_box_.SetCurSel(0);
 
-	monster_type_combo_box_.AddString(L"Cow");
-	monster_type_combo_box_.AddString(L"Wendigo");
-	monster_type_combo_box_.AddString(L"Fallen Shaman");
-	monster_type_combo_box_.AddString(L"Andariel");
-	monster_type_combo_box_.SetCurSel(0);
+	actor_type_combo_box_.AddString(L"Cow");
+	actor_type_combo_box_.AddString(L"Wendigo");
+	actor_type_combo_box_.AddString(L"Fallen Shaman");
+	actor_type_combo_box_.AddString(L"Andariel");
+	actor_type_combo_box_.AddString(L"Akara");
+	actor_type_combo_box_.SetCurSel(0);
 }
 
 // CKEditorFormView 진단
@@ -150,7 +152,7 @@ void CKEditorFormView::OnCbnSelchangeComboOption()
 {
 }
 
-void CKEditorFormView::OnCbnSelchangeComboMonsterType()
+void CKEditorFormView::OnCbnSelchangeComboActorType()
 {
 }
 
@@ -232,10 +234,10 @@ void CKEditorFormView::OnBnClickedButtonDestroy()
 
 	auto const& layer = K::WorldManager::singleton()->FindLayer(K::TAG{ "DefaultLayer", 0 });
 
-	for (auto& monster : monster_list_)
-		layer->RemoveActor(monster);
+	for (auto& actor : actor_list_)
+		layer->RemoveActor(actor);
 
-	monster_list_.clear();
+	actor_list_.clear();
 }
 
 K::TILE_OPTION CKEditorFormView::GetTileOption() const
@@ -243,16 +245,16 @@ K::TILE_OPTION CKEditorFormView::GetTileOption() const
 	return static_cast<K::TILE_OPTION>(option_combo_box_.GetCurSel());
 }
 
-std::string CKEditorFormView::GetMonsterType() const
+std::string CKEditorFormView::GetActorType() const
 {
-	std::string monster_type{};
+	std::string actor_type{};
 
 	CString string{};
 	GetDlgItemText(IDC_COMBO_MONSTER_TYPE, string);
 
-	monster_type = CT2CA(string);
+	actor_type = CT2CA(string);
 
-	return monster_type;
+	return actor_type;
 }
 
 K::Vector3 CKEditorFormView::GetScaling() const
@@ -281,17 +283,17 @@ void CKEditorFormView::SaveLevel(CString const& _path)
 	K::OutputMemoryStream omstream{};
 	tile_map->Serialize(omstream);
 
-	auto monster_size = monster_list_.size();
-	omstream.Serialize(monster_size);
+	auto actor_size = actor_list_.size();
+	omstream.Serialize(actor_size);
 
-	for (auto& monster : monster_list_)
+	for (auto& actor : actor_list_)
 	{
-		K::TAG tag = monster->tag();
+		K::TAG tag = actor->tag();
 
 		omstream.Serialize(tag.first);
 		omstream.Serialize(tag.second);
 
-		monster->Serialize(omstream);
+		actor->Serialize(omstream);
 	}
 
 	file.write(reinterpret_cast<char const*>(omstream.buffer()->data()), omstream.head());
@@ -314,35 +316,37 @@ void CKEditorFormView::LoadLevel(CString const& _path)
 
 	tile_map->Serialize(imstream);
 
-	size_t monster_size{};
-	imstream.Serialize(monster_size);
+	size_t actor_size{};
+	imstream.Serialize(actor_size);
 
 	auto const& object_manager = K::ObjectManager::singleton();
 
-	for (size_t i = 0; i < monster_size; ++i)
+	for (size_t i = 0; i < actor_size; ++i)
 	{
 		K::TAG tag{};
 
 		imstream.Serialize(tag.first);
 		imstream.Serialize(tag.second);
 
-		K::APTR monster{};
+		K::APTR actor{};
 
 		if (tag.first == "Cow")
-			monster = object_manager->CreateActor<K::Cow>(tag);
+			actor = object_manager->CreateActor<K::Cow>(tag);
 		else if (tag.first == "Wendigo")
-			monster = object_manager->CreateActor<K::Wendigo>(tag);
+			actor = object_manager->CreateActor<K::Wendigo>(tag);
 		else if (tag.first == "Fallen Shaman")
-			monster = object_manager->CreateActor<K::FallenShaman>(tag);
+			actor = object_manager->CreateActor<K::FallenShaman>(tag);
 		else if (tag.first == "Andariel")
-			monster = object_manager->CreateActor<K::Andariel>(tag);
+			actor = object_manager->CreateActor<K::Andariel>(tag);
+		else if (tag.first == "Akara")
+			actor = object_manager->CreateActor<K::Akara>(tag);
 
-		monster->Serialize(imstream);
+		actor->Serialize(imstream);
 
 		auto const& default_layer = K::WorldManager::singleton()->FindLayer(K::TAG{ "DefaultLayer", 0 });
-		default_layer->AddActor(monster);
+		default_layer->AddActor(actor);
 
-		monster_list_.push_back(monster);
+		actor_list_.push_back(actor);
 	}
 }
 
@@ -351,9 +355,9 @@ CComboBox& CKEditorFormView::option_combo_box()
 	return option_combo_box_;
 }
 
-std::list<K::APTR>& CKEditorFormView::monster_list()
+std::list<K::APTR>& CKEditorFormView::actor_list()
 {
-	return monster_list_;
+	return actor_list_;
 }
 
 int CKEditorFormView::count_x() const

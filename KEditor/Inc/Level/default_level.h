@@ -7,7 +7,7 @@ namespace K
 		NONE,
 		TILE,
 		OPTION,
-		MONSTER
+		ACTOR
 	};
 
 	class DefaultLevel final : public Level

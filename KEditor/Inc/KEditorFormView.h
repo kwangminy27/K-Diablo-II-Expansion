@@ -48,7 +48,7 @@ public:
 	afx_msg void OnBnClickedButtonCreate();
 	afx_msg void OnCbnSelchangeComboType();
 	afx_msg void OnCbnSelchangeComboOption();
-	afx_msg void OnCbnSelchangeComboMonsterType();
+	afx_msg void OnCbnSelchangeComboActorType();
 	afx_msg void OnEnChangeEditCountX();
 	afx_msg void OnEnChangeEditCountY();
 	afx_msg void OnEnChangeEditSizeX();
@@ -67,7 +67,7 @@ public:
 	afx_msg void OnBnClickedButtonLoad();
 
 	K::TILE_OPTION GetTileOption() const;
-	std::string GetMonsterType() const;
+	std::string GetActorType() const;
 
 	K::Vector3 GetScaling() const;
 	K::Vector3 GetRotation() const;
@@ -77,14 +77,14 @@ public:
 	void LoadLevel(CString const& _path);
 
 	CComboBox& option_combo_box();
-	std::list<K::APTR>& monster_list();
+	std::list<K::APTR>& actor_list();
 
 	int count_x() const;
 	int count_y() const;
 
 	CComboBox type_combo_box_;
 	CComboBox option_combo_box_;
-	CComboBox monster_type_combo_box_;
+	CComboBox actor_type_combo_box_;
 	int count_x_{};
 	int count_y_{};
 	float size_x_{};
@@ -99,7 +99,7 @@ public:
 	float translation_y_{};
 	float translation_z_{};
 
-	std::list<K::APTR> monster_list_{};
+	std::list<K::APTR> actor_list_{};
 };
 
 #ifndef _DEBUG  // KEditorFormView.cpp의 디버그 버전

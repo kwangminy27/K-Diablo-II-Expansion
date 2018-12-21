@@ -10,6 +10,7 @@
 #include <Object/Actor/Monster/wendigo.h>
 #include <Object/Actor/Monster/fallen_shaman.h>
 #include <Object/Actor/Monster/andariel.h>
+#include <Object/Actor/NPC/akara.h>
 
 extern K::Vector2 g_mouse_LT;
 extern K::Vector2 g_mouse_RB;
@@ -88,7 +89,7 @@ void K::DefaultLevel::_Input(float _time)
 		state_ = EDITOR_STATE::OPTION;
 
 	if (input_manager->KeyDown("F4"))
-		state_ = EDITOR_STATE::MONSTER;
+		state_ = EDITOR_STATE::ACTOR;
 
 	auto const& tile_map = APTR_CAST<TileMapActor>(WorldManager::singleton()->FindActor(TAG{ TILE_MAP, 0 }));
 
@@ -120,43 +121,41 @@ void K::DefaultLevel::_Input(float _time)
 	if (input_manager->KeyPressed("LButton") && (state_ == EDITOR_STATE::TILE))
 		tile_map->SetTileUV(tile_idx, g_mouse_LT, g_mouse_RB);
 
-	if (input_manager->KeyDown("LButton") && (state_ == EDITOR_STATE::MONSTER))
+	if (input_manager->KeyDown("LButton") && (state_ == EDITOR_STATE::ACTOR))
 	{
 		if (tile_idx.first < 0 || tile_idx.first >= form_view->count_x() || tile_idx.second < 0 || tile_idx.second >= form_view->count_y())
 			return;
 
 		// 몬스터 생성
-		std::string monster_type = form_view->GetMonsterType();
+		std::string actor_type = form_view->GetActorType();
 
-		Vector3 scaling = form_view->GetScaling();
-		Vector3 rotation = form_view->GetRotation();
 		Vector3 translation = tile_map->GetTilePosition(tile_idx);//form_view->GetTranslation();
 
 		auto const& object_manager = ObjectManager::singleton();
 
-		APTR monster{};
+		APTR actor{};
 		static uint32_t counter{};
 
-		if (monster_type == "Cow")
-			monster = object_manager->CreateActor<Cow>(TAG{ "Cow", counter++ });
-		else if (monster_type == "Wendigo")
-			monster = object_manager->CreateActor<Wendigo>(TAG{ "Wendigo", counter++ });
-		else if (monster_type == "Fallen Shaman")
-			monster = object_manager->CreateActor<FallenShaman>(TAG{ "FallenShaman", counter++ });
-		else if (monster_type == "Andariel")
-			monster = object_manager->CreateActor<Andariel>(TAG{ "Andariel", counter++ });
+		if (actor_type == "Cow")
+			actor = object_manager->CreateActor<Cow>(TAG{ "Cow", counter++ });
+		else if (actor_type == "Wendigo")
+			actor = object_manager->CreateActor<Wendigo>(TAG{ "Wendigo", counter++ });
+		else if (actor_type == "Fallen Shaman")
+			actor = object_manager->CreateActor<FallenShaman>(TAG{ "FallenShaman", counter++ });
+		else if (actor_type == "Andariel")
+			actor = object_manager->CreateActor<Andariel>(TAG{ "Andariel", counter++ });
+		else if (actor_type == "Akara")
+			actor = object_manager->CreateActor<Akara>(TAG{ "Akara", counter++ });
 
-		auto const& monster_transform = CPTR_CAST<Transform>(monster->FindComponent(TAG{ TRANSFORM, 0 }));
+		auto const& actor_transform = CPTR_CAST<Transform>(actor->FindComponent(TAG{ TRANSFORM, 0 }));
 
-		monster_transform->set_local_scaling(scaling);
-		monster_transform->set_local_rotation(Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(rotation.y), DirectX::XMConvertToRadians(rotation.x), DirectX::XMConvertToRadians(rotation.z)));
-		monster_transform->set_local_translation(translation);
+		actor_transform->set_local_translation(translation);
 
 		auto const& layer = FindLayer(TAG{ "DefaultLayer", 0 });
-		layer->AddActor(monster);
+		layer->AddActor(actor);
 
-		auto& monster_list = form_view->monster_list(); 
-		monster_list.push_back(monster);
+		auto& actor_list = form_view->actor_list();
+		actor_list.push_back(actor);
 	}
 
 	auto const& text = WorldManager::singleton()->FindActor(TAG{ "TextActor", 0 });
@@ -178,8 +177,8 @@ void K::DefaultLevel::_Input(float _time)
 		mode_text = L"Option";
 		break;
 
-	case EDITOR_STATE::MONSTER:
-		mode_text = L"Monster";
+	case EDITOR_STATE::ACTOR:
+		mode_text = L"Actor";
 		break;
 	}
 

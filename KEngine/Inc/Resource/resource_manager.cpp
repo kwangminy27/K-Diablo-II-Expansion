@@ -86,6 +86,7 @@ void K::ResourceManager::Initialize()
 		_CreateTexture2D("wendigo_attack2", L"wendigo/wendigo_attack2.png", TEXTURE_PATH);
 		_CreateTexture2D("wendigo_dead", L"wendigo/wendigo_dead.png", TEXTURE_PATH);
 		_CreateTexture2D("wendigo_death", L"wendigo/wendigo_death.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_get_hit", L"wendigo/wendigo_get_hit.png", TEXTURE_PATH);
 		_CreateTexture2D("wendigo_neutral", L"wendigo/wendigo_neutral.png", TEXTURE_PATH);
 		_CreateTexture2D("wendigo_walk", L"wendigo/wendigo_walk.png", TEXTURE_PATH);
 
@@ -106,6 +107,26 @@ void K::ResourceManager::Initialize()
 		_CreateTexture2D("andariel_walk", L"andariel/andariel_walk.png", TEXTURE_PATH);
 		_CreateTexture2D("andariel_special_cast", L"andariel/andariel_special_cast.png", TEXTURE_PATH);
 		_CreateTexture2D("andariel_special_cast(overlay)", L"andariel/andariel_special_cast(overlay).png", TEXTURE_PATH);
+
+		_CreateTexture2D("akara_neutral", L"akara/akara_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("akara_walk", L"akara/akara_walk.png", TEXTURE_PATH);
+
+		_CreateTexture2D("sorceress_attack1", L"sorceress/sorceress_attack1.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_attack2", L"sorceress/sorceress_attack2.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_get_hit", L"sorceress/sorceress_get_hit.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_neutral", L"sorceress/sorceress_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_run", L"sorceress/sorceress_run.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_special_cast", L"sorceress/sorceress_special_cast.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_special1", L"sorceress/sorceress_special1.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_walk", L"sorceress/sorceress_walk.png", TEXTURE_PATH);
+
+		_CreateTexture2D("amazon_attack1", L"amazon/amazon_attack1.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_get_hit", L"amazon/amazon_get_hit.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_neutral", L"amazon/amazon_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_run", L"amazon/amazon_run.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_special_cast", L"amazon/amazon_special_cast.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_special1", L"amazon/amazon_special1.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_walk", L"amazon/amazon_walk.png", TEXTURE_PATH);
 #pragma endregion
 
 #pragma region Sampler
@@ -131,6 +152,7 @@ void K::ResourceManager::Initialize()
 		_CreateAnimation2DClip("wendigo_attack2", L"wendigo_attack2.csv", DATA_PATH);
 		_CreateAnimation2DClip("wendigo_dead", L"wendigo_dead.csv", DATA_PATH);
 		_CreateAnimation2DClip("wendigo_death", L"wendigo_death.csv", DATA_PATH);
+		_CreateAnimation2DClip("wendigo_get_hit", L"wendigo_get_hit.csv", DATA_PATH);
 		_CreateAnimation2DClip("wendigo_neutral", L"wendigo_neutral.csv", DATA_PATH);
 		_CreateAnimation2DClip("wendigo_walk", L"wendigo_walk.csv", DATA_PATH);
 
@@ -151,6 +173,26 @@ void K::ResourceManager::Initialize()
 		_CreateAnimation2DClip("andariel_walk", L"andariel_walk.csv", DATA_PATH);
 		_CreateAnimation2DClip("andariel_special_cast", L"andariel_special_cast.csv", DATA_PATH);
 		_CreateAnimation2DClip("andariel_special_cast(overlay)", L"andariel_special_cast(overlay).csv", DATA_PATH);
+
+		_CreateAnimation2DClip("akara_neutral", L"akara_neutral.csv", DATA_PATH);
+		_CreateAnimation2DClip("akara_walk", L"akara_walk.csv", DATA_PATH);
+
+		_CreateAnimation2DClip("sorceress_attack1", L"sorceress_attack1.csv", DATA_PATH);
+		_CreateAnimation2DClip("sorceress_attack2", L"sorceress_attack2.csv", DATA_PATH);
+		_CreateAnimation2DClip("sorceress_get_hit", L"sorceress_get_hit.csv", DATA_PATH);
+		_CreateAnimation2DClip("sorceress_neutral", L"sorceress_neutral.csv", DATA_PATH);
+		_CreateAnimation2DClip("sorceress_run", L"sorceress_run.csv", DATA_PATH);
+		_CreateAnimation2DClip("sorceress_special_cast", L"sorceress_special_cast.csv", DATA_PATH);
+		_CreateAnimation2DClip("sorceress_special1", L"sorceress_special1.csv", DATA_PATH);
+		_CreateAnimation2DClip("sorceress_walk", L"sorceress_walk.csv", DATA_PATH);
+
+		_CreateAnimation2DClip("amazon_attack1", L"amazon_attack1.csv", DATA_PATH);
+		_CreateAnimation2DClip("amazon_get_hit", L"amazon_get_hit.csv", DATA_PATH);
+		_CreateAnimation2DClip("amazon_neutral", L"amazon_neutral.csv", DATA_PATH);
+		_CreateAnimation2DClip("amazon_run", L"amazon_run.csv", DATA_PATH);
+		_CreateAnimation2DClip("amazon_special_cast", L"amazon_special_cast.csv", DATA_PATH);
+		_CreateAnimation2DClip("amazon_special1", L"amazon_special1.csv", DATA_PATH);
+		_CreateAnimation2DClip("amazon_walk", L"amazon_walk.csv", DATA_PATH);
 #pragma endregion
 	}
 	catch (std::exception const& _e)
