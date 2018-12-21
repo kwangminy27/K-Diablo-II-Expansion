@@ -15,6 +15,8 @@ namespace K
 		virtual void Serialize(InputMemoryStream& _imstream) override;
 		virtual void Serialize(OutputMemoryStream& _omstream) override;
 
+		virtual void _Input(float _time) override;
+
 	private:
 		Sorceress() = default;
 		Sorceress(Sorceress const& _other);

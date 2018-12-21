@@ -97,15 +97,6 @@
     <Filter Include="13. Collision">
       <UniqueIdentifier>{0358025b-bbbf-4c4c-9705-9f972eab45d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="14. Registry">
-      <UniqueIdentifier>{8251f841-2aba-4619-8f68-1fbfc3868291}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="15. Replication">
-      <UniqueIdentifier>{9285f524-9832-426a-b773-37fc95696ffb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="16. Connection">
-      <UniqueIdentifier>{d87a8301-dfcf-4262-9a53-c1d9259e852a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="12. Object\2. Component\7. Collider">
       <UniqueIdentifier>{0377fbb3-c5d3-4092-b952-f4a0dc3e162e}</UniqueIdentifier>
     </Filter>
@@ -129,6 +120,21 @@
     </Filter>
     <Filter Include="12. Object\1. Actor\5. Player">
       <UniqueIdentifier>{81294501-2cdb-4ef1-a109-61e2f6158a9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="14. Navigation">
+      <UniqueIdentifier>{f7dfb9c2-3039-4c47-b1de-3799965d1013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="15. Registry">
+      <UniqueIdentifier>{8251f841-2aba-4619-8f68-1fbfc3868291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="16. Replication">
+      <UniqueIdentifier>{9285f524-9832-426a-b773-37fc95696ffb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="17. Connection">
+      <UniqueIdentifier>{d87a8301-dfcf-4262-9a53-c1d9259e852a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12. Object\2. Component\8. Navigator">
+      <UniqueIdentifier>{6713eeba-dbb7-485f-998c-be964fb937c2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -205,13 +211,13 @@
       <Filter>Base</Filter>
     </ClInclude>
     <ClInclude Include="replication_manager.h">
-      <Filter>15. Replication</Filter>
+      <Filter>16. Replication</Filter>
     </ClInclude>
     <ClInclude Include="registry_manager.h">
-      <Filter>14. Registry</Filter>
+      <Filter>15. Registry</Filter>
     </ClInclude>
     <ClInclude Include="connection_manager.h">
-      <Filter>16. Connection</Filter>
+      <Filter>17. Connection</Filter>
     </ClInclude>
     <ClInclude Include="Object\Actor\actor.h">
       <Filter>12. Object\1. Actor</Filter>
@@ -297,6 +303,12 @@
     <ClInclude Include="Object\Actor\Player\amazon.h">
       <Filter>12. Object\1. Actor\5. Player</Filter>
     </ClInclude>
+    <ClInclude Include="navigation_manager.h">
+      <Filter>14. Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Component\navigator.h">
+      <Filter>12. Object\2. Component\8. Navigator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KEngine.cpp">
@@ -363,13 +375,13 @@
       <Filter>12. Object</Filter>
     </ClCompile>
     <ClCompile Include="replication_manager.cpp">
-      <Filter>15. Replication</Filter>
+      <Filter>16. Replication</Filter>
     </ClCompile>
     <ClCompile Include="registry_manager.cpp">
-      <Filter>14. Registry</Filter>
+      <Filter>15. Registry</Filter>
     </ClCompile>
     <ClCompile Include="connection_manager.cpp">
-      <Filter>16. Connection</Filter>
+      <Filter>17. Connection</Filter>
     </ClCompile>
     <ClCompile Include="Object\Actor\actor.cpp">
       <Filter>12. Object\1. Actor</Filter>
@@ -454,6 +466,12 @@
     </ClCompile>
     <ClCompile Include="Object\Actor\Player\amazon.cpp">
       <Filter>12. Object\1. Actor\5. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="navigation_manager.cpp">
+      <Filter>14. Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Component\navigator.cpp">
+      <Filter>12. Object\2. Component\8. Navigator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

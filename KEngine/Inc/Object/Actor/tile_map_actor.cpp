@@ -98,6 +98,19 @@ void K::TileMapActor::Serialize(OutputMemoryStream& _omstream)
 	}
 }
 
+bool K::TileMapActor::InBounds(Vector3 const& _v)
+{
+	auto idx = GetTileIndex(_v);
+
+	if (idx.second < 0 || idx.second >= tile_map_.size())
+		return false;
+
+	if (idx.first < 0 || idx.first >= tile_map_.at(0).size())
+		return false;
+
+	return true;
+}
+
 void K::TileMapActor::CreateMap(TILE_TYPE _type, int _x_count, int _y_count, Vector2 const& _tile_size)
 {
 	type_ = _type;
@@ -160,6 +173,11 @@ std::pair<int, int> K::TileMapActor::GetTileIndex(Vector3 const& _position) cons
 	case TILE_TYPE::ORTHOGRAPHIC:
 		return _GetOrthographicTileIndex(_position);
 	}
+}
+
+std::list<std::pair<int, int>> const& K::TileMapActor::GetTileAdjacencyList(std::pair<int, int> const& _idx) const
+{
+	return tile_graph_.at(_idx.second).at(_idx.first);
 }
 
 void K::TileMapActor::SetTileUV(std::pair<int, int> const& _idx, Vector2 const& _LT, Vector2 const& _RB)

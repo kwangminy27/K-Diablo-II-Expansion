@@ -176,6 +176,7 @@
     <ClInclude Include="device_manager.h" />
     <ClInclude Include="input_manager.h" />
     <ClInclude Include="KEngine.h" />
+    <ClInclude Include="navigation_manager.h" />
     <ClInclude Include="Object\Actor\actor.h" />
     <ClInclude Include="Object\Actor\camera_actor.h" />
     <ClInclude Include="Object\Actor\Monster\andariel.h" />
@@ -202,6 +203,7 @@
     <ClInclude Include="Object\Component\Collider\collider_point.h" />
     <ClInclude Include="Object\Component\component.h" />
     <ClInclude Include="Object\Component\material.h" />
+    <ClInclude Include="Object\Component\navigator.h" />
     <ClInclude Include="Object\Component\renderer.h" />
     <ClInclude Include="Object\Component\text.h" />
     <ClInclude Include="Object\Component\transform.h" />
@@ -236,6 +238,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="navigation_manager.cpp" />
     <ClCompile Include="Object\Actor\actor.cpp" />
     <ClCompile Include="Object\Actor\camera_actor.cpp" />
     <ClCompile Include="Object\Actor\Monster\andariel.cpp" />
@@ -262,6 +265,7 @@
     <ClCompile Include="Object\Component\Collider\collider_point.cpp" />
     <ClCompile Include="Object\Component\component.cpp" />
     <ClCompile Include="Object\Component\material.cpp" />
+    <ClCompile Include="Object\Component\navigator.cpp" />
     <ClCompile Include="Object\Component\renderer.cpp" />
     <ClCompile Include="Object\Component\text.cpp" />
     <ClCompile Include="Object\Component\transform.cpp" />

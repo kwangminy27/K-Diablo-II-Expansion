@@ -3,12 +3,16 @@
 
 #include "Resource/resource_manager.h"
 #include "Rendering/rendering_manager.h"
+#include "input_manager.h"
+#include "World/world_manager.h"
 #include "Object/object_manager.h"
+#include "Object/Actor/camera_actor.h"
 #include "Object/Component/transform.h"
 #include "Object/Component/material.h"
 #include "Object/Component/renderer.h"
 #include "Object/Component/animation_2d.h"
 #include "Object/Component/Collider/collider_aabb.h"
+#include "Object/Component/navigator.h"
 
 void K::Sorceress::Initialize()
 {
@@ -49,6 +53,10 @@ void K::Sorceress::Initialize()
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });
 		AddComponent(collider);
+
+		auto navigator = object_manager->CreateComponent<Navigator>(TAG{ NAVIGATOR, 0 });
+		CPTR_CAST<Navigator>(navigator)->set_speed(400.f);
+		AddComponent(navigator);
 	}
 	catch (std::exception const& _e)
 	{
@@ -84,6 +92,19 @@ void K::Sorceress::Serialize(OutputMemoryStream& _omstream)
 
 	for (auto& child : child_list_)
 		child->Serialize(_omstream);
+}
+
+void K::Sorceress::_Input(float _time)
+{
+	auto const& input_manager = InputManager::singleton();
+
+	if (input_manager->KeyDown("LButton"))
+	{
+		auto position = CPTR_CAST<Transform>(FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
+		auto mouse_world_position = input_manager->mouse_world_position();
+
+		CPTR_CAST<Navigator>(FindComponent(TAG{ NAVIGATOR, 0 }))->Route(position, mouse_world_position);
+	}
 }
 
 K::Sorceress::Sorceress(Sorceress const& _other) : PlayerActor(_other)

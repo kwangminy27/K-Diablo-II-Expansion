@@ -22,7 +22,7 @@ void K::Transform::Initialize()
 
 void K::Transform::Update(float _time)
 {
-	if (!dirty_flag_)
+	if (false == dirty_flag_)
 		return;
 
 	local_ = Matrix::CreateScaling(local_scaling_) * Matrix::CreateFromQuaternion(local_rotation_) * Matrix::CreateTranslation(local_translation_);
@@ -55,6 +55,19 @@ void K::Transform::Update(float _time)
 	}
 
 	world_ = local_ * parent_;
+
+	for (auto const& child : owner()->child_list())
+	{
+		auto const& child_transform = CPTR_CAST<Transform>(child->FindComponent(TAG{ TRANSFORM, 0 }));
+
+		child_transform->set_parent_scaling(world_scaling_);
+		child_transform->set_parent_rotation(world_rotation_);
+		child_transform->set_parent_translation(world_translation_);
+
+		child_transform->set_dirty_flag(true);
+	}
+
+	dirty_flag_ = false;
 }
 
 K::CPTR K::Transform::Clone() const

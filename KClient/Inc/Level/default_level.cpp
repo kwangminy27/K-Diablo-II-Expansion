@@ -25,6 +25,7 @@ void K::DefaultLevel::Initialize()
 
 		auto tile_map = object_manager->CreateActor<TileMapActor>(TAG{ TILE_MAP, 0 });
 		std::static_pointer_cast<TileMapActor>(tile_map)->CreateMap(TILE_TYPE::ISOMETRIC, 10, 10, Vector2{ 160.f, 80.f });
+		NavigationManager::singleton()->AddTileMap(APTR_CAST<TileMapActor>(tile_map));
 		layer->AddActor(tile_map);
 
 		auto cow = object_manager->CreateActor<Cow>(TAG{ "Cow", 0 });

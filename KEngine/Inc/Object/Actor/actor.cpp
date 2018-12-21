@@ -3,7 +3,6 @@
 
 #include "World/layer.h"
 #include "Object/Component/component.h"
-#include "Object/Component/transform.h"
 
 K::CPTR K::Actor::component_dummy_{};
 K::APTR K::Actor::child_dummy_{};
@@ -214,24 +213,6 @@ void K::Actor::__Update(float _time)
 			iter = component_list_.erase(iter);
 			break;
 		}
-	}
-
-	auto const& transform = static_cast<Transform*>(FindComponent(TAG{ TRANSFORM, 0 }).get());
-
-	if (transform->dirty_flag())
-	{
-		for (auto const& child : child_list_)
-		{
-			auto const& child_transform = static_cast<Transform*>(child->FindComponent(TAG{ TRANSFORM, 0 }).get());
-
-			child_transform->set_parent_scaling(transform->world_scaling());
-			child_transform->set_parent_rotation(transform->world_rotation());
-			child_transform->set_parent_translation(transform->world_translation());
-
-			child_transform->set_dirty_flag(true);
-		}
-
-		transform->set_dirty_flag(false);
 	}
 }
 

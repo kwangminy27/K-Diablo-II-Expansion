@@ -13,6 +13,7 @@
 #include "World/world_manager.h"
 #include "Object/object_manager.h"
 #include "collision_manager.h"
+#include "navigation_manager.h"
 #include "registry_manager.h"
 #include "replication_manager.h"
 #include "connection_manager.h"
@@ -65,6 +66,7 @@ void K::Core::Initialize(HINSTANCE _instance, HWND _window)
 		WorldManager::singleton()->Initialize();
 		ObjectManager::singleton()->Initialize();
 		CollisionManager::singleton()->Initialize();
+		NavigationManager::singleton()->Initialize();
 		RegistryManager::singleton()->Initialize();
 		ReplicationManager::singleton()->Initialize();
 		ConnectionManager::singleton()->Initialize();
@@ -108,11 +110,17 @@ void K::Core::Logic()
 	_Render(time_delta);
 }
 
+HWND K::Core::window() const
+{
+	return window_;
+}
+
 void K::Core::_Finalize()
 {
 	ConnectionManager::singleton().reset();
 	ReplicationManager::singleton().reset();
 	RegistryManager::singleton().reset();
+	NavigationManager::singleton().reset();
 	CollisionManager::singleton().reset();
 	InputManager::singleton().reset();
 	TimeManager::singleton().reset();

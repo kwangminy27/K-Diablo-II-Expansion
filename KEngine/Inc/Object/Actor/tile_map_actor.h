@@ -17,12 +17,15 @@ namespace K
 		virtual void Serialize(InputMemoryStream& _imstream) override;
 		virtual void Serialize(OutputMemoryStream& _omstream) override;
 
+		bool InBounds(Vector3 const& _v);
+
 		void CreateMap(TILE_TYPE _type, int _x_count, int _y_count, Vector2 const& _tile_size);
 		void DestroyMap();
 
 		TILE_OPTION GetTileOption(std::pair<int, int> const& _idx) const;
 		Vector3 GetTilePosition(std::pair<int, int> const& _idx) const;
 		std::pair<int, int> GetTileIndex(Vector3 const& _position) const;
+		std::list<std::pair<int, int>> const& GetTileAdjacencyList(std::pair<int, int> const& _idx) const;
 
 		void SetTileUV(std::pair<int, int> const& _idx, Vector2 const& _LT, Vector2 const& _RB);
 		void SetTileOption(std::pair<int, int> const& _idx, TILE_OPTION _option);

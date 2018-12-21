@@ -16,6 +16,8 @@ namespace K
 		void Run();
 		void Logic();
 
+		HWND window() const;
+
 	private:
 		Core() = default;
 		Core(Core const&) = delete;

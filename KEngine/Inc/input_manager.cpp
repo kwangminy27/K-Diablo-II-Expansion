@@ -1,6 +1,11 @@
 #include "KEngine.h"
 #include "input_manager.h"
 
+#include "core.h"
+#include "World/world_manager.h"
+#include "Object/Actor/camera_actor.h"
+#include "Object/Component/transform.h"
+
 std::pair<std::string, K::KEY_DESC> K::InputManager::key_desc_dummy_{};
 
 void K::InputManager::Initialize()
@@ -73,6 +78,20 @@ void K::InputManager::Update()
 		else if (key_desc.up)
 			key_desc.up = false;
 	}
+
+	POINT mouse_position{};
+	GetCursorPos(&mouse_position);
+	ScreenToClient(Core::singleton()->window(), &mouse_position);
+	mouse_position.y = static_cast<int>(RESOLUTION::HEIGHT) - mouse_position.y;
+	
+	mouse_client_position_ = Vector3{ static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y), 0.f };
+
+	auto const& camera = WorldManager::singleton()->FindCamera(TAG{ DEFAULT_CAMERA, 0 });
+	auto const& camera_position = CPTR_CAST<Transform>(camera->FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
+	mouse_position.x += static_cast<LONG>(camera_position.x - static_cast<float>(RESOLUTION::WIDTH) * 0.5f);
+	mouse_position.y += static_cast<LONG>(camera_position.y - static_cast<float>(RESOLUTION::HEIGHT) * 0.5f);
+
+	mouse_world_position_ = Vector3{ static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y), 0.f };
 }
 
 bool K::InputManager::KeyDown(std::string const& _tag) const
@@ -88,6 +107,16 @@ bool K::InputManager::KeyPressed(std::string const& _tag) const
 bool K::InputManager::KeyUp(std::string const& _tag) const
 {
 	return _FindKeyDesc(_tag).up;
+}
+
+K::Vector3 const& K::InputManager::mouse_world_position() const
+{
+	return mouse_world_position_;
+}
+
+K::Vector3 const& K::InputManager::mouse_client_position() const
+{
+	return mouse_client_position_;
 }
 
 void K::InputManager::_Finalize()

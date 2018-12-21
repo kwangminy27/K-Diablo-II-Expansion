@@ -20,6 +20,7 @@
 #include <Object/Component/Collider/collider_circle.h>
 #include <Object/Component/Collider/collider_aabb.h>
 #include <Object/Component/Collider/collider_oobb.h>
+#include <navigation_manager.h>
 #include <registry_manager.h>
 
 // Base

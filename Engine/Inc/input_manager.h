@@ -22,6 +22,9 @@ namespace K
 		bool KeyPressed(std::string const& _tag) const;
 		bool KeyUp(std::string const& _tag) const;
 
+		Vector3 const& mouse_world_position() const;
+		Vector3 const& mouse_client_position() const;
+
 		static std::pair<std::string, KEY_DESC> key_desc_dummy_;
 
 	private:
@@ -39,6 +42,8 @@ namespace K
 		template <typename... Types> void _CreateKeyDesc(std::string const& _tag, Types... _Args);
 		void _CreateKeyDesc();
 
+		Vector3 mouse_world_position_{};
+		Vector3 mouse_client_position_{};
 		std::unordered_map<std::string, KEY_DESC> key_desc_map_{};
 	};
 }
