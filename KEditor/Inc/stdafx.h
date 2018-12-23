@@ -54,6 +54,7 @@
 #include <KEngine.h>
 #include <core.h>
 #include <device_manager.h>
+#include <path_manager.h>
 #include <Resource/resource_manager.h>
 #include <Rendering/rendering_manager.h>
 #include <time_manager.h>

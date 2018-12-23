@@ -35,6 +35,12 @@ void K::InputManager::Initialize()
 		_CreateKeyDesc(std::string{ "F4" }, VK_F4);
 		_CreateKeyDesc(std::string{ "F5" }, VK_F5 );
 		_CreateKeyDesc(std::string{ "F6" }, VK_F6 );
+		_CreateKeyDesc(std::string{ "F7" }, VK_F7);
+		_CreateKeyDesc(std::string{ "F8" }, VK_F8);
+		_CreateKeyDesc(std::string{ "F9" }, VK_F9);
+		_CreateKeyDesc(std::string{ "F10" }, VK_F10);
+		_CreateKeyDesc(std::string{ "F11" }, VK_F11);
+		_CreateKeyDesc(std::string{ "F12" }, VK_F12);
 	}
 	catch (std::exception const& _e)
 	{

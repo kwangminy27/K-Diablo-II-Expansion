@@ -55,7 +55,7 @@ void K::Sorceress::Initialize()
 		AddComponent(collider);
 
 		auto navigator = object_manager->CreateComponent<Navigator>(TAG{ NAVIGATOR, 0 });
-		CPTR_CAST<Navigator>(navigator)->set_speed(400.f);
+		CPTR_CAST<Navigator>(navigator)->set_speed(320.f);
 		AddComponent(navigator);
 	}
 	catch (std::exception const& _e)
@@ -98,12 +98,21 @@ void K::Sorceress::_Input(float _time)
 {
 	auto const& input_manager = InputManager::singleton();
 
+	auto position = CPTR_CAST<Transform>(FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
+
 	if (input_manager->KeyDown("LButton"))
 	{
-		auto position = CPTR_CAST<Transform>(FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
 		auto mouse_world_position = input_manager->mouse_world_position();
 
 		CPTR_CAST<Navigator>(FindComponent(TAG{ NAVIGATOR, 0 }))->Route(position, mouse_world_position);
+	}
+
+	if (true == focus_flag_)
+	{
+		auto const& camera = WorldManager::singleton()->FindCamera(TAG{ DEFAULT_CAMERA, 0 });
+		auto const& camera_transform = CPTR_CAST<Transform>(camera->FindComponent(TAG{ TRANSFORM, 0 }));
+		camera_transform->set_local_translation(position);
+		camera_transform->Update(_time);
 	}
 }
 

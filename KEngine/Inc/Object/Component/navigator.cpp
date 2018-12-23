@@ -33,9 +33,10 @@ void K::Navigator::Update(float _time)
 	auto direction = destination_ - position;
 	direction.Normalize();
 
-	transform->set_local_translation(transform->local_translation() + direction * speed_ * _time);
+	auto displacement = transform->local_translation() + direction * speed_ * _time;
+	transform->set_local_translation(displacement);
 
-	if (Vector3::Distance(position, destination_) < 8.f)
+	if (Vector3::Distance(displacement, destination_) < 16.f)
 	{
 		if (false == move_path_list_.empty())
 		{

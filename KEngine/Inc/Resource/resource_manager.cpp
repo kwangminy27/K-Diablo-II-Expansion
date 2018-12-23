@@ -72,61 +72,61 @@ void K::ResourceManager::Initialize()
 #pragma endregion
 
 #pragma region Texture
-		_CreateTexture2D("catacomb floor", L"catacomb floor.png", TEXTURE_PATH);
+		_CreateTexture2D("catacomb floor", L"Main/catacomb floor.png", TEXTURE_PATH);
 
-		_CreateTexture2D("cow_attack1", L"cow/cow_attack1.png", TEXTURE_PATH);
-		_CreateTexture2D("cow_attack2", L"cow/cow_attack2.png", TEXTURE_PATH);
-		_CreateTexture2D("cow_dead", L"cow/cow_dead.png", TEXTURE_PATH);
-		_CreateTexture2D("cow_death", L"cow/cow_death.png", TEXTURE_PATH);
-		_CreateTexture2D("cow_get_hit", L"cow/cow_get_hit.png", TEXTURE_PATH);
-		_CreateTexture2D("cow_neutral", L"cow/cow_neutral.png", TEXTURE_PATH);
-		_CreateTexture2D("cow_walk", L"cow/cow_walk.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_attack1", L"Main/cow/cow_attack1.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_attack2", L"Main/cow/cow_attack2.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_dead", L"Main/cow/cow_dead.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_death", L"Main/cow/cow_death.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_get_hit", L"Main/cow/cow_get_hit.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_neutral", L"Main/cow/cow_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("cow_walk", L"Main/cow/cow_walk.png", TEXTURE_PATH);
 
-		_CreateTexture2D("wendigo_attack1", L"wendigo/wendigo_attack1.png", TEXTURE_PATH);
-		_CreateTexture2D("wendigo_attack2", L"wendigo/wendigo_attack2.png", TEXTURE_PATH);
-		_CreateTexture2D("wendigo_dead", L"wendigo/wendigo_dead.png", TEXTURE_PATH);
-		_CreateTexture2D("wendigo_death", L"wendigo/wendigo_death.png", TEXTURE_PATH);
-		_CreateTexture2D("wendigo_get_hit", L"wendigo/wendigo_get_hit.png", TEXTURE_PATH);
-		_CreateTexture2D("wendigo_neutral", L"wendigo/wendigo_neutral.png", TEXTURE_PATH);
-		_CreateTexture2D("wendigo_walk", L"wendigo/wendigo_walk.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_attack1", L"Main/wendigo/wendigo_attack1.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_attack2", L"Main/wendigo/wendigo_attack2.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_dead", L"Main/wendigo/wendigo_dead.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_death", L"Main/wendigo/wendigo_death.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_get_hit", L"Main/wendigo/wendigo_get_hit.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_neutral", L"Main/wendigo/wendigo_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("wendigo_walk", L"Main/wendigo/wendigo_walk.png", TEXTURE_PATH);
 
-		_CreateTexture2D("fallen_shaman_attack1", L"fallen shaman/fallen_shaman_attack1.png", TEXTURE_PATH);
-		_CreateTexture2D("fallen_shaman_attack2", L"fallen shaman/fallen_shaman_attack2.png", TEXTURE_PATH);
-		_CreateTexture2D("fallen_shaman_attack2(overlay)", L"fallen shaman/fallen_shaman_attack2(overlay).png", TEXTURE_PATH);
-		_CreateTexture2D("fallen_shaman_dead", L"fallen shaman/fallen_shaman_dead.png", TEXTURE_PATH);
-		_CreateTexture2D("fallen_shaman_death", L"fallen shaman/fallen_shaman_death.png", TEXTURE_PATH);
-		_CreateTexture2D("fallen_shaman_get_hit", L"fallen shaman/fallen_shaman_get_hit.png", TEXTURE_PATH);
-		_CreateTexture2D("fallen_shaman_neutral", L"fallen shaman/fallen_shaman_neutral.png", TEXTURE_PATH);
-		_CreateTexture2D("fallen_shaman_walk", L"fallen shaman/fallen_shaman_walk.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_attack1", L"Main/fallen shaman/fallen_shaman_attack1.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_attack2", L"Main/fallen shaman/fallen_shaman_attack2.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_attack2(overlay)", L"Main/fallen shaman/fallen_shaman_attack2(overlay).png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_dead", L"Main/fallen shaman/fallen_shaman_dead.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_death", L"Main/fallen shaman/fallen_shaman_death.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_get_hit", L"Main/fallen shaman/fallen_shaman_get_hit.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_neutral", L"Main/fallen shaman/fallen_shaman_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_walk", L"Main/fallen shaman/fallen_shaman_walk.png", TEXTURE_PATH);
 
-		_CreateTexture2D("andariel_attack1", L"andariel/andariel_attack1.png", TEXTURE_PATH);
-		_CreateTexture2D("andariel_death", L"andariel/andariel_death.png", TEXTURE_PATH);
-		_CreateTexture2D("andariel_death(overlay)", L"andariel/andariel_death(overlay).png", TEXTURE_PATH);
-		_CreateTexture2D("andariel_get_hit", L"andariel/andariel_get_hit.png", TEXTURE_PATH);
-		_CreateTexture2D("andariel_neutral", L"andariel/andariel_neutral.png", TEXTURE_PATH);
-		_CreateTexture2D("andariel_walk", L"andariel/andariel_walk.png", TEXTURE_PATH);
-		_CreateTexture2D("andariel_special_cast", L"andariel/andariel_special_cast.png", TEXTURE_PATH);
-		_CreateTexture2D("andariel_special_cast(overlay)", L"andariel/andariel_special_cast(overlay).png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_attack1", L"Main/andariel/andariel_attack1.png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_death", L"Main/andariel/andariel_death.png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_death(overlay)", L"Main/andariel/andariel_death(overlay).png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_get_hit", L"Main/andariel/andariel_get_hit.png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_neutral", L"Main/andariel/andariel_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_walk", L"Main/andariel/andariel_walk.png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_special_cast", L"Main/andariel/andariel_special_cast.png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_special_cast(overlay)", L"Main/andariel/andariel_special_cast(overlay).png", TEXTURE_PATH);
 
-		_CreateTexture2D("akara_neutral", L"akara/akara_neutral.png", TEXTURE_PATH);
-		_CreateTexture2D("akara_walk", L"akara/akara_walk.png", TEXTURE_PATH);
+		_CreateTexture2D("akara_neutral", L"Main/akara/akara_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("akara_walk", L"Main/akara/akara_walk.png", TEXTURE_PATH);
 
-		_CreateTexture2D("sorceress_attack1", L"sorceress/sorceress_attack1.png", TEXTURE_PATH);
-		_CreateTexture2D("sorceress_attack2", L"sorceress/sorceress_attack2.png", TEXTURE_PATH);
-		_CreateTexture2D("sorceress_get_hit", L"sorceress/sorceress_get_hit.png", TEXTURE_PATH);
-		_CreateTexture2D("sorceress_neutral", L"sorceress/sorceress_neutral.png", TEXTURE_PATH);
-		_CreateTexture2D("sorceress_run", L"sorceress/sorceress_run.png", TEXTURE_PATH);
-		_CreateTexture2D("sorceress_special_cast", L"sorceress/sorceress_special_cast.png", TEXTURE_PATH);
-		_CreateTexture2D("sorceress_special1", L"sorceress/sorceress_special1.png", TEXTURE_PATH);
-		_CreateTexture2D("sorceress_walk", L"sorceress/sorceress_walk.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_attack1", L"Main/sorceress/sorceress_attack1.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_attack2", L"Main/sorceress/sorceress_attack2.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_get_hit", L"Main/sorceress/sorceress_get_hit.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_neutral", L"Main/sorceress/sorceress_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_run", L"Main/sorceress/sorceress_run.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_special_cast", L"Main/sorceress/sorceress_special_cast.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_special1", L"Main/sorceress/sorceress_special1.png", TEXTURE_PATH);
+		_CreateTexture2D("sorceress_walk", L"Main/sorceress/sorceress_walk.png", TEXTURE_PATH);
 
-		_CreateTexture2D("amazon_attack1", L"amazon/amazon_attack1.png", TEXTURE_PATH);
-		_CreateTexture2D("amazon_get_hit", L"amazon/amazon_get_hit.png", TEXTURE_PATH);
-		_CreateTexture2D("amazon_neutral", L"amazon/amazon_neutral.png", TEXTURE_PATH);
-		_CreateTexture2D("amazon_run", L"amazon/amazon_run.png", TEXTURE_PATH);
-		_CreateTexture2D("amazon_special_cast", L"amazon/amazon_special_cast.png", TEXTURE_PATH);
-		_CreateTexture2D("amazon_special1", L"amazon/amazon_special1.png", TEXTURE_PATH);
-		_CreateTexture2D("amazon_walk", L"amazon/amazon_walk.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_attack1", L"Main/amazon/amazon_attack1.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_get_hit", L"Main/amazon/amazon_get_hit.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_neutral", L"Main/amazon/amazon_neutral.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_run", L"Main/amazon/amazon_run.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_special_cast", L"Main/amazon/amazon_special_cast.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_special1", L"Main/amazon/amazon_special1.png", TEXTURE_PATH);
+		_CreateTexture2D("amazon_walk", L"Main/amazon/amazon_walk.png", TEXTURE_PATH);
 #pragma endregion
 
 #pragma region Sampler

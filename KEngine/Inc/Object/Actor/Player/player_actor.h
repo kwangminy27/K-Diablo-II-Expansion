@@ -15,6 +15,8 @@ namespace K
 		virtual void Serialize(InputMemoryStream& _imstream) = 0;
 		virtual void Serialize(OutputMemoryStream& _omstream) = 0;
 
+		void set_focus_flag(bool _flag);
+
 	protected:
 		PlayerActor() = default;
 		PlayerActor(PlayerActor const& _other);
@@ -23,5 +25,7 @@ namespace K
 		PlayerActor& operator=(PlayerActor&&) noexcept = default;
 
 		virtual void _Finalize() = 0;
+
+		bool focus_flag_{};
 	};
 }

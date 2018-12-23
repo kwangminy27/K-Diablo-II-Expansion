@@ -23,10 +23,54 @@ void K::DefaultLevel::Initialize()
 			return object_manager->CreateActor<DefaultActor>(_tag);
 		});
 
+		// Map & Monster ·Îµå
+		auto const& path_manager = PathManager::singleton();
+
+		std::wstring file_name = path_manager->FindPath(DATA_PATH).wstring() + L"test.lv";
+
+		std::fstream file{ file_name, std::ios::in | std::ios::binary | std::ios::ate };
+
 		auto tile_map = object_manager->CreateActor<TileMapActor>(TAG{ TILE_MAP, 0 });
-		std::static_pointer_cast<TileMapActor>(tile_map)->CreateMap(TILE_TYPE::ISOMETRIC, 10, 10, Vector2{ 160.f, 80.f });
+		
+		auto size = file.tellg();
+		file.seekg(std::ios::beg);
+
+		K::InputMemoryStream imstream{};
+		imstream.Resize(size);
+		file.read(reinterpret_cast<char*>(imstream.buffer()->data()), size);
+
+		tile_map->Serialize(imstream);
+
 		NavigationManager::singleton()->AddTileMap(APTR_CAST<TileMapActor>(tile_map));
 		layer->AddActor(tile_map);
+
+		size_t actor_size{};
+		imstream.Serialize(actor_size);
+
+		for (size_t i = 0; i < actor_size; ++i)
+		{
+			K::TAG tag{};
+
+			imstream.Serialize(tag.first);
+			imstream.Serialize(tag.second);
+
+			K::APTR actor{};
+
+			if (tag.first == "Cow")
+				actor = object_manager->CreateActor<K::Cow>(tag);
+			else if (tag.first == "Wendigo")
+				actor = object_manager->CreateActor<K::Wendigo>(tag);
+			else if (tag.first == "Fallen Shaman")
+				actor = object_manager->CreateActor<K::FallenShaman>(tag);
+			else if (tag.first == "Andariel")
+				actor = object_manager->CreateActor<K::Andariel>(tag);
+			else if (tag.first == "Akara")
+				actor = object_manager->CreateActor<K::Akara>(tag);
+
+			actor->Serialize(imstream);
+			layer->AddActor(actor);
+		}
+		//
 
 		auto cow = object_manager->CreateActor<Cow>(TAG{ "Cow", 0 });
 		layer->AddActor(cow);
@@ -48,6 +92,7 @@ void K::DefaultLevel::Initialize()
 		layer->AddActor(akara);
 
 		auto sorceress = object_manager->CreateActor<Sorceress>(TAG{ "Sorceress", 0 });
+		APTR_CAST<PlayerActor>(sorceress)->set_focus_flag(true);
 		CPTR_CAST<Transform>(sorceress->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 200.f, 300.f, 0.f });
 		layer->AddActor(sorceress);
 
@@ -71,4 +116,17 @@ K::DefaultLevel::DefaultLevel(DefaultLevel&& _other) noexcept : Level(std::move(
 
 void K::DefaultLevel::_Finalize()
 {
+}
+
+void K::DefaultLevel::_Input(float _time)
+{
+	auto const& input_manager = InputManager::singleton();
+
+	if(input_manager->KeyDown("F9"))
+	{
+		static int counter{};
+
+		auto const& sorceress = WorldManager::singleton()->FindActor(TAG{ "Sorceress", 0 });
+		APTR_CAST<Sorceress>(sorceress)->set_focus_flag((++counter) % 2);
+	}
 }

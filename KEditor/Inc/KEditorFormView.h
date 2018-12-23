@@ -53,25 +53,12 @@ public:
 	afx_msg void OnEnChangeEditCountY();
 	afx_msg void OnEnChangeEditSizeX();
 	afx_msg void OnEnChangeEditSizeY();
-	afx_msg void OnEnChangeEditScalingX();
-	afx_msg void OnEnChangeEditScalingY();
-	afx_msg void OnEnChangeEditScalingZ();
-	afx_msg void OnEnChangeEditRotationX();
-	afx_msg void OnEnChangeEditRotationY();
-	afx_msg void OnEnChangeEditRotationZ();
-	afx_msg void OnEnChangeEditTranslationX();
-	afx_msg void OnEnChangeEditTranslationY();
-	afx_msg void OnEnChangeEditTranslationZ();
 	afx_msg void OnBnClickedButtonDestroy();
 	afx_msg void OnBnClickedButtonSave();
 	afx_msg void OnBnClickedButtonLoad();
 
 	K::TILE_OPTION GetTileOption() const;
 	std::string GetActorType() const;
-
-	K::Vector3 GetScaling() const;
-	K::Vector3 GetRotation() const;
-	K::Vector3 GetTranslation() const;
 
 	void SaveLevel(CString const& _path);
 	void LoadLevel(CString const& _path);
@@ -89,15 +76,6 @@ public:
 	int count_y_{};
 	float size_x_{};
 	float size_y_{};
-	float scaling_x_{};
-	float scaling_y_{};
-	float scaling_z_{};
-	float rotation_x_{};
-	float rotation_y_{};
-	float rotation_z_{};
-	float translation_x_{};
-	float translation_y_{};
-	float translation_z_{};
 
 	std::list<K::APTR> actor_list_{};
 };

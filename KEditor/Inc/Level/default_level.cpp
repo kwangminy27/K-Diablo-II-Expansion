@@ -136,15 +136,15 @@ void K::DefaultLevel::_Input(float _time)
 		APTR actor{};
 		static uint32_t counter{};
 
-		if (actor_type == "Cow")
+		if (actor_type == "1. Cow")
 			actor = object_manager->CreateActor<Cow>(TAG{ "Cow", counter++ });
-		else if (actor_type == "Wendigo")
+		else if (actor_type == "2. Wendigo")
 			actor = object_manager->CreateActor<Wendigo>(TAG{ "Wendigo", counter++ });
-		else if (actor_type == "Fallen Shaman")
+		else if (actor_type == "3. Fallen Shaman")
 			actor = object_manager->CreateActor<FallenShaman>(TAG{ "FallenShaman", counter++ });
-		else if (actor_type == "Andariel")
+		else if (actor_type == "4. Andariel")
 			actor = object_manager->CreateActor<Andariel>(TAG{ "Andariel", counter++ });
-		else if (actor_type == "Akara")
+		else if (actor_type == "5. Akara")
 			actor = object_manager->CreateActor<Akara>(TAG{ "Akara", counter++ });
 
 		auto const& actor_transform = CPTR_CAST<Transform>(actor->FindComponent(TAG{ TRANSFORM, 0 }));

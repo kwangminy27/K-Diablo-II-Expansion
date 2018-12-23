@@ -38,15 +38,6 @@ BEGIN_MESSAGE_MAP(CKEditorFormView, CFormView)
 	ON_EN_CHANGE(IDC_EDIT_COUNT_Y, &CKEditorFormView::OnEnChangeEditCountY)
 	ON_EN_CHANGE(IDC_EDIT_SIZE_X, &CKEditorFormView::OnEnChangeEditSizeX)
 	ON_EN_CHANGE(IDC_EDIT_SIZE_Y, &CKEditorFormView::OnEnChangeEditSizeY)
-	ON_EN_CHANGE(IDC_EDIT_SCALING_X, &CKEditorFormView::OnEnChangeEditScalingX)
-	ON_EN_CHANGE(IDC_EDIT_SCALING_Y, &CKEditorFormView::OnEnChangeEditScalingY)
-	ON_EN_CHANGE(IDC_EDIT_SCALING_Z, &CKEditorFormView::OnEnChangeEditScalingZ)
-	ON_EN_CHANGE(IDC_EDIT_ROTATION_X, &CKEditorFormView::OnEnChangeEditRotationX)
-	ON_EN_CHANGE(IDC_EDIT_ROTATION_Y, &CKEditorFormView::OnEnChangeEditRotationY)
-	ON_EN_CHANGE(IDC_EDIT_ROTATION_Z, &CKEditorFormView::OnEnChangeEditRotationZ)
-	ON_EN_CHANGE(IDC_EDIT_TRANSLATION_X, &CKEditorFormView::OnEnChangeEditTranslationX)
-	ON_EN_CHANGE(IDC_EDIT_TRANSLATION_Y, &CKEditorFormView::OnEnChangeEditTranslationY)
-	ON_EN_CHANGE(IDC_EDIT_TRANSLATION_Z, &CKEditorFormView::OnEnChangeEditTranslationZ)	
 END_MESSAGE_MAP()
 
 // CKEditorFormView 생성/소멸
@@ -71,15 +62,6 @@ void CKEditorFormView::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_COUNT_Y, count_y_);
 	DDX_Text(pDX, IDC_EDIT_SIZE_X, size_x_);
 	DDX_Text(pDX, IDC_EDIT_SIZE_Y, size_y_);
-	DDX_Text(pDX, IDC_EDIT_SCALING_X, scaling_x_);
-	DDX_Text(pDX, IDC_EDIT_SCALING_Y, scaling_y_);
-	DDX_Text(pDX, IDC_EDIT_SCALING_Z, scaling_z_);
-	DDX_Text(pDX, IDC_EDIT_ROTATION_X, rotation_x_);
-	DDX_Text(pDX, IDC_EDIT_ROTATION_Y, rotation_y_);
-	DDX_Text(pDX, IDC_EDIT_ROTATION_Z, rotation_z_);
-	DDX_Text(pDX, IDC_EDIT_TRANSLATION_X, translation_x_);
-	DDX_Text(pDX, IDC_EDIT_TRANSLATION_Y, translation_y_);
-	DDX_Text(pDX, IDC_EDIT_TRANSLATION_Z, translation_z_);
 }
 
 BOOL CKEditorFormView::PreCreateWindow(CREATESTRUCT& cs)
@@ -104,12 +86,11 @@ void CKEditorFormView::OnInitialUpdate()
 	option_combo_box_.AddString(L"2. Blocked");
 	option_combo_box_.SetCurSel(0);
 
-	actor_type_combo_box_.AddString(L"Cow");
-	actor_type_combo_box_.AddString(L"Wendigo");
-	actor_type_combo_box_.AddString(L"Fallen Shaman");
-	actor_type_combo_box_.AddString(L"Andariel");
-	actor_type_combo_box_.AddString(L"Akara");
-	actor_type_combo_box_.SetCurSel(0);
+	actor_type_combo_box_.AddString(L"1. Cow");
+	actor_type_combo_box_.AddString(L"2. Wendigo");
+	actor_type_combo_box_.AddString(L"3. Fallen Shaman");
+	actor_type_combo_box_.AddString(L"4. Andariel");
+	actor_type_combo_box_.AddString(L"5. Akara");
 }
 
 // CKEditorFormView 진단
@@ -154,6 +135,31 @@ void CKEditorFormView::OnCbnSelchangeComboOption()
 
 void CKEditorFormView::OnCbnSelchangeComboActorType()
 {
+	UpdateData(true);
+
+	CImage image{};
+
+	auto actor_type = GetActorType();
+
+	auto path = K::PathManager::singleton()->FindPath(K::TEXTURE_PATH);
+
+	auto dc = GetDC();
+
+	if ("1. Cow" == actor_type)
+		path /= "Main/cow/cow.png";
+	else if ("2. Wendigo" == actor_type)
+		path /= "Main/wendigo/wendigo.png";
+	else if ("3. Fallen Shaman" == actor_type)
+		path /= "Main/fallen shaman/fallen_shaman.png";
+	else if ("4. Andariel" == actor_type)
+		path /= "Main/andariel/andariel.png";
+	else if ("5. Akara" == actor_type)
+		path /= "Main/akara/akara.png";
+
+	image.Load(path.wstring().c_str());
+	image.Draw(dc->m_hDC, 230, 360, 126, 168);
+
+	UpdateData(false);
 }
 
 void CKEditorFormView::OnEnChangeEditCountX()
@@ -170,60 +176,6 @@ void CKEditorFormView::OnEnChangeEditSizeX()
 
 void CKEditorFormView::OnEnChangeEditSizeY()
 {
-}
-
-void CKEditorFormView::OnEnChangeEditScalingX()
-{
-	UpdateData(true);
-	UpdateData(false);
-}
-
-void CKEditorFormView::OnEnChangeEditScalingY()
-{
-	UpdateData(true);
-	UpdateData(false);
-}
-
-void CKEditorFormView::OnEnChangeEditScalingZ()
-{
-	UpdateData(true);
-	UpdateData(false);
-}
-
-void CKEditorFormView::OnEnChangeEditRotationX()
-{
-	UpdateData(true);
-	UpdateData(false);
-}
-
-void CKEditorFormView::OnEnChangeEditRotationY()
-{
-	UpdateData(true);
-	UpdateData(false);
-}
-
-void CKEditorFormView::OnEnChangeEditRotationZ()
-{
-	UpdateData(true);
-	UpdateData(false);
-}
-
-void CKEditorFormView::OnEnChangeEditTranslationX()
-{
-	UpdateData(true);
-	UpdateData(false);
-}
-
-void CKEditorFormView::OnEnChangeEditTranslationY()
-{
-	UpdateData(true);
-	UpdateData(false);
-}
-
-void CKEditorFormView::OnEnChangeEditTranslationZ()
-{
-	UpdateData(true);
-	UpdateData(false);
 }
 
 void CKEditorFormView::OnBnClickedButtonDestroy()
@@ -250,26 +202,11 @@ std::string CKEditorFormView::GetActorType() const
 	std::string actor_type{};
 
 	CString string{};
-	GetDlgItemText(IDC_COMBO_MONSTER_TYPE, string);
+	actor_type_combo_box_.GetLBText(actor_type_combo_box_.GetCurSel(), string);
 
 	actor_type = CT2CA(string);
 
 	return actor_type;
-}
-
-K::Vector3 CKEditorFormView::GetScaling() const
-{
-	return K::Vector3{ scaling_x_, scaling_y_, scaling_z_ };
-}
-
-K::Vector3 CKEditorFormView::GetRotation() const
-{
-	return K::Vector3{ rotation_x_, rotation_y_, rotation_z_ };
-}
-
-K::Vector3 CKEditorFormView::GetTranslation() const
-{
-	return K::Vector3{ translation_x_, translation_y_, translation_z_ };
 }
 
 void CKEditorFormView::SaveLevel(CString const& _path)
@@ -330,15 +267,15 @@ void CKEditorFormView::LoadLevel(CString const& _path)
 
 		K::APTR actor{};
 
-		if (tag.first == "Cow")
+		if (tag.first == "1. Cow")
 			actor = object_manager->CreateActor<K::Cow>(tag);
-		else if (tag.first == "Wendigo")
+		else if (tag.first == "2. Wendigo")
 			actor = object_manager->CreateActor<K::Wendigo>(tag);
-		else if (tag.first == "Fallen Shaman")
+		else if (tag.first == "3. Fallen Shaman")
 			actor = object_manager->CreateActor<K::FallenShaman>(tag);
-		else if (tag.first == "Andariel")
+		else if (tag.first == "4. Andariel")
 			actor = object_manager->CreateActor<K::Andariel>(tag);
-		else if (tag.first == "Akara")
+		else if (tag.first == "5. Akara")
 			actor = object_manager->CreateActor<K::Akara>(tag);
 
 		actor->Serialize(imstream);

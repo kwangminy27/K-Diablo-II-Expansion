@@ -3,6 +3,8 @@
 // KEngine
 #include <KEngine.h>
 #include <core.h>
+#include <path_manager.h>
+#include <input_manager.h>
 #include <World/world_manager.h>
 #include <World/level.h>
 #include <World/layer.h>
