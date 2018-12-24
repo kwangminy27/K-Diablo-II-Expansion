@@ -91,6 +91,7 @@ void CKEditorFormView::OnInitialUpdate()
 	actor_type_combo_box_.AddString(L"3. Fallen Shaman");
 	actor_type_combo_box_.AddString(L"4. Andariel");
 	actor_type_combo_box_.AddString(L"5. Akara");
+	actor_type_combo_box_.SetCurSel(0);
 }
 
 // CKEditorFormView 진단
@@ -135,15 +136,14 @@ void CKEditorFormView::OnCbnSelchangeComboOption()
 
 void CKEditorFormView::OnCbnSelchangeComboActorType()
 {
-	UpdateData(true);
-
 	CImage image{};
 
 	auto actor_type = GetActorType();
 
 	auto path = K::PathManager::singleton()->FindPath(K::TEXTURE_PATH);
 
-	auto dc = GetDC();
+	if (path.empty())
+		return;
 
 	if ("1. Cow" == actor_type)
 		path /= "Main/cow/cow.png";
@@ -157,9 +157,7 @@ void CKEditorFormView::OnCbnSelchangeComboActorType()
 		path /= "Main/akara/akara.png";
 
 	image.Load(path.wstring().c_str());
-	image.Draw(dc->m_hDC, 230, 360, 126, 168);
-
-	UpdateData(false);
+	image.Draw(GetDC()->m_hDC, 230, 360, 126, 168);
 }
 
 void CKEditorFormView::OnEnChangeEditCountX()
@@ -184,10 +182,14 @@ void CKEditorFormView::OnBnClickedButtonDestroy()
 
 	tile_map->DestroyMap();
 
-	auto const& layer = K::WorldManager::singleton()->FindLayer(K::TAG{ "DefaultLayer", 0 });
+	auto const& tile_layer = K::WorldManager::singleton()->FindLayer(K::TAG{ "TileLayer", 0 });
+	auto const& layer = K::WorldManager::singleton()->FindLayer(K::TAG{ "DefaultLayer", 1 });
 
 	for (auto& actor : actor_list_)
+	{
+		tile_layer->RemoveActor(actor);
 		layer->RemoveActor(actor);
+	}
 
 	actor_list_.clear();
 }
@@ -267,20 +269,20 @@ void CKEditorFormView::LoadLevel(CString const& _path)
 
 		K::APTR actor{};
 
-		if (tag.first == "1. Cow")
+		if (tag.first == "Cow")
 			actor = object_manager->CreateActor<K::Cow>(tag);
-		else if (tag.first == "2. Wendigo")
+		else if (tag.first == "Wendigo")
 			actor = object_manager->CreateActor<K::Wendigo>(tag);
-		else if (tag.first == "3. Fallen Shaman")
+		else if (tag.first == "FallenShaman")
 			actor = object_manager->CreateActor<K::FallenShaman>(tag);
-		else if (tag.first == "4. Andariel")
+		else if (tag.first == "Andariel")
 			actor = object_manager->CreateActor<K::Andariel>(tag);
-		else if (tag.first == "5. Akara")
+		else if (tag.first == "Akara")
 			actor = object_manager->CreateActor<K::Akara>(tag);
 
 		actor->Serialize(imstream);
 
-		auto const& default_layer = K::WorldManager::singleton()->FindLayer(K::TAG{ "DefaultLayer", 0 });
+		auto const& default_layer = K::WorldManager::singleton()->FindLayer(K::TAG{ "DefaultLayer", 1 });
 		default_layer->AddActor(actor);
 
 		actor_list_.push_back(actor);
@@ -329,4 +331,30 @@ void CKEditorFormView::OnBnClickedButtonLoad()
 
 		LoadLevel(path);
 	}
+}
+
+void CKEditorFormView::OnDraw(CDC* pDC)
+{
+	CImage image{};
+
+	auto actor_type = GetActorType();
+
+	auto path = K::PathManager::singleton()->FindPath(K::TEXTURE_PATH);
+
+	if (path.empty())
+		return;
+
+	if ("1. Cow" == actor_type)
+		path /= "Main/cow/cow.png";
+	else if ("2. Wendigo" == actor_type)
+		path /= "Main/wendigo/wendigo.png";
+	else if ("3. Fallen Shaman" == actor_type)
+		path /= "Main/fallen shaman/fallen_shaman.png";
+	else if ("4. Andariel" == actor_type)
+		path /= "Main/andariel/andariel.png";
+	else if ("5. Akara" == actor_type)
+		path /= "Main/akara/akara.png";
+
+	image.Load(path.wstring().c_str());
+	image.Draw(pDC->m_hDC, 230, 360, 126, 168);
 }

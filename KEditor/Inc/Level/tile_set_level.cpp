@@ -25,7 +25,7 @@ void K::TileSetLevel::Initialize()
 				image->set_ui_flag(true);
 				APTR_CAST<ImageActor>(image)->set_LT(Vector2{ (1.f / 4) * j, (1.f / 17) * i });
 				APTR_CAST<ImageActor>(image)->set_RB(Vector2{ (1.f / 4) * (j + 1), (1.f / 17) * (i + 1) });
-				CPTR_CAST<Transform>(image->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ -720.f + 161.f * i, 410.f - 81.f * j, 0.f });
+				CPTR_CAST<Transform>(image->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ -720.f + 161.f * i, 370.f - 81.f * j, 0.f });
 				layer->AddActor(image);
 			}
 		}

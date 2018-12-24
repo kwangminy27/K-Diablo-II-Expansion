@@ -4,6 +4,7 @@
 #include "world_manager.h"
 #include "level.h"
 #include "Object/Actor/actor.h"
+#include "Object/Component/transform.h"
 #include "collision_manager.h"
 #include "replication_manager.h"
 
@@ -56,6 +57,16 @@ void K::Layer::RemoveActor(APTR const& _actor)
 		RemoveActor(child);
 
 	actor_list_.remove(_actor);
+}
+
+void K::Layer::Sort()
+{
+	actor_list_.sort([](APTR const& _lhs, APTR const& _rhs) {
+		auto lhs_y = CPTR_CAST<Transform>(_lhs->FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation().y;
+		auto rhs_y = CPTR_CAST<Transform>(_rhs->FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation().y;
+		
+		return lhs_y > rhs_y;
+	});
 }
 
 std::shared_ptr<K::Level> K::Layer::level() const

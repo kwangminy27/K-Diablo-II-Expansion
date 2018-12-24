@@ -28,6 +28,7 @@ void K::InputManager::Initialize()
 		_CreateKeyDesc(std::string{ "Right" }, VK_RIGHT);
 
 		_CreateKeyDesc(std::string{ "LButton" }, VK_LBUTTON);
+		_CreateKeyDesc(std::string{ "RButton" }, VK_RBUTTON);
 
 		_CreateKeyDesc(std::string{ "F1" }, VK_F1 );
 		_CreateKeyDesc(std::string{ "F2" }, VK_F2 );
@@ -41,6 +42,8 @@ void K::InputManager::Initialize()
 		_CreateKeyDesc(std::string{ "F10" }, VK_F10);
 		_CreateKeyDesc(std::string{ "F11" }, VK_F11);
 		_CreateKeyDesc(std::string{ "F12" }, VK_F12);
+
+		_CreateKeyDesc(std::string{ "Space" }, VK_SPACE);
 	}
 	catch (std::exception const& _e)
 	{

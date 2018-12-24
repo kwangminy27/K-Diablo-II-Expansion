@@ -170,6 +170,8 @@ void K::Level::__Render(float _time)
 
 	for (auto iter = layer_list_.begin(); iter != layer_list_.end();)
 	{
+		(*iter)->Sort();
+
 		switch ((*iter)->tag_state())
 		{
 		case TAG_STATE::NORMAL:

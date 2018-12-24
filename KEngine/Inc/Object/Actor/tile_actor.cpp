@@ -80,6 +80,11 @@ K::TILE_OPTION K::TileActor::option() const
 	return option_;
 }
 
+K::TAG K::TileActor::actor_tag() const
+{
+	return actor_tag_;
+}
+
 void K::TileActor::set_LT(Vector2 const& _LT)
 {
 	LT_ = _LT;
@@ -95,11 +100,17 @@ void K::TileActor::set_option(TILE_OPTION _option)
 	option_ = _option;
 }
 
+void K::TileActor::set_actor_tag(TAG const& _tag)
+{
+	actor_tag_ = _tag;
+}
+
 K::TileActor::TileActor(TileActor const& _other) : Actor(_other)
 {
 	LT_ = _other.LT_;
 	RB_ = _other.RB_;
 	option_ = _other.option_;
+	actor_tag_ = _other.actor_tag_;
 }
 
 K::TileActor::TileActor(TileActor&& _other) noexcept : Actor(std::move(_other))
@@ -107,6 +118,7 @@ K::TileActor::TileActor(TileActor&& _other) noexcept : Actor(std::move(_other))
 	LT_ = std::move(_other.LT_);
 	RB_ = std::move(_other.RB_);
 	option_ = std::move(_other.option_);
+	actor_tag_ = std::move(_other.actor_tag_);
 }
 
 void K::TileActor::_Finalize()

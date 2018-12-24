@@ -18,10 +18,12 @@ namespace K
 		Vector2 const& LT() const;
 		Vector2 const& RB() const;
 		TILE_OPTION option() const;
+		TAG actor_tag() const;
 
 		void set_LT(Vector2 const& _LT);
 		void set_RB(Vector2 const& _RB);
 		void set_option(TILE_OPTION _option);
+		void set_actor_tag(TAG const& _tag);
 
 	private:
 		TileActor() = default;
@@ -35,5 +37,6 @@ namespace K
 		Vector2 LT_;
 		Vector2 RB_;
 		TILE_OPTION option_{};
+		TAG actor_tag_{};
 	};
 }

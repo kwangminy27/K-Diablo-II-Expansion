@@ -147,6 +147,11 @@ void K::TileMapActor::DestroyMap()
 	tile_graph_.clear();
 }
 
+K::Vector2 K::TileMapActor::GetTileSize()
+{
+	return tile_size_;
+}
+
 K::TILE_OPTION K::TileMapActor::GetTileOption(std::pair<int, int> const& _idx) const
 {
 	if (_idx.second < 0 || _idx.second >= tile_map_.size())
@@ -180,6 +185,11 @@ std::list<std::pair<int, int>> const& K::TileMapActor::GetTileAdjacencyList(std:
 	return tile_graph_.at(_idx.second).at(_idx.first);
 }
 
+K::TAG K::TileMapActor::GetActorTag(std::pair<int, int> const& _idx) const
+{
+	return tile_map_.at(_idx.second).at(_idx.first)->actor_tag();
+}
+
 void K::TileMapActor::SetTileUV(std::pair<int, int> const& _idx, Vector2 const& _LT, Vector2 const& _RB)
 {
 	if (_idx.second < 0 || _idx.second >= tile_map_.size())
@@ -201,6 +211,11 @@ void K::TileMapActor::SetTileOption(std::pair<int, int> const& _idx, TILE_OPTION
 		return;
 
 	tile_map_[_idx.second][_idx.first]->set_option(_option);
+}
+
+void K::TileMapActor::SetActorTag(std::pair<int, int> const& _idx, TAG const& _tag)
+{
+	return tile_map_.at(_idx.second).at(_idx.first)->set_actor_tag(_tag);
 }
 
 K::TileMapActor::TileMapActor(TileMapActor const& _other) : Actor(_other)
@@ -351,14 +366,16 @@ void K::TileMapActor::_CreateIsometricMap()
 {
 	auto tile_size_div2 = tile_size_ * 0.5f;
 
+	auto default_LT = Vector2{ (1.f / 4) * 2, (1.f / 17) * 14 };
+	auto default_RB = Vector2{ (1.f / 4) * 3, (1.f / 17) * 15 };
+
 	for (auto i = 0; i < tile_map_.size(); ++i)
 	{
 		for (auto j = 0; j < tile_map_.at(i).size(); ++j)
 		{
 			auto tile = ObjectManager::singleton()->CreateActor<TileActor>(TAG{ TILE, 0 });
-
-			APTR_CAST<TileActor>(tile)->set_LT(Vector2::Zero);
-			APTR_CAST<TileActor>(tile)->set_RB(Vector2{ 1.f / 4, 1.f / 17 });
+			APTR_CAST<TileActor>(tile)->set_LT(default_LT);
+			APTR_CAST<TileActor>(tile)->set_RB(default_RB);
 
 			auto const& tile_transform = CPTR_CAST<Transform>(tile->FindComponent(TAG{ TRANSFORM, 0 }));
 

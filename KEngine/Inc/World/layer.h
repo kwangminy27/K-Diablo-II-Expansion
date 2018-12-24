@@ -15,6 +15,8 @@ namespace K
 		void AddActor(APTR const& _actor);
 		void RemoveActor(APTR const& _actor);
 
+		void Sort();
+
 		std::shared_ptr<Level> level() const;
 		void set_level(std::shared_ptr<Level> const& _level);
 

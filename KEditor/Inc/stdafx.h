@@ -50,6 +50,9 @@
 #endif
 #endif
 
+// C++ Standard Library
+#include <filesystem>
+
 // KEngine
 #include <KEngine.h>
 #include <core.h>

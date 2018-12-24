@@ -14,7 +14,8 @@ void K::DefaultLevel::Initialize()
 {
 	try
 	{
-		auto layer = CreateLayer({ "DefaultLayer", 0 });
+		auto tile_layer = CreateLayer({ "TileLayer", 0 });
+		auto layer = CreateLayer({ "DefaultLayer", 1 });
 
 		auto const& object_manager = ObjectManager::singleton();
 		auto const& registry_manager = RegistryManager::singleton();
@@ -42,7 +43,7 @@ void K::DefaultLevel::Initialize()
 		tile_map->Serialize(imstream);
 
 		NavigationManager::singleton()->AddTileMap(APTR_CAST<TileMapActor>(tile_map));
-		layer->AddActor(tile_map);
+		tile_layer->AddActor(tile_map);
 
 		size_t actor_size{};
 		imstream.Serialize(actor_size);
@@ -60,7 +61,7 @@ void K::DefaultLevel::Initialize()
 				actor = object_manager->CreateActor<K::Cow>(tag);
 			else if (tag.first == "Wendigo")
 				actor = object_manager->CreateActor<K::Wendigo>(tag);
-			else if (tag.first == "Fallen Shaman")
+			else if (tag.first == "FallenShaman")
 				actor = object_manager->CreateActor<K::FallenShaman>(tag);
 			else if (tag.first == "Andariel")
 				actor = object_manager->CreateActor<K::Andariel>(tag);
@@ -72,33 +73,33 @@ void K::DefaultLevel::Initialize()
 		}
 		//
 
-		auto cow = object_manager->CreateActor<Cow>(TAG{ "Cow", 0 });
-		layer->AddActor(cow);
+		//auto cow = object_manager->CreateActor<Cow>(TAG{ "Cow", 0 });
+		//layer->AddActor(cow);
 
-		auto wendigo = object_manager->CreateActor<Wendigo>(TAG{ "Wendigo", 0 });
-		CPTR_CAST<Transform>(wendigo->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ -100.f, 150.f, 0.f });
-		layer->AddActor(wendigo);
+		//auto wendigo = object_manager->CreateActor<Wendigo>(TAG{ "Wendigo", 0 });
+		//CPTR_CAST<Transform>(wendigo->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ -100.f, 150.f, 0.f });
+		//layer->AddActor(wendigo);
 
-		auto fallen_shaman = object_manager->CreateActor<FallenShaman>(TAG{ "FallenShaman", 0 });
-		CPTR_CAST<Transform>(fallen_shaman->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 100.f, 150.f, 0.f });
-		layer->AddActor(fallen_shaman);
+		//auto fallen_shaman = object_manager->CreateActor<FallenShaman>(TAG{ "FallenShaman", 0 });
+		//CPTR_CAST<Transform>(fallen_shaman->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 100.f, 150.f, 0.f });
+		//layer->AddActor(fallen_shaman);
 
-		auto andariel = object_manager->CreateActor<Andariel>(TAG{ "Andariel", 0 });
-		CPTR_CAST<Transform>(andariel->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, 300.f, 0.f });
-		layer->AddActor(andariel);
+		//auto andariel = object_manager->CreateActor<Andariel>(TAG{ "Andariel", 0 });
+		//CPTR_CAST<Transform>(andariel->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, 300.f, 0.f });
+		//layer->AddActor(andariel);
 
-		auto akara = object_manager->CreateActor<Akara>(TAG{ "Akara", 0 });
-		CPTR_CAST<Transform>(akara->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ -200.f, 300.f, 0.f });
-		layer->AddActor(akara);
+		//auto akara = object_manager->CreateActor<Akara>(TAG{ "Akara", 0 });
+		//CPTR_CAST<Transform>(akara->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ -200.f, 300.f, 0.f });
+		//layer->AddActor(akara);
 
 		auto sorceress = object_manager->CreateActor<Sorceress>(TAG{ "Sorceress", 0 });
 		APTR_CAST<PlayerActor>(sorceress)->set_focus_flag(true);
-		CPTR_CAST<Transform>(sorceress->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 200.f, 300.f, 0.f });
+		CPTR_CAST<Transform>(sorceress->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, 0.f, 0.f });
 		layer->AddActor(sorceress);
 
-		auto amazon = object_manager->CreateActor<Amazon>(TAG{ "Amazon", 0 });
-		CPTR_CAST<Transform>(amazon->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, -150.f, 0.f });
-		layer->AddActor(amazon);
+		//auto amazon = object_manager->CreateActor<Amazon>(TAG{ "Amazon", 0 });
+		//CPTR_CAST<Transform>(amazon->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, -150.f, 0.f });
+		//layer->AddActor(amazon);
 	}
 	catch (std::exception const& _e)
 	{
@@ -127,6 +128,6 @@ void K::DefaultLevel::_Input(float _time)
 		static int counter{};
 
 		auto const& sorceress = WorldManager::singleton()->FindActor(TAG{ "Sorceress", 0 });
-		APTR_CAST<Sorceress>(sorceress)->set_focus_flag((++counter) % 2);
+		APTR_CAST<Sorceress>(sorceress)->set_focus_flag((counter++) % 2);
 	}
 }

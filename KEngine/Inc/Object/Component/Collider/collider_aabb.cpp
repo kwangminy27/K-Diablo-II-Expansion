@@ -37,6 +37,8 @@ void K::ColliderAABB::Update(float _time)
 {
 	auto position = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
 
+	relative_info_.center.y = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling().y * 0.5f;
+
 	absolute_info_.center = position + relative_info_.center;
 	absolute_info_.extent = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling() * 0.5f;
 

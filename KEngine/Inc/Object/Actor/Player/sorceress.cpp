@@ -100,7 +100,7 @@ void K::Sorceress::_Input(float _time)
 
 	auto position = CPTR_CAST<Transform>(FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
 
-	if (input_manager->KeyDown("LButton"))
+	if (input_manager->KeyPressed("LButton"))
 	{
 		auto mouse_world_position = input_manager->mouse_world_position();
 

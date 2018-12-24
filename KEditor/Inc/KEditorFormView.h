@@ -78,6 +78,7 @@ public:
 	float size_y_{};
 
 	std::list<K::APTR> actor_list_{};
+	virtual void OnDraw(CDC* pDC);
 };
 
 #ifndef _DEBUG  // KEditorFormView.cpp의 디버그 버전

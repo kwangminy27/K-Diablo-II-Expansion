@@ -37,6 +37,8 @@ void K::ColliderOOBB::Update(float _time)
 {
 	auto const& transform = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }));
 
+	relative_info_.center.y = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling().y * 0.5f;
+
 	absolute_info_.rotation = transform->world_rotation() * relative_info_.rotation;
 
 	auto rotation_matrix = Matrix::CreateFromQuaternion(absolute_info_.rotation);

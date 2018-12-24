@@ -19,28 +19,30 @@ void K::DefaultLevel::Initialize()
 {
 	try
 	{
-		auto layer = CreateLayer({ "DefaultLayer", 0 });
+		auto tile_layer = CreateLayer({ "TileLayer", 0 });
+		auto layer = CreateLayer({ "DefaultLayer", 1 });
+		auto text_layer = CreateLayer({ "TextLayer", 2 });
 
 		auto const& object_manager = ObjectManager::singleton();
 
 		auto tile_map = object_manager->CreateActor<TileMapActor>(TAG{ TILE_MAP, 0 });
-		layer->AddActor(tile_map);
+		tile_layer->AddActor(tile_map);
 
 		auto text = object_manager->CreateActor<TextActor>(TAG{ "TextActor", 0 });
 		text->set_ui_flag(true);
-		layer->AddActor(text);
+		text_layer->AddActor(text);
 
 		auto text1 = object_manager->CreateActor<TextActor>(TAG{ "TextActor", 1 });
 		text1->set_ui_flag(true);
 		APTR_CAST<TextActor>(text1)->set_color(DirectX::Colors::Green.v);
 		CPTR_CAST<Transform>(text1->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 550.f, static_cast<float>(RESOLUTION::HEIGHT), 0.f });
-		layer->AddActor(text1);
+		text_layer->AddActor(text1);
 
 		auto text2 = object_manager->CreateActor<TextActor>(TAG{ "TextActor", 2 });
 		text2->set_ui_flag(true);
 		APTR_CAST<TextActor>(text2)->set_color(DirectX::Colors::Red.v);
 		CPTR_CAST<Transform>(text2->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 1100.f, static_cast<float>(RESOLUTION::HEIGHT), 0.f });
-		layer->AddActor(text2);
+		text_layer->AddActor(text2);
 	}
 	catch (std::exception const& _e)
 	{
@@ -119,17 +121,59 @@ void K::DefaultLevel::_Input(float _time)
 		tile_map->SetTileOption(tile_idx, form_view->GetTileOption());
 
 	if (input_manager->KeyPressed("LButton") && (state_ == EDITOR_STATE::TILE))
-		tile_map->SetTileUV(tile_idx, g_mouse_LT, g_mouse_RB);
-
-	if (input_manager->KeyDown("LButton") && (state_ == EDITOR_STATE::ACTOR))
 	{
+		tile_map->SetTileUV(tile_idx, g_mouse_LT, g_mouse_RB);
+	}
+
+	if (input_manager->KeyPressed("RButton") && (state_ == EDITOR_STATE::TILE))
+	{
+		tile_map->SetTileUV(tile_idx, Vector2::Zero, Vector2::Zero);
+		tile_map->SetTileOption(tile_idx, K::TILE_OPTION::BLOCKED);
+
 		if (tile_idx.first < 0 || tile_idx.first >= form_view->count_x() || tile_idx.second < 0 || tile_idx.second >= form_view->count_y())
+			return;
+
+		APTR actor = WorldManager::singleton()->FindActor(tile_map->GetActorTag(tile_idx));
+
+		if (actor)
+		{
+			tile_map->SetActorTag(tile_idx, TAG{});
+			
+			auto const& layer = FindLayer(TAG{ "DefaultLayer", 1 });
+			layer->RemoveActor(actor);
+
+			auto& actor_list = form_view->actor_list();
+			actor_list.remove(actor);
+		}
+	}
+
+	if (input_manager->KeyPressed("LButton") && (state_ == EDITOR_STATE::ACTOR))
+	{
+		if (mouse_position.x - (static_cast<LONG>(camera_position.x - static_cast<float>(RESOLUTION::WIDTH) * 0.5f)) < 10)
+			return;
+
+		if (mouse_position.x - (static_cast<LONG>(camera_position.x - static_cast<float>(RESOLUTION::WIDTH) * 0.5f)) > 1190)
+			return;
+
+		if (mouse_position.y - (static_cast<LONG>(camera_position.y - static_cast<float>(RESOLUTION::HEIGHT) * 0.5f)) < 310)
+			return;
+
+		if (mouse_position.y - (static_cast<LONG>(camera_position.y - static_cast<float>(RESOLUTION::HEIGHT) * 0.5f)) > 890)
+			return;
+
+		if (tile_idx.first < 0 || tile_idx.first >= form_view->count_x() || tile_idx.second < 0 || tile_idx.second >= form_view->count_y())
+			return;
+
+		if (false == tile_map->GetActorTag(tile_idx).first.empty())
+			return;
+
+		if (K::TILE_OPTION::BLOCKED == tile_map->GetTileOption(tile_idx))
 			return;
 
 		// 몬스터 생성
 		std::string actor_type = form_view->GetActorType();
 
-		Vector3 translation = tile_map->GetTilePosition(tile_idx);//form_view->GetTranslation();
+		Vector3 translation = tile_map->GetTilePosition(tile_idx);
 
 		auto const& object_manager = ObjectManager::singleton();
 
@@ -151,15 +195,42 @@ void K::DefaultLevel::_Input(float _time)
 
 		actor_transform->set_local_translation(translation);
 
-		auto const& layer = FindLayer(TAG{ "DefaultLayer", 0 });
+		tile_map->SetActorTag(tile_idx, actor->tag());
+
+		auto const& layer = FindLayer(TAG{ "DefaultLayer", 1 });
 		layer->AddActor(actor);
 
 		auto& actor_list = form_view->actor_list();
 		actor_list.push_back(actor);
 	}
 
+	if (input_manager->KeyPressed("RButton") && (state_ == EDITOR_STATE::ACTOR))
+	{
+		if (mouse_position.y - (static_cast<LONG>(camera_position.y - static_cast<float>(RESOLUTION::HEIGHT) * 0.5f)) < 0)
+			return;
+
+		if (tile_idx.first < 0 || tile_idx.first >= form_view->count_x() || tile_idx.second < 0 || tile_idx.second >= form_view->count_y())
+			return;
+
+		APTR actor = WorldManager::singleton()->FindActor(tile_map->GetActorTag(tile_idx));
+
+		if (actor)
+		{
+			tile_map->SetActorTag(tile_idx, TAG{});
+
+			auto const& layer = FindLayer(TAG{ "DefaultLayer", 1 });
+			layer->RemoveActor(actor);
+
+			auto& actor_list = form_view->actor_list();
+			actor_list.remove(actor);
+		}
+	}
+
 	auto const& text = WorldManager::singleton()->FindActor(TAG{ "TextActor", 0 });
-	std::static_pointer_cast<TextActor>(text)->set_text(L"Tile Index: " + std::to_wstring(tile_idx.first) + L", " + std::to_wstring(tile_idx.second));
+
+	std::wstring idx_text = L"Tile Index: " + std::to_wstring(tile_idx.first) + L", " + std::to_wstring(tile_idx.second);
+
+	std::static_pointer_cast<TextActor>(text)->set_text(idx_text);
 
 	std::wstring mode_text{};
 

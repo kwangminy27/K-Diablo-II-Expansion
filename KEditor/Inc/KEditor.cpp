@@ -122,6 +122,9 @@ BOOL CKEditorApp::InitInstance()
 
 	K::Core::singleton()->Initialize(m_hInstance, view->m_hWnd);
 
+	auto form_view = static_cast<CMainFrame*>(m_pMainWnd)->splitter().GetPane(0, 0);
+	form_view->RedrawWindow();
+
 	K::WorldManager::singleton()->CreateLevel<K::DefaultLevel>({ "DefaultLevel", 0 });
 	K::WorldManager::singleton()->CreateLevel<K::TileSetLevel>({ "TileSetLevel", 0 });
 	

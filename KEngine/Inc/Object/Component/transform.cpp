@@ -147,7 +147,7 @@ void K::Transform::UpdateConstantBuffer()
 	camera->CreateView(camera_position - Vector3(0.f, 0.f, 5.f), camera_position, Vector3::UnitY);
 
 	TransformConstantBuffer transform_CB{};
-	transform_CB.world = world_;
+	transform_CB.world = Matrix::CreateScaling(world_scaling_) * Matrix::CreateFromQuaternion(world_rotation_) * Matrix::CreateTranslation(world_translation_ + Vector3{ 0.f, world_scaling_.y * 0.5f, 0.f });
 	transform_CB.view = camera->view();
 	transform_CB.projection = camera->projection();
 	transform_CB.WVP = transform_CB.world * transform_CB.view * transform_CB.projection;

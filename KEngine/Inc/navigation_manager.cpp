@@ -78,6 +78,47 @@ bool K::NavigationManager::Route(Vector3 const& _start, Vector3 const& _end)
 			if (TILE_OPTION::BLOCKED == tile_map->GetTileOption(idx))
 				continue;
 
+			switch (idx.second - current->idx.second)
+			{
+			case -1:
+				switch (idx.first - current->idx.first)
+				{
+				case -1:
+					if (TILE_OPTION::BLOCKED == tile_map->GetTileOption(std::pair{ current->idx.first - 1, current->idx.second }))
+						continue;
+					if (TILE_OPTION::BLOCKED == tile_map->GetTileOption(std::pair{ current->idx.first, current->idx.second - 1 }))
+						continue;
+					break;
+
+				case 1:
+					if (TILE_OPTION::BLOCKED == tile_map->GetTileOption(std::pair{ current->idx.first + 1, current->idx.second }))
+						continue;
+					if (TILE_OPTION::BLOCKED == tile_map->GetTileOption(std::pair{ current->idx.first, current->idx.second - 1 }))
+						continue;
+					break;
+				}
+				break;
+
+			case 1:
+				switch (idx.first - current->idx.first)
+				{
+				case -1:
+					if (TILE_OPTION::BLOCKED == tile_map->GetTileOption(std::pair{ current->idx.first - 1, current->idx.second }))
+						continue;
+					if (TILE_OPTION::BLOCKED == tile_map->GetTileOption(std::pair{ current->idx.first, current->idx.second + 1 }))
+						continue;
+					break;
+
+				case 1:
+					if (TILE_OPTION::BLOCKED == tile_map->GetTileOption(std::pair{ current->idx.first + 1, current->idx.second }))
+						continue;
+					if (TILE_OPTION::BLOCKED == tile_map->GetTileOption(std::pair{ current->idx.first, current->idx.second + 1 }))
+						continue;
+					break;
+				}
+				break;
+			}
+
 			auto current_position = tile_map->GetTilePosition(current->idx);
 			auto adjacency_position = tile_map->GetTilePosition(idx);
 			auto G = current->G + Vector3::Distance(current_position, adjacency_position);
@@ -122,15 +163,71 @@ bool K::NavigationManager::Route(Vector3 const& _start, Vector3 const& _end)
 		open_list.pop_front();
 
 		close_list.push_back(current);
+
+		if (close_list.size() >= 500)
+			return false;
 	}
 
 	move_path_list_.clear();
 
+	// 경로 최적화
+	std::pair<int, int> pred{};
+	std::pair<int, int> curr{};
+	std::pair<int, int> succ{};
+	std::stack<std::pair<int, int>> route{};
+	std::list<std::pair<int, int>> optimized_route{};
+
 	while (current->idx != start_idx)
 	{
-		move_path_list_.push_front(tile_map->GetTilePosition(current->idx));
+		route.push(current->idx);
 		current = current->parent;
 	}
+
+	if (route.size() == 1)
+		optimized_route.push_back(route.top());
+	else
+	{
+		pred = start_idx;
+		
+		while (route.size() > 1)
+		{
+			curr = route.top();
+			route.pop();
+			succ = route.top();
+
+			auto x_minmax = std::minmax(pred.first, succ.first);
+			auto y_minmax = std::minmax(pred.second, succ.second);
+
+			bool block_flag{};
+
+			for (auto i = y_minmax.first; i <= y_minmax.second; ++i)
+			{
+				for (auto j = x_minmax.first; j <= x_minmax.second; ++j)
+				{
+					if (TILE_OPTION::BLOCKED == tile_map->GetTileOption({ j, i }))
+					{
+						block_flag = true;
+						break;
+					}
+				}
+
+				if (block_flag)
+					break;
+			}
+
+			if (block_flag)
+			{
+				optimized_route.push_back(curr);
+
+				pred = curr;
+			}
+		}
+
+		optimized_route.push_back(route.top());
+	}
+
+	for (auto const& e : optimized_route)
+		move_path_list_.push_back(tile_map->GetTilePosition(e));
 
 	return true;
 }
