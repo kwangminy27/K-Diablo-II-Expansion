@@ -5,6 +5,20 @@ namespace K
 	class Level;
 	class Layer;
 
+	enum class ACTOR_STATE
+	{
+		ATTACK1,
+		ATTACK2,
+		GET_HIT,
+		DEAD,
+		DEATH,
+		NEUTRAL,
+		RUN,
+		SPECIAL_CAST,
+		SPECIAL1,
+		WALK
+	};
+
 	class K_ENGINE_DLL Actor : public Tag, public std::enable_shared_from_this<Actor>
 	{
 		friend class Layer;
@@ -28,6 +42,7 @@ namespace K
 		void RemoveChild(APTR const& _child);
 
 		bool ui_flag() const;
+		ACTOR_STATE state() const;
 		std::shared_ptr<Level> level() const;
 		std::shared_ptr<Layer> layer() const;
 		APTR parent() const;
@@ -35,6 +50,7 @@ namespace K
 		std::list<APTR> const& child_list() const;
 
 		void set_ui_flag(bool _flag);
+		void set_state(ACTOR_STATE _state);
 		void set_parent(APTR const& _actor);
 		void set_level(std::shared_ptr<Level> const& _level);
 		void set_layer(std::shared_ptr<Layer> const& _layer);
@@ -61,6 +77,7 @@ namespace K
 		void __Render(float _time);
 
 		bool ui_flag_{};
+		ACTOR_STATE state_{};
 		std::weak_ptr<Level> level_{};
 		std::weak_ptr<Layer> layer_{};
 		std::weak_ptr<Actor> parent_{};

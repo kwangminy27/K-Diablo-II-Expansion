@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-fallen_shaman_walk,fallen_shaman_walk,1,0,1722,888,2
+fallen_shaman_walk,fallen_shaman_walk,1,0,1722,888,0.5
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,123,111
 0,0,123,111,,,

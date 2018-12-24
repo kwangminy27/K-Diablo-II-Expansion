@@ -43,6 +43,8 @@ void K::Camera::CreateView(Vector3 const& _eye, Vector3 const& _focus, Vector3 c
 
 void K::Camera::CreateProjection(float _width, float _height, float _near, float _far)
 {
+	resolution_ = Vector2{ _width, _height };
+
 	projection_ = Matrix::CreateOrthographic(_width, _height, _near, _far);
 }
 
@@ -51,6 +53,11 @@ void K::Camera::CreateProjection(float _fov_angle, float _width, float _height, 
 	assert(_near != 0.f);
 
 	projection_ = Matrix::CreatePerspectiveFieldOfView(_fov_angle, _width / _height, _near, _far);
+}
+
+K::Vector2 const& K::Camera::resolution() const
+{
+	return resolution_;
 }
 
 K::Matrix const& K::Camera::view() const

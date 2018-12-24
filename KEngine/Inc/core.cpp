@@ -12,6 +12,7 @@
 #include "input_manager.h"
 #include "World/world_manager.h"
 #include "Object/object_manager.h"
+#include "Object/Actor/camera_actor.h"
 #include "collision_manager.h"
 #include "navigation_manager.h"
 #include "registry_manager.h"
@@ -143,6 +144,26 @@ LRESULT K::Core::_WindowProc(HWND _window, UINT _message, WPARAM _w_param, LPARA
 {
 	switch (_message)
 	{
+	case WM_MOUSEWHEEL:
+	{
+		static float scale = 1.f;
+
+		auto result = static_cast<short>(HIWORD(_w_param));
+	
+		auto const& default_camera = WorldManager::singleton()->FindCamera(TAG{ DEFAULT_CAMERA, 0 });
+
+		if (120 == result)
+			scale -= .2f;
+		else
+			scale += .2f;
+
+		scale = std::clamp(scale, 0.2f, 5.f);
+
+		default_camera->set_scale(scale);
+		default_camera->CreateProjection(static_cast<float>(RESOLUTION::WIDTH) * scale, static_cast<float>(RESOLUTION::HEIGHT) * scale, 0.f, 1000.f);
+	}
+		return 0;
+
 	case WM_DESTROY:
 		Core::shutdown_ = true;
 		PostQuitMessage(0);

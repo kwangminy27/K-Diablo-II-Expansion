@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-amazon_neutral,amazon_neutral,1,0,1216,1280,2
+amazon_neutral,amazon_neutral,1,0,1216,1280,0.5
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,76,80
 0,0,76,80,,,

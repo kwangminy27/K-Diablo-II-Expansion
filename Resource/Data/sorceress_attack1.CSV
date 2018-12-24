@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-sorceress_attack1,sorceress_attack1,1,0,2500,1264,2
+sorceress_attack1,sorceress_attack1,1,0,2500,1264,0.5
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,125,79
 0,0,125,79,,,

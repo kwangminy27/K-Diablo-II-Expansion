@@ -43,8 +43,8 @@ void K::Andariel::Initialize()
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("andariel_walk");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("andariel_special_cast");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("andariel_special_cast(overlay)");
-		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("andariel_walk");
-		CPTR_CAST<Animation2D>(animation_2d)->SetDefaultClip("andariel_walk");
+		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("andariel_walk", 0);
+		CPTR_CAST<Animation2D>(animation_2d)->SetDefaultClip("andariel_walk", 0);
 		AddComponent(animation_2d);
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });

@@ -30,10 +30,10 @@ void K::Navigator::Update(float _time)
 
 	auto position = transform->world().Translation();
 
-	auto direction = destination_ - position;
-	direction.Normalize();
+	direction_ = destination_ - position;
+	direction_.Normalize();
 
-	auto displacement = transform->local_translation() + direction * speed_ * _time;
+	auto displacement = transform->local_translation() + direction_ * speed_ * _time;
 	transform->set_local_translation(displacement);
 
 	if (Vector3::Distance(displacement, destination_) < 8.f)
@@ -44,7 +44,11 @@ void K::Navigator::Update(float _time)
 			move_path_list_.pop_front();
 		}
 		else
+		{
+			owner()->set_state(ACTOR_STATE::NEUTRAL);
+
 			move_flag_ = false;
+		}
 	}
 }
 
@@ -77,6 +81,18 @@ void K::Navigator::Route(Vector3 const& _start, Vector3 const& _end)
 
 		move_flag_ = true;
 	}
+	else
+		owner()->set_state(ACTOR_STATE::NEUTRAL);
+}
+
+bool K::Navigator::move_flag() const
+{
+	return move_flag_;
+}
+
+K::Vector3 K::Navigator::direction() const
+{
+	return direction_;
 }
 
 void K::Navigator::set_speed(float _speed)
@@ -88,6 +104,7 @@ K::Navigator::Navigator(Navigator const& _other) : Component(_other)
 {
 	speed_ = _other.speed_;
 	move_flag_ = _other.move_flag_;
+	direction_ = _other.direction_;
 	destination_ = _other.destination_;
 	move_path_list_ = _other.move_path_list_;
 }
@@ -96,6 +113,7 @@ K::Navigator::Navigator(Navigator&& _other) noexcept : Component(std::move(_othe
 {
 	speed_ = std::move(_other.speed_);
 	move_flag_ = std::move(_other.move_flag_);
+	direction_ = std::move(_other.direction_);
 	destination_ = std::move(_other.destination_);
 	move_path_list_ = std::move(_other.move_path_list_);
 }

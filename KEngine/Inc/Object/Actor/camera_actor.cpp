@@ -58,6 +58,16 @@ void K::CameraActor::CreateProjection(float _fov_angle, float _width, float _hei
 	CPTR_CAST<Camera>(FindComponent(TAG{ CAMERA, 0 }))->CreateProjection(_fov_angle, _width, _height, _near, _far);
 }
 
+float K::CameraActor::scale() const
+{
+	return scale_;
+}
+
+K::Vector2 const& K::CameraActor::resolution() const
+{
+	return CPTR_CAST<Camera>(FindComponent(TAG{ CAMERA, 0 }))->resolution();
+}
+
 K::Matrix const& K::CameraActor::view() const
 {
 	return CPTR_CAST<Camera>(FindComponent(TAG{ CAMERA, 0 }))->view();
@@ -68,12 +78,19 @@ K::Matrix const& K::CameraActor::projection() const
 	return CPTR_CAST<Camera>(FindComponent(TAG{ CAMERA, 0 }))->projection();
 }
 
+void K::CameraActor::set_scale(float _scale)
+{
+	scale_ = _scale;
+}
+
 K::CameraActor::CameraActor(CameraActor const& _other) : Actor(_other)
 {
+	scale_ = _other.scale_;
 }
 
 K::CameraActor::CameraActor(CameraActor&& _other) noexcept : Actor(std::move(_other))
 {
+	scale_ = std::move(_other.scale_);
 }
 
 void K::CameraActor::_Finalize()

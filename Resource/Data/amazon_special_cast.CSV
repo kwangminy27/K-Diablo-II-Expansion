@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-amazon_special_cast,amazon_special_cast,1,0,1900,1760,2
+amazon_special_cast,amazon_special_cast,1,0,1900,1760,0.5
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,95,110
 0,0,95,110,,,

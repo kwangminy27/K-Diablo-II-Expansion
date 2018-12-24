@@ -19,8 +19,12 @@ namespace K
 		void CreateProjection(float _width, float _height, float _near, float _far);
 		void CreateProjection(float _fov_angle, float _width, float _height, float _near, float _far);
 
+		float scale() const;
+		Vector2 const& resolution() const;
 		Matrix const& view() const;
 		Matrix const& projection() const;
+
+		void set_scale(float _scale);
 
 	private:
 		CameraActor() = default;
@@ -32,5 +36,7 @@ namespace K
 		virtual void _Finalize() override;
 
 		virtual void _Update(float _time) override;
+
+		float scale_{ 1.f };
 	};
 }

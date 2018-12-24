@@ -27,5 +27,6 @@ namespace K
 		virtual void _Finalize() = 0;
 
 		bool focus_flag_{};
+		bool run_flag_{};
 	};
 }

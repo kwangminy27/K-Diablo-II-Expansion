@@ -42,8 +42,8 @@ void K::Cow::Initialize()
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("cow_get_hit");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("cow_neutral");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("cow_walk");
-		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("cow_walk");
-		CPTR_CAST<Animation2D>(animation_2d)->SetDefaultClip("cow_walk");
+		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("cow_walk", 0);
+		CPTR_CAST<Animation2D>(animation_2d)->SetDefaultClip("cow_walk", 0);
 		AddComponent(animation_2d);
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });

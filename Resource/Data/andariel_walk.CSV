@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-andariel_walk,andariel_walk,1,0,1776,1472,2
+andariel_walk,andariel_walk,1,0,1776,1472,0.5
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,148,184
 0,0,148,184,,,

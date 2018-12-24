@@ -43,8 +43,8 @@ void K::FallenShaman::Initialize()
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("fallen_shaman_get_hit");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("fallen_shaman_neutral");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("fallen_shaman_walk");
-		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("fallen_shaman_walk");
-		CPTR_CAST<Animation2D>(animation_2d)->SetDefaultClip("fallen_shaman_walk");
+		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("fallen_shaman_walk", 0);
+		CPTR_CAST<Animation2D>(animation_2d)->SetDefaultClip("fallen_shaman_walk", 0);
 		AddComponent(animation_2d);
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });

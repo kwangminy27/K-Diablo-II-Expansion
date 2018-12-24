@@ -261,10 +261,10 @@ void K::TileMapActor::_Render(float _time)
 
 	camera->CreateView(camera_position - Vector3::UnitZ, camera_position, Vector3::UnitY);
 
-	auto resolution = Vector3{ static_cast<float>(RESOLUTION::WIDTH), static_cast<float>(RESOLUTION::HEIGHT), 0.f };
+	auto resolution = camera->resolution();
 
-	auto camera_view_min = camera_position - resolution * 0.5f;
-	auto camera_view_max = camera_position + resolution * 0.5f;
+	auto camera_view_min = camera_position - Vector3{ resolution.x, resolution.y, 0.f } * 0.5f;
+	auto camera_view_max = camera_position + Vector3{ resolution.x, resolution.y, 0.f } * 0.5f;
 
 	std::pair<int, int> x_idx_range{};
 	std::pair<int, int> y_idx_range{};
@@ -280,6 +280,8 @@ void K::TileMapActor::_Render(float _time)
 
 		x_idx_range = { LB.first, RT.first };
 		y_idx_range = { RB.second, LT.second };
+
+		//std::cout << "x: " << x_idx_range.first << ", " << x_idx_range.second << " y: " << y_idx_range.first << ", " << y_idx_range.second << std::endl;
 	}
 		break;
 

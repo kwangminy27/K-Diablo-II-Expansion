@@ -22,6 +22,8 @@ void K::InputManager::Initialize()
 		_CreateKeyDesc(std::string{ "O" }, 'O');
 		_CreateKeyDesc(std::string{ "P" }, 'P');
 
+		_CreateKeyDesc(std::string{ "R" }, 'R');
+
 		_CreateKeyDesc(std::string{ "Up" }, VK_UP);
 		_CreateKeyDesc(std::string{ "Down" }, VK_DOWN);
 		_CreateKeyDesc(std::string{ "Left" }, VK_LEFT);
@@ -88,17 +90,23 @@ void K::InputManager::Update()
 			key_desc.up = false;
 	}
 
+	auto const& camera = WorldManager::singleton()->FindCamera(TAG{ DEFAULT_CAMERA, 0 });
+	auto const& camera_position = CPTR_CAST<Transform>(camera->FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
+	auto resolution = camera->resolution();
+	auto scale = camera->scale();
+
 	POINT mouse_position{};
 	GetCursorPos(&mouse_position);
 	ScreenToClient(Core::singleton()->window(), &mouse_position);
-	mouse_position.y = static_cast<int>(RESOLUTION::HEIGHT) - mouse_position.y;
+	mouse_position.x = static_cast<LONG>(mouse_position.x * scale);
+	mouse_position.y = static_cast<LONG>(mouse_position.y * scale);
+
+	mouse_position.y = static_cast<LONG> (resolution.y) - mouse_position.y;
 	
 	mouse_client_position_ = Vector3{ static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y), 0.f };
 
-	auto const& camera = WorldManager::singleton()->FindCamera(TAG{ DEFAULT_CAMERA, 0 });
-	auto const& camera_position = CPTR_CAST<Transform>(camera->FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
-	mouse_position.x += static_cast<LONG>(camera_position.x - static_cast<float>(RESOLUTION::WIDTH) * 0.5f);
-	mouse_position.y += static_cast<LONG>(camera_position.y - static_cast<float>(RESOLUTION::HEIGHT) * 0.5f);
+	mouse_position.x += static_cast<LONG>(camera_position.x - resolution.x * 0.5f);
+	mouse_position.y += static_cast<LONG>(camera_position.y - resolution.y * 0.5f);
 
 	mouse_world_position_ = Vector3{ static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y), 0.f };
 }

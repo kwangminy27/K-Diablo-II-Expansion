@@ -42,8 +42,8 @@ void K::Amazon::Initialize()
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("amazon_special_cast");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("amazon_special1");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("amazon_walk");
-		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("amazon_walk");
-		CPTR_CAST<Animation2D>(animation_2d)->SetDefaultClip("amazon_walk");
+		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("amazon_walk", 0);
+		CPTR_CAST<Animation2D>(animation_2d)->SetDefaultClip("amazon_walk", 0);
 		AddComponent(animation_2d);
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });

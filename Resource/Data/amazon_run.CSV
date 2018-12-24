@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-amazon_run,amazon_run,1,0,704,1312,2
+amazon_run,amazon_run,1,0,704,1312,0.5
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,88,82
 0,0,88,82,,,

@@ -21,6 +21,9 @@ namespace K
 
 		void Route(Vector3 const& _start, Vector3 const& _end);
 
+		bool move_flag() const;
+		Vector3 direction() const;
+
 		void set_speed(float _speed);
 
 	private:
@@ -34,6 +37,7 @@ namespace K
 
 		float speed_{};
 		bool move_flag_{};
+		Vector3 direction_{};
 		Vector3 destination_{};
 		std::list<Vector3> move_path_list_{};
 	};

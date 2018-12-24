@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-cow_walk,cow_walk,1,0,1160,1128,2
+cow_walk,cow_walk,1,0,1160,1128,0.5
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,,
 0,0,145,141,,,

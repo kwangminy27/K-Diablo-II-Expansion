@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-amazon_get_hit,amazon_get_hit,1,0,456,1488,2
+amazon_get_hit,amazon_get_hit,1,0,456,1488,0.5
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,76,93
 0,0,76,93,,,

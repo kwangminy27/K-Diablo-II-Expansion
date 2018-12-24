@@ -37,8 +37,8 @@ void K::Akara::Initialize()
 		CPTR_CAST<Animation2D>(animation_2d)->set_owner(shared_from_this());
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("akara_neutral");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("akara_walk");
-		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("akara_walk");
-		CPTR_CAST<Animation2D>(animation_2d)->SetDefaultClip("akara_walk");
+		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("akara_walk", 4);
+		CPTR_CAST<Animation2D>(animation_2d)->SetDefaultClip("akara_walk", 4);
 		AddComponent(animation_2d);
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });

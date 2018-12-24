@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-fallen_shaman_attack2(overlay),fallen_shaman_attack2(overlay),1,0,3672,1000,2
+fallen_shaman_attack2(overlay),fallen_shaman_attack2(overlay),1,0,3672,1000,0.5
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,,
 0,0,216,125,,,

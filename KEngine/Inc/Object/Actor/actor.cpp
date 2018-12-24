@@ -81,6 +81,11 @@ bool K::Actor::ui_flag() const
 	return ui_flag_;
 }
 
+K::ACTOR_STATE K::Actor::state() const
+{
+	return state_;
+}
+
 std::shared_ptr<K::Level> K::Actor::level() const
 {
 	return level_.lock();
@@ -111,6 +116,11 @@ void K::Actor::set_ui_flag(bool _flag)
 	ui_flag_ = _flag;
 }
 
+void K::Actor::set_state(ACTOR_STATE _state)
+{
+	state_ = _state;
+}
+
 void K::Actor::set_parent(APTR const& _actor)
 {
 	parent_ = _actor;
@@ -129,6 +139,7 @@ void K::Actor::set_layer(std::shared_ptr<Layer> const& _layer)
 K::Actor::Actor(Actor const& _other) : Tag(_other)
 {
 	ui_flag_ = _other.ui_flag_;
+	state_ = _other.state_;
 	level_ = _other.level_;
 	layer_ = _other.layer_;
 	parent_ = _other.parent_;
@@ -145,6 +156,7 @@ K::Actor::Actor(Actor const& _other) : Tag(_other)
 K::Actor::Actor(Actor&& _other) noexcept : Tag(std::move(_other))
 {
 	ui_flag_ = std::move(_other.ui_flag_);
+	state_ = std::move(_other.state_);
 	level_ = std::move(_other.level_);
 	layer_ = std::move(_other.layer_);
 	parent_ = std::move(_other.parent_);
