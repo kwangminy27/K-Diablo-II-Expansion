@@ -16,6 +16,7 @@ void K::DefaultLevel::Initialize()
 	{
 		auto tile_layer = CreateLayer({ "TileLayer", 0 });
 		auto layer = CreateLayer({ "DefaultLayer", 1 });
+		auto ui_layer = CreateLayer({ "UILayer", 2 });
 
 		auto const& object_manager = ObjectManager::singleton();
 		auto const& registry_manager = RegistryManager::singleton();
@@ -31,7 +32,7 @@ void K::DefaultLevel::Initialize()
 
 		std::fstream file{ file_name, std::ios::in | std::ios::binary | std::ios::ate };
 
-		auto tile_map = object_manager->CreateActor<TileMapActor>(TAG{ TILE_MAP, 0 });
+		auto tile_map = object_manager->CreateActor<TileMapActor>(TAG{ TILE_MAP, object_manager->counter() });
 		
 		auto size = file.tellg();
 		file.seekg(std::ios::beg);
@@ -73,31 +74,33 @@ void K::DefaultLevel::Initialize()
 		}
 		//
 
-		//auto cow = object_manager->CreateActor<Cow>(TAG{ "Cow", 0 });
+		//auto cow = object_manager->CreateActor<Cow>(TAG{ "Cow", object_manager->counter() });
 		//layer->AddActor(cow);
 
-		//auto wendigo = object_manager->CreateActor<Wendigo>(TAG{ "Wendigo", 0 });
+		//auto wendigo = object_manager->CreateActor<Wendigo>(TAG{ "Wendigo", object_manager->counter() });
 		//CPTR_CAST<Transform>(wendigo->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ -100.f, 150.f, 0.f });
 		//layer->AddActor(wendigo);
 
-		//auto fallen_shaman = object_manager->CreateActor<FallenShaman>(TAG{ "FallenShaman", 0 });
+		//auto fallen_shaman = object_manager->CreateActor<FallenShaman>(TAG{ "FallenShaman", object_manager->counter() });
 		//CPTR_CAST<Transform>(fallen_shaman->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 100.f, 150.f, 0.f });
 		//layer->AddActor(fallen_shaman);
 
-		//auto andariel = object_manager->CreateActor<Andariel>(TAG{ "Andariel", 0 });
-		//CPTR_CAST<Transform>(andariel->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, 300.f, 0.f });
+		//auto andariel = object_manager->CreateActor<Andariel>(TAG{ "Andariel", object_manager->counter() });
+		//CPTR_CAST<Transform>(andariel->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, 2000.f, 0.f });
 		//layer->AddActor(andariel);
 
-		//auto akara = object_manager->CreateActor<Akara>(TAG{ "Akara", 0 });
+		//auto akara = object_manager->CreateActor<Akara>(TAG{ "Akara", object_manager->counter() });
 		//CPTR_CAST<Transform>(akara->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ -200.f, 300.f, 0.f });
 		//layer->AddActor(akara);
 
-		auto sorceress = object_manager->CreateActor<Sorceress>(TAG{ "Sorceress", 0 });
+		player_tag_ = TAG{ "Sorceress", object_manager->counter() };
+
+		auto sorceress = object_manager->CreateActor<Sorceress>(player_tag_);
 		APTR_CAST<PlayerActor>(sorceress)->set_focus_flag(true);
 		CPTR_CAST<Transform>(sorceress->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, 0.f, 0.f });
 		layer->AddActor(sorceress);
 
-		//auto amazon = object_manager->CreateActor<Amazon>(TAG{ "Amazon", 0 });
+		//auto amazon = object_manager->CreateActor<Amazon>(TAG{ "Amazon", object_manager->counter() });
 		//CPTR_CAST<Transform>(amazon->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, -150.f, 0.f });
 		//layer->AddActor(amazon);
 	}
@@ -127,7 +130,7 @@ void K::DefaultLevel::_Input(float _time)
 	{
 		static int counter{};
 
-		auto const& sorceress = WorldManager::singleton()->FindActor(TAG{ "Sorceress", 0 });
+		auto const& sorceress = WorldManager::singleton()->FindActor(player_tag_);
 		APTR_CAST<Sorceress>(sorceress)->set_focus_flag((counter++) % 2);
 	}
 }

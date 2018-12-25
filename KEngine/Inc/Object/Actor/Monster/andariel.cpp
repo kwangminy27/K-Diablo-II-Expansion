@@ -4,6 +4,9 @@
 #include "Resource/resource_manager.h"
 #include "Rendering/rendering_manager.h"
 #include "Object/object_manager.h"
+#include "Object/Actor/Monster/cow.h"
+#include "Object/Actor/Monster/wendigo.h"
+#include "Object/Actor/Monster/fallen_shaman.h"
 #include "Object/Component/transform.h"
 #include "Object/Component/material.h"
 #include "Object/Component/renderer.h"
@@ -49,6 +52,43 @@ void K::Andariel::Initialize()
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });
 		AddComponent(collider);
+
+		// ╨нго
+		for (auto i = 0; i < 10; ++i)
+		{
+			for (auto j = 0; j < 10; ++j)
+			{
+				auto cow = object_manager->CreateActor<Cow>(TAG{ "Cow", object_manager->counter() });
+				auto const& cow_transform = CPTR_CAST<Transform>(cow->FindComponent(TAG{ TRANSFORM, 0 }));
+				cow_transform->set_parent_flag(static_cast<uint8_t>(PARENT_FLAG::TRANSLATION));
+				cow_transform->set_local_translation(Vector3{ -1000.f + 50.f * j, -250.f + 50.f * i, 0.f });
+				AddChild(cow);
+			}
+		}
+
+		for (auto i = 0; i < 10; ++i)
+		{
+			for (auto j = 0; j < 10; ++j)
+			{
+				auto wendigo = object_manager->CreateActor<Wendigo>(TAG{ "Wendigo", object_manager->counter() });
+				auto const& wendigo_transform = CPTR_CAST<Transform>(wendigo->FindComponent(TAG{ TRANSFORM, 0 }));
+				wendigo_transform->set_parent_flag(static_cast<uint8_t>(PARENT_FLAG::TRANSLATION));
+				wendigo_transform->set_local_translation(Vector3{ 500.f + 50.f * j, -250.f + 50.f * i, 0.f });
+				AddChild(wendigo);
+			}
+		}
+
+		for (auto i = 0; i < 10; ++i)
+		{
+			for (auto j = 0; j < 10; ++j)
+			{
+				auto fallen_shaman = object_manager->CreateActor<FallenShaman>(TAG{ "FallenShaman", object_manager->counter() });
+				auto const& fallen_shaman_transform = CPTR_CAST<Transform>(fallen_shaman->FindComponent(TAG{ TRANSFORM, 0 }));
+				fallen_shaman_transform->set_parent_flag(static_cast<uint8_t>(PARENT_FLAG::TRANSLATION));
+				fallen_shaman_transform->set_local_translation(Vector3{ -250.f + 50.f * j, -1000.f + 50.f * i, 0.f });
+				AddChild(fallen_shaman);
+			}
+		}
 	}
 	catch (std::exception const& _e)
 	{

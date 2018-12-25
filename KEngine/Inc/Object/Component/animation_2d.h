@@ -25,6 +25,8 @@ namespace K
 		void SetCurrentClip(std::string const& _tag, int _dir_idx);
 		void SetDefaultClip(std::string const& _tag, int _dir_idx);
 
+		void set_callback(std::function<void()> const& _callback);
+
 		static std::shared_ptr<ANIMATION_2D_CLIP_DESC> animation_2d_clip_dummy_;
 
 	private:
@@ -40,6 +42,7 @@ namespace K
 		int dir_count_{};
 		float elapsed_time_{};
 		uint16_t frame_idx_{};
+		std::function<void()> callback_{};
 		std::shared_ptr<ANIMATION_2D_CLIP_DESC> current_clip_{};
 		std::shared_ptr<ANIMATION_2D_CLIP_DESC> default_clip_{};
 		std::unordered_map<std::string, std::shared_ptr<ANIMATION_2D_CLIP_DESC>> animation_2d_clip_map_{};

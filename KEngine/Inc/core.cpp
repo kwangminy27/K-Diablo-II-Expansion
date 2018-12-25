@@ -103,7 +103,11 @@ void K::Core::Logic()
 
 	time_manager->Update();
 
-	float time_delta = time_manager->time_delta();
+	static bool t = true;
+	if (InputManager::singleton()->KeyDown("F7"))
+		t ^= true;
+
+	float time_delta = time_manager->time_delta() * t;
 
 	_Input(time_delta);
 	_Update(time_delta);
@@ -166,6 +170,7 @@ LRESULT K::Core::_WindowProc(HWND _window, UINT _message, WPARAM _w_param, LPARA
 
 	case WM_DESTROY:
 		Core::shutdown_ = true;
+		AudioManager::singleton()->Suspend();
 		PostQuitMessage(0);
 		return 0;
 	}

@@ -100,6 +100,11 @@ void K::Navigator::set_speed(float _speed)
 	speed_ = _speed;
 }
 
+void K::Navigator::set_direction(Vector3 const& _direction)
+{
+	direction_ = _direction;
+}
+
 K::Navigator::Navigator(Navigator const& _other) : Component(_other)
 {
 	speed_ = _other.speed_;

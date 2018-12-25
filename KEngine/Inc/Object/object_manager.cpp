@@ -16,6 +16,11 @@ void K::ObjectManager::Initialize()
 	}
 }
 
+uint32_t K::ObjectManager::counter()
+{
+	return counter_++;
+}
+
 void K::ObjectManager::_Finalize()
 {
 }

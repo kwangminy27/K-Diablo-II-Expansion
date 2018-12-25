@@ -21,7 +21,7 @@ void K::TileSetLevel::Initialize()
 		{
 			for (auto j = 0; j < 4; ++j)
 			{
-				auto image = object_manager->CreateActor<ImageActor>(TAG{ "ImageActor", i * 4 + j });
+				auto image = object_manager->CreateActor<ImageActor>(TAG{ "ImageActor", 0 });
 				image->set_ui_flag(true);
 				APTR_CAST<ImageActor>(image)->set_LT(Vector2{ (1.f / 4) * j, (1.f / 17) * i });
 				APTR_CAST<ImageActor>(image)->set_RB(Vector2{ (1.f / 4) * (j + 1), (1.f / 17) * (i + 1) });

@@ -229,6 +229,9 @@ bool K::NavigationManager::Route(Vector3 const& _start, Vector3 const& _end)
 	for (auto const& e : optimized_route)
 		move_path_list_.push_back(tile_map->GetTilePosition(e));
 
+	move_path_list_.pop_back();
+	move_path_list_.push_back(_end);
+
 	return true;
 }
 

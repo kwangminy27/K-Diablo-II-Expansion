@@ -17,6 +17,8 @@ namespace K
 
 		virtual void _Input(float _time) override;
 
+		void set_frozen_armor_flag(bool _flag);
+
 	private:
 		Sorceress() = default;
 		Sorceress(Sorceress const& _other);
@@ -25,5 +27,7 @@ namespace K
 		Sorceress& operator=(Sorceress&&) noexcept = default;
 
 		virtual void _Finalize() override;
+
+		bool frozen_armor_flag_{};
 	};
 }

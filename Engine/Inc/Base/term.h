@@ -38,6 +38,7 @@ namespace K
 	//////////////////// RenderState Key ////////////////////
 	constexpr auto ALPHA_BLEND = "AlphaBlend";
 	constexpr auto DEPTH_DISABLE = "DepthDisable";
+	constexpr auto RGB_ADD_BLEND = "RGBAddBlend";
 
 	//////////////////// Common Key ////////////////////
 	constexpr auto DEFAULT = "Default";

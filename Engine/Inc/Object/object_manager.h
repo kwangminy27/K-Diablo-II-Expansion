@@ -11,6 +11,8 @@ namespace K
 		template <typename T> APTR CreateActor(TAG const& _tag);
 		template <typename T> CPTR CreateComponent(TAG const& _tag);
 
+		uint32_t counter();
+
 	private:
 		ObjectManager() = default;
 		ObjectManager(ObjectManager const&) = delete;
@@ -19,6 +21,8 @@ namespace K
 		ObjectManager& operator=(ObjectManager&&) noexcept = delete;
 
 		virtual void _Finalize() override;
+
+		uint32_t counter_{};
 	};
 }
 

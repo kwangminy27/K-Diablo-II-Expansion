@@ -1,12 +1,20 @@
 #include "KEngine.h"
 #include "sorceress.h"
 
+#include "Audio/audio_manager.h"
 #include "Resource/resource_manager.h"
 #include "Rendering/rendering_manager.h"
 #include "input_manager.h"
 #include "World/world_manager.h"
+#include "World/layer.h"
 #include "Object/object_manager.h"
 #include "Object/Actor/camera_actor.h"
+#include "Object/Actor/Missile/ice_cast.h"
+#include "Object/Actor/Missile/ice_bolt.h"
+#include "Object/Actor/Missile/ice_blast.h"
+#include "Object/Actor/Missile/ice_orb.h"
+#include "Object/Actor/Missile/frost_nova.h"
+#include "Object/Actor/Missile/frozen_armor.h"
 #include "Object/Component/transform.h"
 #include "Object/Component/material.h"
 #include "Object/Component/renderer.h"
@@ -96,8 +104,12 @@ void K::Sorceress::Serialize(OutputMemoryStream& _omstream)
 
 void K::Sorceress::_Input(float _time)
 {
+	auto const& audio_manager = AudioManager::singleton();
 	auto const& input_manager = InputManager::singleton();
+	auto const& object_manager = ObjectManager::singleton();
 	auto const& animation_2d = CPTR_CAST<Animation2D>(FindComponent(TAG{ ANIMATION_2D, 0 }));
+
+	auto caching_layer = layer();
 
 	auto position = CPTR_CAST<Transform>(FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
 	auto mouse_world_position = input_manager->mouse_world_position();
@@ -149,6 +161,266 @@ void K::Sorceress::_Input(float _time)
 	else
 		dir_idx = 15 - static_cast<int>(angle / 22.5f);
 
+	if (ACTOR_STATE::NEUTRAL == state())
+	{
+		if (input_manager->KeyDown("1"))
+		{
+			audio_manager->FindSoundEffect("ice_cast")->Play();
+
+			auto const& ui_layer = WorldManager::singleton()->FindLayer(TAG{ "UILayer", 2 });
+
+			auto ice_cast = object_manager->CreateActor<IceCast>(TAG{ "IceCast", 0 });
+			auto const& ice_cast_transform = CPTR_CAST<Transform>(ice_cast->FindComponent(TAG{ TRANSFORM, 0 }));
+			auto const& ice_cast_animation_2d = CPTR_CAST<Animation2D>(ice_cast->FindComponent(TAG{ ANIMATION_2D, 0 }));
+
+			ice_cast_transform->set_local_translation(position + Vector3{ 0.f, 40.f, 0.f });
+			ice_cast_animation_2d->SetCurrentClip("ice_cast1", -1);
+			ui_layer->AddActor(ice_cast);
+
+			direction = mouse_world_position - position;
+			direction.Normalize();
+			navigator->set_direction(direction);
+
+			angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction)));
+
+			if (direction.x < 0.f)
+				dir_idx = static_cast<int>(angle / 22.5f);
+			else
+				dir_idx = 15 - static_cast<int>(angle / 22.5f);
+
+			animation_2d->set_callback([&object_manager, &audio_manager, position, direction, dir_idx]() {
+				auto ice_bolt = object_manager->CreateActor<IceBolt>(TAG{ "IceBolt", 0 });
+				auto const& ice_bolt_transform = CPTR_CAST<Transform>(ice_bolt->FindComponent(TAG{ TRANSFORM, 0 }));
+				auto const& ice_bolt_animation_2d = CPTR_CAST<Animation2D>(ice_bolt->FindComponent(TAG{ ANIMATION_2D, 0 }));
+
+				APTR_CAST<IceBolt>(ice_bolt)->set_direction(direction);
+				ice_bolt_transform->set_local_translation(position);
+
+				std::random_device r{};
+				std::default_random_engine gen{ r() };
+				std::uniform_int_distribution uniform_dist{ 1, 3 };
+				auto number = uniform_dist(gen);
+
+				std::string skill_name = "ice_bolt" + std::to_string(number);
+
+				audio_manager->FindSoundEffect(skill_name)->Play();
+				ice_bolt_animation_2d->SetCurrentClip("ice_bolt", dir_idx);
+
+				auto const& lambda_layer = WorldManager::singleton()->FindLayer(TAG{ "DefaultLayer", 1 });
+
+				lambda_layer->AddActor(ice_bolt);
+			});
+
+			set_state(ACTOR_STATE::SPECIAL_CAST);
+		}
+
+		if (input_manager->KeyDown("2"))
+		{
+			audio_manager->FindSoundEffect("ice_cast")->Play();
+
+			auto const& ui_layer = WorldManager::singleton()->FindLayer(TAG{ "UILayer", 2 });
+
+			auto ice_cast = object_manager->CreateActor<IceCast>(TAG{ "IceCast", 0 });
+			auto const& ice_cast_transform = CPTR_CAST<Transform>(ice_cast->FindComponent(TAG{ TRANSFORM, 0 }));
+			auto const& ice_cast_animation_2d = CPTR_CAST<Animation2D>(ice_cast->FindComponent(TAG{ ANIMATION_2D, 0 }));
+
+			ice_cast_transform->set_local_translation(position + Vector3{ 0.f, 40.f, 0.f });
+			ice_cast_animation_2d->SetCurrentClip("ice_cast1", -1);
+			ui_layer->AddActor(ice_cast);
+
+			direction = mouse_world_position - position;
+			direction.Normalize();
+			navigator->set_direction(direction);
+
+			angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction)));
+
+			if (direction.x < 0.f)
+				dir_idx = static_cast<int>(angle / 22.5f);
+			else
+				dir_idx = 15 - static_cast<int>(angle / 22.5f);
+
+			animation_2d->set_callback([&object_manager, &audio_manager, position, direction, dir_idx]() {
+				auto ice_blast = object_manager->CreateActor<IceBlast>(TAG{ "IceBlast", 0 });
+				auto const& ice_blast_transform = CPTR_CAST<Transform>(ice_blast->FindComponent(TAG{ TRANSFORM, 0 }));
+				auto const& ice_blast_animation_2d = CPTR_CAST<Animation2D>(ice_blast->FindComponent(TAG{ ANIMATION_2D, 0 }));
+
+				APTR_CAST<IceBlast>(ice_blast)->set_direction(direction);
+				ice_blast_transform->set_local_translation(position);
+
+				std::random_device r{};
+				std::default_random_engine gen{ r() };
+				std::uniform_int_distribution uniform_dist{ 1, 3 };
+				auto number = uniform_dist(gen);
+
+				std::string skill_name = "ice_blast" + std::to_string(number);
+
+				audio_manager->FindSoundEffect(skill_name)->Play();
+				ice_blast_animation_2d->SetCurrentClip("ice_blast", dir_idx);
+
+				auto const& lambda_layer = WorldManager::singleton()->FindLayer(TAG{ "DefaultLayer", 1 });
+
+				lambda_layer->AddActor(ice_blast);
+			});
+
+			set_state(ACTOR_STATE::SPECIAL_CAST);
+		}
+
+		if (input_manager->KeyDown("3"))
+		{
+			audio_manager->FindSoundEffect("ice_cast")->Play();
+
+			auto const& ui_layer = WorldManager::singleton()->FindLayer(TAG{ "UILayer", 2 });
+
+			auto ice_cast = object_manager->CreateActor<IceCast>(TAG{ "IceCast", 0 });
+			auto const& ice_cast_transform = CPTR_CAST<Transform>(ice_cast->FindComponent(TAG{ TRANSFORM, 0 }));
+			auto const& ice_cast_animation_2d = CPTR_CAST<Animation2D>(ice_cast->FindComponent(TAG{ ANIMATION_2D, 0 }));
+
+			ice_cast_transform->set_local_translation(position);
+			ice_cast_animation_2d->SetCurrentClip("ice_cast3", -1);
+			ui_layer->AddActor(ice_cast);
+
+			direction = mouse_world_position - position;
+			direction.Normalize();
+			navigator->set_direction(direction);
+
+			angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction)));
+
+			if (direction.x < 0.f)
+				dir_idx = static_cast<int>(angle / 22.5f);
+			else
+				dir_idx = 15 - static_cast<int>(angle / 22.5f);
+
+			animation_2d->set_callback([&object_manager, &audio_manager, position, direction, dir_idx]() {
+				auto ice_orb = object_manager->CreateActor<IceOrb>(TAG{ "IceOrb", 0 });
+				auto const& ice_orb_transform = CPTR_CAST<Transform>(ice_orb->FindComponent(TAG{ TRANSFORM, 0 }));
+				auto const& ice_orb_animation_2d = CPTR_CAST<Animation2D>(ice_orb->FindComponent(TAG{ ANIMATION_2D, 0 }));
+
+				APTR_CAST<IceOrb>(ice_orb)->set_direction(direction);
+				ice_orb_transform->set_local_translation(position);
+
+				std::string skill_name = "ice_orb";
+
+				audio_manager->FindSoundEffect(skill_name)->Play();
+				ice_orb_animation_2d->SetCurrentClip("ice_orb", -1);
+
+				auto const& lambda_layer = WorldManager::singleton()->FindLayer(TAG{ "DefaultLayer", 1 });
+
+				lambda_layer->AddActor(ice_orb);
+			});
+
+			set_state(ACTOR_STATE::SPECIAL_CAST);
+		}
+
+		if (input_manager->KeyDown("4"))
+		{
+			audio_manager->FindSoundEffect("ice_cast")->Play();
+
+			auto const& ui_layer = WorldManager::singleton()->FindLayer(TAG{ "UILayer", 2 });
+
+			auto ice_cast = object_manager->CreateActor<IceCast>(TAG{ "IceCast", 0 });
+			auto const& ice_cast_transform = CPTR_CAST<Transform>(ice_cast->FindComponent(TAG{ TRANSFORM, 0 }));
+			auto const& ice_cast_animation_2d = CPTR_CAST<Animation2D>(ice_cast->FindComponent(TAG{ ANIMATION_2D, 0 }));
+
+			ice_cast_transform->set_local_translation(position);
+			ice_cast_animation_2d->SetCurrentClip("ice_cast2", -1);
+			ui_layer->AddActor(ice_cast);
+
+			direction = mouse_world_position - position;
+			direction.Normalize();
+			navigator->set_direction(direction);
+
+			angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction)));
+
+			animation_2d->set_callback([&object_manager, &audio_manager, position]() {
+				auto const& lambda_layer = WorldManager::singleton()->FindLayer(TAG{ "DefaultLayer", 1 });
+
+				std::string skill_name = "frost_nova";
+				audio_manager->FindSoundEffect(skill_name)->Play();
+
+				for (auto i = 0; i < 64; ++i)
+				{
+					auto frost_nova = object_manager->CreateActor<FrostNova>(TAG{ "FrostNova", 0 });
+					auto const& frost_nova_transform = CPTR_CAST<Transform>(frost_nova->FindComponent(TAG{ TRANSFORM, 0 }));
+					auto const& frost_nova_animation_2d = CPTR_CAST<Animation2D>(frost_nova->FindComponent(TAG{ ANIMATION_2D, 0 }));
+
+					APTR_CAST<FrostNova>(frost_nova)->set_direction(Vector3::TransformNormal(Vector3::UnitX, Matrix::CreateRotationZ(5.625f * i))); 
+
+					frost_nova_transform->set_local_translation(position + Vector3{ 0.f, -20.f, 0.f });
+
+					frost_nova_animation_2d->SetCurrentClip("frost_nova", i / 4);
+
+					lambda_layer->AddActor(frost_nova);
+				}
+			});
+
+			set_state(ACTOR_STATE::SPECIAL_CAST);
+		}
+
+		if (input_manager->KeyDown("5"))
+		{
+			if (false == frozen_armor_flag_)
+			{
+				audio_manager->FindSoundEffect("frozen_armor")->Play();
+
+				auto const& ui_layer = WorldManager::singleton()->FindLayer(TAG{ "UILayer", 2 });
+
+				auto ice_cast = object_manager->CreateActor<IceCast>(TAG{ "IceCast", 0 });
+				auto const& ice_cast_transform = CPTR_CAST<Transform>(ice_cast->FindComponent(TAG{ TRANSFORM, 0 }));
+				auto const& ice_cast_animation_2d = CPTR_CAST<Animation2D>(ice_cast->FindComponent(TAG{ ANIMATION_2D, 0 }));
+
+				ice_cast_transform->set_local_translation(position + Vector3{ 0.f, 40.f, 0.f });
+				ice_cast_animation_2d->SetCurrentClip("ice_cast1", -1);
+				ui_layer->AddActor(ice_cast);
+
+				direction = mouse_world_position - position;
+				direction.Normalize();
+				navigator->set_direction(direction);
+
+				auto const& lambda_layer = WorldManager::singleton()->FindLayer(TAG{ "DefaultLayer", 1 });
+
+				auto frozen_armor = object_manager->CreateActor<FrozenArmor>(TAG{ "FrozenArmor", 0 });
+				APTR_CAST<FrozenArmor>(frozen_armor)->set_target(shared_from_this());
+				auto const& frozen_armor_transform = CPTR_CAST<Transform>(frozen_armor->FindComponent(TAG{ TRANSFORM, 0 }));
+				auto const& frozen_armor_animation_2d = CPTR_CAST<Animation2D>(frozen_armor->FindComponent(TAG{ ANIMATION_2D, 0 }));
+
+				frozen_armor_transform->set_local_translation(position);
+				
+				lambda_layer->AddActor(frozen_armor);
+
+				animation_2d->set_callback([]() {});
+
+				frozen_armor_flag_ = true;
+				set_state(ACTOR_STATE::SPECIAL_CAST);
+			}
+		}
+
+		if (input_manager->KeyDown("6"))
+		{
+			audio_manager->FindSoundEffect("teleport")->Play();
+
+			auto const& ui_layer = WorldManager::singleton()->FindLayer(TAG{ "UILayer", 2 });
+
+			auto ice_cast = object_manager->CreateActor<IceCast>(TAG{ "IceCast", 0 });
+			auto const& ice_cast_transform = CPTR_CAST<Transform>(ice_cast->FindComponent(TAG{ TRANSFORM, 0 }));
+			auto const& ice_cast_animation_2d = CPTR_CAST<Animation2D>(ice_cast->FindComponent(TAG{ ANIMATION_2D, 0 }));
+
+			ice_cast_transform->set_local_translation(position + Vector3{ 0.f, -40.f, 0.f });
+			ice_cast_animation_2d->SetCurrentClip("teleport", -1);
+			ui_layer->AddActor(ice_cast);
+
+			direction = mouse_world_position - position;
+			direction.Normalize();
+			navigator->set_direction(direction);
+
+			animation_2d->set_callback([this, direction]() {
+				auto const& transform = CPTR_CAST<Transform>(FindComponent(TAG{ TRANSFORM, 0 }));
+				transform->set_local_translation(transform->local_translation() + direction * 600.f);
+			});
+
+			set_state(ACTOR_STATE::SPECIAL_CAST);
+		}
+	}
+
 	switch (state_)
 	{
 	case K::ACTOR_STATE::ATTACK1:
@@ -180,6 +452,11 @@ void K::Sorceress::_Input(float _time)
 		animation_2d->SetCurrentClip("sorceress_walk", dir_idx);
 		break;
 	}
+}
+
+void K::Sorceress::set_frozen_armor_flag(bool _flag)
+{
+	frozen_armor_flag_ = _flag;
 }
 
 K::Sorceress::Sorceress(Sorceress const& _other) : PlayerActor(_other)

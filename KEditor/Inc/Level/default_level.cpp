@@ -25,7 +25,7 @@ void K::DefaultLevel::Initialize()
 
 		auto const& object_manager = ObjectManager::singleton();
 
-		auto tile_map = object_manager->CreateActor<TileMapActor>(TAG{ TILE_MAP, 0 });
+		auto tile_map = object_manager->CreateActor<TileMapActor>(TAG{ TILE_MAP, object_manager->counter() });
 		tile_layer->AddActor(tile_map);
 
 		auto text = object_manager->CreateActor<TextActor>(TAG{ "TextActor", 0 });
@@ -178,18 +178,17 @@ void K::DefaultLevel::_Input(float _time)
 		auto const& object_manager = ObjectManager::singleton();
 
 		APTR actor{};
-		static uint32_t counter{};
 
 		if (actor_type == "1. Cow")
-			actor = object_manager->CreateActor<Cow>(TAG{ "Cow", counter++ });
+			actor = object_manager->CreateActor<Cow>(TAG{ "Cow", object_manager->counter() });
 		else if (actor_type == "2. Wendigo")
-			actor = object_manager->CreateActor<Wendigo>(TAG{ "Wendigo", counter++ });
+			actor = object_manager->CreateActor<Wendigo>(TAG{ "Wendigo", object_manager->counter() });
 		else if (actor_type == "3. Fallen Shaman")
-			actor = object_manager->CreateActor<FallenShaman>(TAG{ "FallenShaman", counter++ });
+			actor = object_manager->CreateActor<FallenShaman>(TAG{ "FallenShaman", object_manager->counter() });
 		else if (actor_type == "4. Andariel")
-			actor = object_manager->CreateActor<Andariel>(TAG{ "Andariel", counter++ });
+			actor = object_manager->CreateActor<Andariel>(TAG{ "Andariel", object_manager->counter() });
 		else if (actor_type == "5. Akara")
-			actor = object_manager->CreateActor<Akara>(TAG{ "Akara", counter++ });
+			actor = object_manager->CreateActor<Akara>(TAG{ "Akara", object_manager->counter() });
 
 		auto const& actor_transform = CPTR_CAST<Transform>(actor->FindComponent(TAG{ TRANSFORM, 0 }));
 

@@ -120,6 +120,17 @@ void K::ResourceManager::Initialize()
 		_CreateTexture2D("sorceress_special1", L"Main/sorceress/sorceress_special1.png", TEXTURE_PATH);
 		_CreateTexture2D("sorceress_walk", L"Main/sorceress/sorceress_walk.png", TEXTURE_PATH);
 
+		_CreateTexture2D("ice_cast1", L"Main/sorceress/skill/ice_cast1.bmp", TEXTURE_PATH);
+		_CreateTexture2D("ice_cast2", L"Main/sorceress/skill/ice_cast2.bmp", TEXTURE_PATH);
+		_CreateTexture2D("ice_cast3", L"Main/sorceress/skill/ice_cast3.bmp", TEXTURE_PATH);
+		_CreateTexture2D("ice_bolt", L"Main/sorceress/skill/ice_bolt.bmp", TEXTURE_PATH);
+		_CreateTexture2D("ice_blast", L"Main/sorceress/skill/ice_blast.bmp", TEXTURE_PATH);
+		_CreateTexture2D("ice_orb", L"Main/sorceress/skill/ice_orb.bmp", TEXTURE_PATH);
+		_CreateTexture2D("ice_orb_explosion", L"Main/sorceress/skill/ice_orb_explosion.bmp", TEXTURE_PATH);
+		_CreateTexture2D("frost_nova", L"Main/sorceress/skill/frost_nova.bmp", TEXTURE_PATH);
+		_CreateTexture2D("frozen_armor", L"Main/sorceress/skill/frozen_armor.bmp", TEXTURE_PATH);
+		_CreateTexture2D("teleport", L"Main/sorceress/skill/teleport.bmp", TEXTURE_PATH);
+
 		_CreateTexture2D("amazon_attack1", L"Main/amazon/amazon_attack1.png", TEXTURE_PATH);
 		_CreateTexture2D("amazon_get_hit", L"Main/amazon/amazon_get_hit.png", TEXTURE_PATH);
 		_CreateTexture2D("amazon_neutral", L"Main/amazon/amazon_neutral.png", TEXTURE_PATH);
@@ -185,6 +196,17 @@ void K::ResourceManager::Initialize()
 		_CreateAnimation2DClip("sorceress_special_cast", L"sorceress_special_cast.csv", DATA_PATH);
 		_CreateAnimation2DClip("sorceress_special1", L"sorceress_special1.csv", DATA_PATH);
 		_CreateAnimation2DClip("sorceress_walk", L"sorceress_walk.csv", DATA_PATH);
+
+		_CreateAnimation2DClip("ice_cast1", L"ice_cast1.csv", DATA_PATH);
+		_CreateAnimation2DClip("ice_cast2", L"ice_cast2.csv", DATA_PATH);
+		_CreateAnimation2DClip("ice_cast3", L"ice_cast3.csv", DATA_PATH);
+		_CreateAnimation2DClip("ice_bolt", L"ice_bolt.csv", DATA_PATH);
+		_CreateAnimation2DClip("ice_blast", L"ice_blast.csv", DATA_PATH);
+		_CreateAnimation2DClip("ice_orb", L"ice_orb.csv", DATA_PATH);
+		_CreateAnimation2DClip("ice_orb_explosion", L"ice_orb_explosion.csv", DATA_PATH);
+		_CreateAnimation2DClip("frost_nova", L"frost_nova.csv", DATA_PATH);
+		_CreateAnimation2DClip("frozen_armor", L"frozen_armor.csv", DATA_PATH);
+		_CreateAnimation2DClip("teleport", L"teleport.csv", DATA_PATH);
 
 		_CreateAnimation2DClip("amazon_attack1", L"amazon_attack1.csv", DATA_PATH);
 		_CreateAnimation2DClip("amazon_get_hit", L"amazon_get_hit.csv", DATA_PATH);

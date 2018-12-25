@@ -14,6 +14,13 @@ void K::InputManager::Initialize()
 	{
 		_CreateKeyDesc(std::string{ "ESC" }, VK_ESCAPE);
 
+		_CreateKeyDesc(std::string{ "1" }, '1');
+		_CreateKeyDesc(std::string{ "2" }, '2');
+		_CreateKeyDesc(std::string{ "3" }, '3');
+		_CreateKeyDesc(std::string{ "4" }, '4');
+		_CreateKeyDesc(std::string{ "5" }, '5');
+		_CreateKeyDesc(std::string{ "6" }, '6');
+
 		_CreateKeyDesc(std::string{ "W" }, 'W');
 		_CreateKeyDesc(std::string{ "S" }, 'S');
 		_CreateKeyDesc(std::string{ "A" }, 'A');
@@ -31,6 +38,7 @@ void K::InputManager::Initialize()
 
 		_CreateKeyDesc(std::string{ "LButton" }, VK_LBUTTON);
 		_CreateKeyDesc(std::string{ "RButton" }, VK_RBUTTON);
+
 
 		_CreateKeyDesc(std::string{ "F1" }, VK_F1 );
 		_CreateKeyDesc(std::string{ "F2" }, VK_F2 );

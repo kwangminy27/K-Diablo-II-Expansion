@@ -15,6 +15,24 @@ void K::AudioManager::Initialize()
 		audio_engine_flags = audio_engine_flags | DirectX::AudioEngine_Debug;
 #endif
 		audio_engine_ = std::make_unique<DirectX::AudioEngine>(audio_engine_flags);
+
+		_CreateSoundEffect("ice_cast", L"sorceress/ice_cast.wav", AUDIO_PATH);
+
+		_CreateSoundEffect("ice_bolt1", L"sorceress/ice_bolt1.wav", AUDIO_PATH);
+		_CreateSoundEffect("ice_bolt2", L"sorceress/ice_bolt2.wav", AUDIO_PATH);
+		_CreateSoundEffect("ice_bolt3", L"sorceress/ice_bolt3.wav", AUDIO_PATH);
+
+		_CreateSoundEffect("ice_blast1", L"sorceress/ice_blast1.wav", AUDIO_PATH);
+		_CreateSoundEffect("ice_blast2", L"sorceress/ice_blast2.wav", AUDIO_PATH);
+		_CreateSoundEffect("ice_blast3", L"sorceress/ice_blast3.wav", AUDIO_PATH);
+
+		_CreateSoundEffect("ice_orb", L"sorceress/ice_orb.wav", AUDIO_PATH);
+
+		_CreateSoundEffect("frost_nova", L"sorceress/frost_nova.wav", AUDIO_PATH);
+
+		_CreateSoundEffect("frozen_armor", L"sorceress/frozen_armor.wav", AUDIO_PATH);
+
+		_CreateSoundEffect("teleport", L"sorceress/teleport.wav", AUDIO_PATH);
 	}
 	catch (std::exception const& _e)
 	{

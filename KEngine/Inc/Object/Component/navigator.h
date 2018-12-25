@@ -25,6 +25,7 @@ namespace K
 		Vector3 direction() const;
 
 		void set_speed(float _speed);
+		void set_direction(Vector3 const& _direction);
 
 	private:
 		Navigator() = default;
@@ -37,7 +38,7 @@ namespace K
 
 		float speed_{};
 		bool move_flag_{};
-		Vector3 direction_{};
+		Vector3 direction_{ -Vector3::UnitY };
 		Vector3 destination_{};
 		std::list<Vector3> move_path_list_{};
 	};

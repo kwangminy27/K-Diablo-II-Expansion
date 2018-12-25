@@ -136,6 +136,9 @@
     <Filter Include="12. Object\2. Component\8. Navigator">
       <UniqueIdentifier>{6713eeba-dbb7-485f-998c-be964fb937c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="12. Object\1. Actor\6. Missile">
+      <UniqueIdentifier>{d77c22e6-8c61-4cdc-8a47-d312d0e2f75f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KEngine.h">
@@ -309,6 +312,27 @@
     <ClInclude Include="Object\Component\navigator.h">
       <Filter>12. Object\2. Component\8. Navigator</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\missile_actor.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\ice_bolt.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\ice_blast.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\ice_orb.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\frost_nova.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\frozen_armor.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\ice_cast.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KEngine.cpp">
@@ -472,6 +496,27 @@
     </ClCompile>
     <ClCompile Include="Object\Component\navigator.cpp">
       <Filter>12. Object\2. Component\8. Navigator</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\missile_actor.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\ice_bolt.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\ice_blast.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\ice_orb.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\frost_nova.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\frozen_armor.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\ice_cast.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

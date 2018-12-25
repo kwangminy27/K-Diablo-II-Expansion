@@ -67,7 +67,7 @@ void K::TileMapActor::Serialize(InputMemoryStream& _imstream)
 
 		for (auto j = 0; j < x_count; ++j)
 		{
-			tile_map_.at(i).at(j) = APTR_CAST<TileActor>(ObjectManager::singleton()->CreateActor<TileActor>(TAG{ TILE, 0 }));
+			tile_map_.at(i).at(j) = APTR_CAST<TileActor>(ObjectManager::singleton()->CreateActor<TileActor>(TAG{ TILE, ObjectManager::singleton()->counter() }));
 			tile_map_.at(i).at(j)->Serialize(_imstream);
 		}
 	}
@@ -375,7 +375,7 @@ void K::TileMapActor::_CreateIsometricMap()
 	{
 		for (auto j = 0; j < tile_map_.at(i).size(); ++j)
 		{
-			auto tile = ObjectManager::singleton()->CreateActor<TileActor>(TAG{ TILE, 0 });
+			auto tile = ObjectManager::singleton()->CreateActor<TileActor>(TAG{ TILE, ObjectManager::singleton()->counter() });
 			APTR_CAST<TileActor>(tile)->set_LT(default_LT);
 			APTR_CAST<TileActor>(tile)->set_RB(default_RB);
 
@@ -395,7 +395,7 @@ void K::TileMapActor::_CreateOrthographicMap()
 	{
 		for (auto j = 0; j < tile_map_.at(i).size(); ++j)
 		{
-			auto tile = ObjectManager::singleton()->CreateActor<TileActor>(TAG{ TILE, 0 });
+			auto tile = ObjectManager::singleton()->CreateActor<TileActor>(TAG{ TILE, ObjectManager::singleton()->counter() });
 
 			APTR_CAST<TileActor>(tile)->set_LT(Vector2::Zero);
 			APTR_CAST<TileActor>(tile)->set_RB(Vector2{ 1.f / 4, 1.f / 17 });

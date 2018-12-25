@@ -31,7 +31,8 @@ namespace K
 	enum class ANIMATION_OPTION
 	{
 		LOOP,
-		DESTROY
+		DESTROY,
+		ONCE
 	};
 
 	enum class TILE_TYPE

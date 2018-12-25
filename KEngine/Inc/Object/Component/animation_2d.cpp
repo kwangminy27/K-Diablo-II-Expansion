@@ -46,6 +46,13 @@ void K::Animation2D::Update(float _time)
 			case ANIMATION_OPTION::DESTROY:
 				owner()->set_tag_state(TAG_STATE::DEAD);
 				break;
+
+			case ANIMATION_OPTION::ONCE:
+				if (callback_)
+					callback_();
+
+				owner()->set_state(ACTOR_STATE::NEUTRAL);
+				break;
 			}
 		}
 	}
@@ -116,7 +123,7 @@ void K::Animation2D::SetCurrentClip(std::string const& _tag, int _dir_idx)
 {
 	auto clip = FindClip(_tag);
 
-	if(nullptr == clip)
+	if (nullptr == clip)
 		throw std::exception{ "Animation2D::SetCurrentClip" };
 
 	if (current_clip_ == clip && dir_idx_ == _dir_idx)
@@ -124,6 +131,9 @@ void K::Animation2D::SetCurrentClip(std::string const& _tag, int _dir_idx)
 
 	if (current_clip_ == clip)
 	{
+		if (-1 == _dir_idx)
+			return;
+
 		Vector3 frame_size = Vector3{ current_clip_->frame_vector.at(0).RB.x, current_clip_->frame_vector.at(0).RB.y, 1.f };
 		int frame_count_x = static_cast<int>((current_clip_->width / frame_size.x));
 
@@ -136,16 +146,29 @@ void K::Animation2D::SetCurrentClip(std::string const& _tag, int _dir_idx)
 		current_clip_ = clip;
 
 		Vector3 frame_size = Vector3{ current_clip_->frame_vector.at(0).RB.x, current_clip_->frame_vector.at(0).RB.y, 1.f };
-		int frame_count_x = static_cast<int>((current_clip_->width / frame_size.x));
 
 		CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_scaling(frame_size);
 		CPTR_CAST<Material>(owner()->FindComponent(TAG{ MATERIAL, 0 }))->SetTexture(current_clip_->texture_tag, 0, 0, 0);
 
-		frame_idx_ = frame_count_x * _dir_idx;
-		elapsed_time_ = 0.f;
+		if (_dir_idx == -1)
+		{
 
-		dir_idx_ = _dir_idx;
-		dir_count_ = static_cast<int>(current_clip_->frame_vector.size()) / frame_count_x;
+			frame_idx_ = 0;
+			elapsed_time_ = 0.f;
+
+			dir_idx_ = 0;
+			dir_count_ = 1;
+		}
+		else
+		{
+			int frame_count_x = static_cast<int>((current_clip_->width / frame_size.x));
+
+			frame_idx_ = frame_count_x * _dir_idx;
+			elapsed_time_ = 0.f;
+
+			dir_idx_ = _dir_idx;
+			dir_count_ = static_cast<int>(current_clip_->frame_vector.size()) / frame_count_x;
+		}
 	}
 }
 
@@ -159,12 +182,18 @@ void K::Animation2D::SetDefaultClip(std::string const& _tag, int _dir_idx)
 	default_clip_ = clip;
 }
 
+void K::Animation2D::set_callback(std::function<void()> const& _callback)
+{
+	callback_ = _callback;
+}
+
 K::Animation2D::Animation2D(Animation2D const& _other) : Component(_other)
 {
 	dir_idx_ = _other.dir_idx_;
 	dir_count_ = _other.dir_count_;
 	elapsed_time_ = _other.elapsed_time_;
 	frame_idx_ = _other.frame_idx_;
+	callback_ = _other.callback_;
 	current_clip_ = _other.current_clip_;
 	default_clip_ = _other.default_clip_;
 	animation_2d_clip_map_ = _other.animation_2d_clip_map_;
@@ -176,6 +205,7 @@ K::Animation2D::Animation2D(Animation2D&& _other) noexcept : Component(std::move
 	dir_count_ = std::move(_other.dir_count_);
 	elapsed_time_ = std::move(_other.elapsed_time_);
 	frame_idx_ = std::move(_other.frame_idx_);
+	callback_ = std::move(_other.callback_);
 	current_clip_ = std::move(_other.current_clip_);
 	default_clip_ = std::move(_other.default_clip_);
 	animation_2d_clip_map_ = std::move(_other.animation_2d_clip_map_);

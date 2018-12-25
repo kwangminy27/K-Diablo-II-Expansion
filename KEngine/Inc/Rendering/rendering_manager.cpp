@@ -106,6 +106,23 @@ void K::RenderingManager::Initialize()
 		render_target_blend_desc_vector.push_back(std::move(rtbd));
 
 		_CreateBlendState(ALPHA_BLEND, false, false, render_target_blend_desc_vector);
+
+		// RGB_ADD_BLEND
+		render_target_blend_desc_vector.clear();
+
+		rtbd = D3D11_RENDER_TARGET_BLEND_DESC{};
+		rtbd.BlendEnable = true;
+		rtbd.SrcBlend = D3D11_BLEND_ONE;
+		rtbd.DestBlend = D3D11_BLEND_ONE;
+		rtbd.BlendOp = D3D11_BLEND_OP_ADD;
+		rtbd.SrcBlendAlpha = D3D11_BLEND_ONE;
+		rtbd.DestBlendAlpha = D3D11_BLEND_ZERO;
+		rtbd.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		rtbd.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+		render_target_blend_desc_vector.push_back(std::move(rtbd));
+
+		_CreateBlendState(RGB_ADD_BLEND, false, false, render_target_blend_desc_vector);
 #pragma endregion
 
 #pragma region ConstantBuffer
