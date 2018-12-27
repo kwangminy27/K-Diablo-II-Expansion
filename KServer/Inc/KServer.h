@@ -3,6 +3,8 @@
 // KEngine
 #include <KEngine.h>
 #include <core.h>
+#include <path_manager.h>
+#include <input_manager.h>
 #include <World/world_manager.h>
 #include <World/level.h>
 #include <World/layer.h>
@@ -20,7 +22,10 @@
 #include <Object/Component/Collider/collider_circle.h>
 #include <Object/Component/Collider/collider_aabb.h>
 #include <Object/Component/Collider/collider_oobb.h>
+#include <navigation_manager.h>
 #include <registry_manager.h>
+#include <replication_manager.h>
+#include <connection_manager.h>
 
 // Base
 #include "Base/enum.h"

@@ -20,6 +20,10 @@ namespace K
 
 		void ShutDown();
 
+		void SetNonBlockingMode(bool _flag);
+
+		SOCKET const& socket() const;
+
 	private:
 		TCPSocket(SOCKET _socket);
 		TCPSocket(TCPSocket&& _other) noexcept;

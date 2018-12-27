@@ -444,11 +444,17 @@ std::pair<int, int> K::TileMapActor::_GetIsometricTileIndex(Vector3 const& _posi
 
 	auto slope = tile_size_.y / tile_size_.x;
 
-	auto y_intercept_for_x_idx = _position.y + slope * _position.x;
-	auto y_intercept_for_y_idx = _position.y - slope * _position.x;
+	auto y_intercept_for_x_idx = _position.y + slope * _position.x + tile_size_.y * 0.5f;
+	auto y_intercept_for_y_idx = _position.y - slope * _position.x + tile_size_.y * 0.5f;
 
-	index.first = static_cast<int>((y_intercept_for_x_idx + tile_size_.y * 0.5f) / tile_size_.y);
-	index.second = static_cast<int>((y_intercept_for_y_idx + tile_size_.y * 0.5f) / tile_size_.y);
+	index.first = static_cast<int>(y_intercept_for_x_idx / tile_size_.y);
+	index.second = static_cast<int>(y_intercept_for_y_idx / tile_size_.y);
+
+	if (y_intercept_for_x_idx < 0.f)
+		index.first -= 1;
+
+	if (y_intercept_for_y_idx < 0.f)
+		index.second -= 1;
 
 	return index;
 }

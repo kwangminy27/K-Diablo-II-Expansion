@@ -2,13 +2,35 @@
 
 namespace K
 {
+	enum class IO_OPERATION
+	{
+		RECV,
+		SEND
+	};
+
+	struct OverlappedEx
+	{
+		WSAOVERLAPPED wsa_overlapped;
+		WSABUF wsa_buf;
+		IO_OPERATION operation;
+		uint8_t buffer[MTU_SIZE];
+	};
+
 	struct Connection
 	{
 		int id;
-		std::shared_ptr<TCPSocket> socket;
+		bool connection_flag;
+		uint32_t packet_size;
+		uint32_t previous_data;
+		uint8_t buffer[MTU_SIZE];
+		OverlappedEx overlapped_ex;
 		InputMemoryStream imstream;
 		OutputMemoryStream omstream;
+		std::shared_ptr<TCPSocket> tcp_socket;
 	};
+
+	void WorkerThreadFunc(std::function<void(int, uint8_t*)> const& _function);
+	void AcceptThreadFunc();
 
 	class K_ENGINE_DLL ConnectionManager : public Singleton<ConnectionManager>
 	{
@@ -16,10 +38,18 @@ namespace K
 	public:
 		virtual void Initialize() override;
 
+		void RunIOCP(std::function<void(int, uint8_t*)> const& _function);
+
+		void HandlePacket(std::function<void(int, uint8_t*)> const& _function, int _id, uint8_t* _packet);
+		void HandlePacket(std::function<void(int, uint8_t*)> const& _function, uint8_t* _packet);
+
 		std::unique_ptr<Connection> const& FindConnection(int _id) const;
 
 		void AddConnection(std::unique_ptr<Connection>& _connection);
 		void RemoveConnection(std::unique_ptr<Connection> const& _connection);
+
+		HANDLE iocp() const;
+		std::vector<std::unique_ptr<Connection>>& connection_vector();
 
 		static std::unique_ptr<Connection> connection_dummy_;
 
@@ -32,6 +62,7 @@ namespace K
 
 		virtual void _Finalize() override;
 
-		std::list<std::unique_ptr<Connection>> connection_list_{};
+		HANDLE iocp_{};
+		std::vector<std::unique_ptr<Connection>> connection_vector_{};
 	};
 }

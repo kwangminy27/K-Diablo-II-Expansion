@@ -15,6 +15,8 @@ namespace K
 
 		void ShutDown();
 
+		SOCKET const& socket() const;
+
 	private:
 		UDPSocket(SOCKET _socket);
 		UDPSocket(UDPSocket&& _other) noexcept;

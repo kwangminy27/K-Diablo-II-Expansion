@@ -37,6 +37,11 @@ void K::UDPSocket::ShutDown()
 		std::exception{ "UDPSocket::ShutDown" };
 }
 
+SOCKET const& K::UDPSocket::socket() const
+{
+	return socket_;
+}
+
 K::UDPSocket::UDPSocket(SOCKET _socket)
 {
 	socket_ = _socket;

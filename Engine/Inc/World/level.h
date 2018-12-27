@@ -32,10 +32,10 @@ namespace K
 		virtual void _Collision(float _time);
 		virtual void _Render(float _time);
 
-		void __Input(float _time);
-		void __Update(float _time);
-		void __Collision(float _time);
-		void __Render(float _time);
+		virtual void __Input(float _time);
+		virtual void __Update(float _time);
+		virtual void __Collision(float _time);
+		virtual void __Render(float _time);
 
 	private:
 		std::list<std::shared_ptr<Layer>> layer_list_{};

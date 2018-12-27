@@ -51,7 +51,10 @@ int K::TCPSocket::Receive(void* _buffer, int _size)
 	auto result = recv(socket_, static_cast<char*>(_buffer), _size, NULL);
 
 	if (SOCKET_ERROR == result)
-		throw std::exception{ "TCPSocket::Receive" };
+	{
+		if(WSAEWOULDBLOCK != WSAGetLastError())
+			throw std::exception{ "TCPSocket::Receive" };
+	}
 
 	return result;
 }
@@ -60,6 +63,19 @@ void K::TCPSocket::ShutDown()
 {
 	if (SOCKET_ERROR == shutdown(socket_, SD_BOTH))
 		throw std::exception{ "TCPSocket::ShutDown" };
+}
+
+void K::TCPSocket::SetNonBlockingMode(bool _flag)
+{
+	u_long arg = _flag;
+
+	if (SOCKET_ERROR == ioctlsocket(socket_, FIONBIO, &arg))
+		throw std::exception{ "TCPSocket::SetNonBlockingMode" };
+}
+
+SOCKET const& K::TCPSocket::socket() const
+{
+	return socket_;
 }
 
 K::TCPSocket::TCPSocket(SOCKET _socket)

@@ -41,7 +41,7 @@ void K::ReplicationManager::ReceiveWorld(InputMemoryStream& _imstream)
 	auto const& world_manager = WorldManager::singleton();
 	auto const& registry_manager = RegistryManager::singleton();
 
-	auto const& layer = world_manager->FindLayer({ "DefaultLayer", 0 });
+	auto const& layer = world_manager->FindLayer({ "DefaultLayer", 1 });
 
 	size_t size{};
 	_imstream.Serialize(size);

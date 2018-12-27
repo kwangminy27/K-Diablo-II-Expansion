@@ -27,6 +27,9 @@ void K::TextManager::Initialize()
 		_CreateSolidColorBrush(DirectX::Colors::Blue.v);
 		_CreateSolidColorBrush(DirectX::Colors::Black.v);
 		_CreateSolidColorBrush(DirectX::Colors::White.v);
+
+		_CreateSolidColorBrush(DirectX::Colors::OrangeRed.v);
+		_CreateSolidColorBrush(DirectX::Colors::MistyRose.v);
 	}
 	catch (std::exception const& _e)
 	{

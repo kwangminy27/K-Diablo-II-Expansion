@@ -56,6 +56,9 @@
 // KNetwork
 #include <KNetwork.h>
 #include <Socket/socket_manager.h>
+#include <Socket/socket_address.h>
+#include <Socket/tcp_socket.h>
+#include <Socket/udp_socket.h>
 #include <Stream/memory_stream.h>
 
 // Base

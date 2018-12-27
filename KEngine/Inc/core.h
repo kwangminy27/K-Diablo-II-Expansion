@@ -13,8 +13,14 @@ namespace K
 		void Initialize(std::wstring const& _class_name, std::wstring const& _window_name, HINSTANCE _instance);
 		void Initialize(HINSTANCE _instance, HWND _window);
 
+		void RunServer(std::function<void(int, uint8_t*)> const& _function);
+		void RunClient(std::function<void(int, uint8_t*)> const& _function);
 		void Run();
 		void Logic();
+
+		static bool shutdown();
+		static bool chat();
+		static std::wstring& chat_message();
 
 		HWND window() const;
 
@@ -37,6 +43,10 @@ namespace K
 		void _Render(float _time);
 
 		static bool shutdown_;
+		static bool chat_;
+		static bool hangul_;
+		static std::wstring chat_message_;
+
 		HINSTANCE instance_{};
 		HWND window_{};
 	};

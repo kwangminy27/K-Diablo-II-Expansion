@@ -10,6 +10,8 @@
 #include <Object/Actor/Player/sorceress.h>
 #include <Object/Actor/Player/amazon.h>
 
+#include "Actor/text_actor.h"
+
 void K::DefaultLevel::Initialize()
 {
 	try
@@ -17,7 +19,8 @@ void K::DefaultLevel::Initialize()
 		auto tile_layer = CreateLayer({ "TileLayer", 0 });
 		auto layer = CreateLayer({ "DefaultLayer", 1 });
 		auto ui_layer = CreateLayer({ "UILayer", 2 });
-
+		auto text_layer = CreateLayer({ "TextLayer", 3 });
+		
 		auto const& object_manager = ObjectManager::singleton();
 		auto const& registry_manager = RegistryManager::singleton();
 
@@ -72,7 +75,6 @@ void K::DefaultLevel::Initialize()
 			actor->Serialize(imstream);
 			layer->AddActor(actor);
 		}
-		//
 
 		//auto cow = object_manager->CreateActor<Cow>(TAG{ "Cow", object_manager->counter() });
 		//layer->AddActor(cow);
@@ -103,6 +105,42 @@ void K::DefaultLevel::Initialize()
 		//auto amazon = object_manager->CreateActor<Amazon>(TAG{ "Amazon", object_manager->counter() });
 		//CPTR_CAST<Transform>(amazon->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, -150.f, 0.f });
 		//layer->AddActor(amazon);
+
+		auto text = object_manager->CreateActor<TextActor>(TAG{ "TextActor", 0 });
+		auto const& text_transform = CPTR_CAST<Transform>(text->FindComponent(TAG{ TRANSFORM, 0 }));
+		text_transform->set_local_translation(Vector3{ 0.f, 25.f, 0.f });
+		text->set_ui_flag(true);
+		text_layer->AddActor(text);
+
+		auto text_1 = object_manager->CreateActor<TextActor>(TAG{ "TextActor", 1 });
+		auto const& text_1_transform = CPTR_CAST<Transform>(text_1->FindComponent(TAG{ TRANSFORM, 0 }));
+		text_1_transform->set_local_translation(Vector3{ 0.f, 50.f, 0.f });
+		text_1->set_ui_flag(true);
+		text_layer->AddActor(text_1);
+
+		auto text_2 = object_manager->CreateActor<TextActor>(TAG{ "TextActor", 2 });
+		auto const& text_2_transform = CPTR_CAST<Transform>(text_2->FindComponent(TAG{ TRANSFORM, 0 }));
+		text_2_transform->set_local_translation(Vector3{ 0.f, 75.f, 0.f });
+		text_2->set_ui_flag(true);
+		text_layer->AddActor(text_2);
+
+		auto text_3 = object_manager->CreateActor<TextActor>(TAG{ "TextActor", 3 });
+		auto const& text_3_transform = CPTR_CAST<Transform>(text_3->FindComponent(TAG{ TRANSFORM, 0 }));
+		text_3_transform->set_local_translation(Vector3{ 0.f, 100.f, 0.f });
+		text_3->set_ui_flag(true);
+		text_layer->AddActor(text_3);
+
+		auto text_4 = object_manager->CreateActor<TextActor>(TAG{ "TextActor", 4 });
+		auto const& text_4_transform = CPTR_CAST<Transform>(text_4->FindComponent(TAG{ TRANSFORM, 0 }));
+		text_4_transform->set_local_translation(Vector3{ 0.f, 125.f, 0.f });
+		text_4->set_ui_flag(true);
+		text_layer->AddActor(text_4);
+
+		auto text_5 = object_manager->CreateActor<TextActor>(TAG{ "TextActor", 5 });
+		auto const& text_5_transform = CPTR_CAST<Transform>(text_5->FindComponent(TAG{ TRANSFORM, 0 }));
+		text_5_transform->set_local_translation(Vector3{ 0.f, 150.f, 0.f });
+		text_5->set_ui_flag(true);
+		text_layer->AddActor(text_5);
 	}
 	catch (std::exception const& _e)
 	{
@@ -133,4 +171,15 @@ void K::DefaultLevel::_Input(float _time)
 		auto const& sorceress = WorldManager::singleton()->FindActor(player_tag_);
 		APTR_CAST<Sorceress>(sorceress)->set_focus_flag((counter++) % 2);
 	}
+}
+
+void K::DefaultLevel::_Render(float _time)
+{
+	auto const& text = WorldManager::singleton()->FindActor(TAG{ "TextActor", 0 });
+	
+	auto chat_message = Core::singleton()->chat_message();
+
+	std::wstring message{ chat_message.begin(), chat_message.end() };
+
+	APTR_CAST<TextActor>(text)->set_text(message);
 }

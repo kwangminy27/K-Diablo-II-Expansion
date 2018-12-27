@@ -18,6 +18,7 @@ namespace K
 		virtual void _Finalize() override;
 
 		virtual void _Input(float _time) override;
+		virtual void _Render(float _time) override;
 
 		TAG player_tag_{};
 	};

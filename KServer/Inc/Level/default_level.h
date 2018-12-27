@@ -16,5 +16,11 @@ namespace K
 		DefaultLevel& operator=(DefaultLevel&&) noexcept = default;
 
 		virtual void _Finalize() override;
+
+		virtual void _Input(float _time) override;
+		virtual void _Update(float _time) override;
+		virtual void _Collision(float _time) override;
+
+		virtual void __Render(float _time) override;
 	};
 }

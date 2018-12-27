@@ -65,6 +65,8 @@ void K::Sorceress::Initialize()
 		auto navigator = object_manager->CreateComponent<Navigator>(TAG{ NAVIGATOR, 0 });
 		CPTR_CAST<Navigator>(navigator)->set_speed(320.f);
 		AddComponent(navigator);
+
+		set_state(ACTOR_STATE::NEUTRAL);
 	}
 	catch (std::exception const& _e)
 	{
@@ -114,11 +116,11 @@ void K::Sorceress::_Input(float _time)
 	auto position = CPTR_CAST<Transform>(FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
 	auto mouse_world_position = input_manager->mouse_world_position();
 
-	if (input_manager->KeyDown("Space"))
-	{
-		std::cout << "Position: " << static_cast<int>(position.x) << ", " << static_cast<int>(position.y) << std::endl;
-		std::cout << "Mouse Position: " << static_cast<int>(mouse_world_position.x) << ", " << static_cast<int>(mouse_world_position.y) << std::endl;
-	}
+	//if (input_manager->KeyDown("Space"))
+	//{
+	//	std::cout << "Position: " << static_cast<int>(position.x) << ", " << static_cast<int>(position.y) << std::endl;
+	//	std::cout << "Mouse Position: " << static_cast<int>(mouse_world_position.x) << ", " << static_cast<int>(mouse_world_position.y) << std::endl;
+	//}
 
 	auto const& navigator = CPTR_CAST<Navigator>(FindComponent(TAG{ NAVIGATOR, 0 }));
 
@@ -412,9 +414,15 @@ void K::Sorceress::_Input(float _time)
 			direction.Normalize();
 			navigator->set_direction(direction);
 
-			animation_2d->set_callback([this, direction]() {
+			animation_2d->set_callback([this, direction, mouse_world_position]() {
 				auto const& transform = CPTR_CAST<Transform>(FindComponent(TAG{ TRANSFORM, 0 }));
-				transform->set_local_translation(transform->local_translation() + direction * 600.f);
+
+				auto position = transform->world().Translation();
+
+				auto distance = Vector3::Distance(position, mouse_world_position);
+				distance = std::clamp(distance, 0.f, 600.f);
+
+				transform->set_local_translation(transform->local_translation() + direction * distance);
 			});
 
 			set_state(ACTOR_STATE::SPECIAL_CAST);

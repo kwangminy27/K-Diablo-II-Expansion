@@ -60,6 +60,48 @@ namespace K
 	constexpr auto COLLIDER = "Collider";
 	constexpr auto NAVIGATOR = "Navigator";
 
+	//////////////////// Constant ////////////////////
+	const auto MTU_SIZE = 1024;
+	const auto USER_SIZE = 100;
+	const auto MAX_MESSAGE_SIZE = 128;
+
+	//////////////////// Protocol ////////////////////
+	const auto CS_LOGIN = 1;
+	const auto CS_CHAT = 2;
+
+	const auto SC_LOGIN = 1;
+	const auto SC_CHAT = 2;
+
+	struct CS_PACKET_LOGIN
+	{
+		uint32_t size;
+		uint8_t type;
+	};
+
+	struct SC_PACKET_LOGIN
+	{
+		uint32_t size;
+		uint8_t type;
+		uint8_t id;
+	};
+
+	struct CS_PACKET_CHAT
+	{
+		uint32_t size;
+		uint8_t type;
+		wchar_t message[MAX_MESSAGE_SIZE];
+	};
+
+	struct SC_PACKET_CHAT
+	{
+		uint32_t size;
+		uint8_t type;
+		uint8_t id;
+		wchar_t message[MAX_MESSAGE_SIZE];
+	};
+
+	////////////////////////////////////////////////////////////
+
 	struct VertexColor
 	{
 		Vector3 position;

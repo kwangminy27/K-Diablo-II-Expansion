@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor\default_actor.cpp" />
+    <ClCompile Include="Actor\text_actor.cpp" />
     <ClCompile Include="Component\default_component.cpp" />
     <ClCompile Include="KClient.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -47,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\default_actor.h" />
+    <ClInclude Include="Actor\text_actor.h" />
     <ClInclude Include="Base\enum.h" />
     <ClInclude Include="Component\default_component.h" />
     <ClInclude Include="KClient.h" />
