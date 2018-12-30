@@ -120,7 +120,7 @@ void K::Core::RunClient(std::function<void(int, uint8_t*)> const& _function)
 	auto client_socket = socket_manager->CreateTCPSocket();
 
 	uint32_t ip_address{};
-	InetPton(AF_INET, L"192.168.219.102", &ip_address);
+	InetPton(AF_INET, L"192.168.219.103", &ip_address);
 	SocketAddress server_address{ ntohl(ip_address), 21027 };
 
 	client_socket->Connect(server_address);

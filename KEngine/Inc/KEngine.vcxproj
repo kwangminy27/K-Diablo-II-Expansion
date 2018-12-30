@@ -72,11 +72,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>../Bin/</OutDir>
-    <IntDir>../Obj/</IntDir>
-    <TargetName>$(ProjectName)_Debug</TargetName>
-    <IncludePath>$(SolutionDir)Common/Inc/;$(SolutionDir)Physics/Inc/;$(SolutionDir)Network/Inc/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Common/Bin/;$(SolutionDir)Physics/Bin/;$(SolutionDir)Network/Bin/;$(LibraryPath)</LibraryPath>
+    <OutDir>../Bin/Debug/</OutDir>
+    <IntDir>../Obj/Debug/</IntDir>
+    <IncludePath>$(SolutionDir)_Common/Inc/;$(SolutionDir)_Physics/Inc/;$(SolutionDir)_Network/Inc/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -86,22 +84,21 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>../Bin/</OutDir>
-    <IntDir>../Obj/</IntDir>
-    <IncludePath>$(SolutionDir)Common/Inc/;$(SolutionDir)Physics/Inc/;$(SolutionDir)Network/Inc/;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Common/Bin/;$(SolutionDir)Physics/Bin/;$(SolutionDir)Network/Bin/;$(LibraryPath)</LibraryPath>
+    <OutDir>../Bin/Release/</OutDir>
+    <IntDir>../Obj/Release/</IntDir>
+    <IncludePath>$(SolutionDir)_Common/Inc/;$(SolutionDir)_Physics/Inc/;$(SolutionDir)_Network/Inc/;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>K_ENGINE_EXPORT;_DEBUG;KENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)DirectXTK/Inc/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>KEngine.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>K_ENGINE_EXPORT;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -148,12 +145,12 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>K_ENGINE_EXPORT;NDEBUG;KENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)DirectXTK/Inc/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>KEngine.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>K_ENGINE_EXPORT;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

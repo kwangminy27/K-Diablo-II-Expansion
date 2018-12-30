@@ -116,17 +116,13 @@ void K::IceOrb::_Update(float _time)
 	auto angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction_)));
 	float isometric_correction_factor = sqrtf(1.f - cos(DirectX::XMConvertToRadians(angle)) * cos(DirectX::XMConvertToRadians(angle)) * 0.25f) * 0.5f;
 
-	transform->set_local_translation(local_translation + Vector3{ direction_.x, direction_.y * isometric_correction_factor, direction_.z } *speed_ * _time);
-
-	range_ -= speed_ * _time;
-
 	auto const& object_manager = ObjectManager::singleton();
 
 	auto position = transform->world().Translation();
 
 	elapsed_time_ += _time;
 
-	if (elapsed_time_ >= interval_time_)
+	if (elapsed_time_ >= interval_time_ && once_flag_)
 	{
 		for (auto i = 0; i < 4; ++i)
 		{
@@ -184,5 +180,11 @@ void K::IceOrb::_Update(float _time)
 		animation_2d->SetCurrentClip("ice_orb_explosion", -1);
 
 		once_flag_ = false;
+	}
+	else if(once_flag_)
+	{
+		transform->set_local_translation(local_translation + Vector3{ direction_.x, direction_.y * isometric_correction_factor, direction_.z } *speed_ * _time);
+
+		range_ -= speed_ * _time;
 	}
 }
