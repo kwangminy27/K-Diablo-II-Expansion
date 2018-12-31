@@ -62,9 +62,6 @@ void K::Cow::Initialize()
 				set_target(_dest->owner());
 		}, COLLISION_CALLBACK_TYPE::ENTER);
 		CPTR_CAST<ColliderCircle>(view_range)->AddCallback([this](Collider* _src, Collider* _dest, float _time) {
-
-		}, COLLISION_CALLBACK_TYPE::STAY);
-		CPTR_CAST<ColliderCircle>(view_range)->AddCallback([this](Collider* _src, Collider* _dest, float _time) {
 			if (target_.expired())
 				return;
 
@@ -81,6 +78,8 @@ void K::Cow::Initialize()
 		auto navigator = object_manager->CreateComponent<Navigator>(TAG{ NAVIGATOR, 0 });
 		CPTR_CAST<Navigator>(navigator)->set_speed(150.f);
 		AddComponent(navigator);
+
+		set_state(ACTOR_STATE::NEUTRAL);
 
 		set_hp(100.f);
 		set_speed(150.f);

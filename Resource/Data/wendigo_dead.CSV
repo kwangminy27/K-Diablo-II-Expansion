@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-wendigo_dead,wendigo_dead,1,0,222,904,0.5
+wendigo_dead,wendigo_dead,1,1,222,904,4
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,222,113
 0,0,222,113,,,
