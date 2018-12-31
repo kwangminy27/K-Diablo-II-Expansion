@@ -20,6 +20,8 @@ namespace K
 		virtual void _Input(float _time) override;
 		virtual void _Render(float _time) override;
 
+		//virtual void __Collision(float _time) override;
+
 		TAG player_tag_{};
 	};
 }

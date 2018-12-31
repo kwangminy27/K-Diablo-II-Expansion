@@ -16,7 +16,8 @@ namespace K
 		RUN,
 		SPECIAL_CAST,
 		SPECIAL1,
-		WALK
+		WALK,
+		MAX
 	};
 
 	class K_ENGINE_DLL Actor : public Tag, public std::enable_shared_from_this<Actor>

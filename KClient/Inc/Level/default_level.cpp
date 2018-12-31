@@ -24,8 +24,24 @@ void K::DefaultLevel::Initialize()
 		auto const& object_manager = ObjectManager::singleton();
 		auto const& registry_manager = RegistryManager::singleton();
 
-		registry_manager->AddActorGenerator({ "DefaultActor" }, [&object_manager](TAG const& _tag) -> APTR {
-			return object_manager->CreateActor<DefaultActor>(_tag);
+		registry_manager->AddActorGenerator({ "Cow" }, [&object_manager](TAG const& _tag) -> APTR {
+			return object_manager->CreateActor<Cow>(_tag);
+		});
+
+		registry_manager->AddActorGenerator({ "Wendigo" }, [&object_manager](TAG const& _tag) -> APTR {
+			return object_manager->CreateActor<Wendigo>(_tag);
+		});
+
+		registry_manager->AddActorGenerator({ "FallenShaman" }, [&object_manager](TAG const& _tag) -> APTR {
+			return object_manager->CreateActor<FallenShaman>(_tag);
+		});
+
+		registry_manager->AddActorGenerator({ "Andariel" }, [&object_manager](TAG const& _tag) -> APTR {
+			return object_manager->CreateActor<Andariel>(_tag);
+		});
+
+		registry_manager->AddActorGenerator({ "Akara" }, [&object_manager](TAG const& _tag) -> APTR {
+			return object_manager->CreateActor<Akara>(_tag);
 		});
 
 		// Map & Monster ·Îµå
@@ -49,32 +65,32 @@ void K::DefaultLevel::Initialize()
 		NavigationManager::singleton()->AddTileMap(APTR_CAST<TileMapActor>(tile_map));
 		tile_layer->AddActor(tile_map);
 
-		size_t actor_size{};
-		imstream.Serialize(actor_size);
+		//size_t actor_size{};
+		//imstream.Serialize(actor_size);
 
-		for (size_t i = 0; i < actor_size; ++i)
-		{
-			K::TAG tag{};
+		//for (size_t i = 0; i < actor_size; ++i)
+		//{
+		//	K::TAG tag{};
 
-			imstream.Serialize(tag.first);
-			imstream.Serialize(tag.second);
+		//	imstream.Serialize(tag.first);
+		//	imstream.Serialize(tag.second);
 
-			K::APTR actor{};
+		//	K::APTR actor{};
 
-			if (tag.first == "Cow")
-				actor = object_manager->CreateActor<K::Cow>(tag);
-			else if (tag.first == "Wendigo")
-				actor = object_manager->CreateActor<K::Wendigo>(tag);
-			else if (tag.first == "FallenShaman")
-				actor = object_manager->CreateActor<K::FallenShaman>(tag);
-			else if (tag.first == "Andariel")
-				actor = object_manager->CreateActor<K::Andariel>(tag);
-			else if (tag.first == "Akara")
-				actor = object_manager->CreateActor<K::Akara>(tag);
+		//	if (tag.first == "Cow")
+		//		actor = object_manager->CreateActor<K::Cow>(tag);
+		//	else if (tag.first == "Wendigo")
+		//		actor = object_manager->CreateActor<K::Wendigo>(tag);
+		//	else if (tag.first == "FallenShaman")
+		//		actor = object_manager->CreateActor<K::FallenShaman>(tag);
+		//	else if (tag.first == "Andariel")
+		//		actor = object_manager->CreateActor<K::Andariel>(tag);
+		//	else if (tag.first == "Akara")
+		//		actor = object_manager->CreateActor<K::Akara>(tag);
 
-			actor->Serialize(imstream);
-			layer->AddActor(actor);
-		}
+		//	actor->Serialize(imstream);
+		//	layer->AddActor(actor);
+		//}
 
 		//auto cow = object_manager->CreateActor<Cow>(TAG{ "Cow", object_manager->counter() });
 		//layer->AddActor(cow);
@@ -183,3 +199,7 @@ void K::DefaultLevel::_Render(float _time)
 
 	APTR_CAST<TextActor>(text)->set_text(message);
 }
+
+//void K::DefaultLevel::__Collision(float _time)
+//{
+//};

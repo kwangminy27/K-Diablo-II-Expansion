@@ -27,6 +27,8 @@ namespace K
 		void set_speed(float _speed);
 		void set_direction(Vector3 const& _direction);
 
+		void ClearPath();
+
 	private:
 		Navigator() = default;
 		Navigator(Navigator const& _other);

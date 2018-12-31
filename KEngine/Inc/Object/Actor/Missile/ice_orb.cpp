@@ -113,9 +113,6 @@ void K::IceOrb::_Update(float _time)
 
 	auto local_translation = transform->local_translation();
 
-	auto angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction_)));
-	float isometric_correction_factor = sqrtf(1.f - cos(DirectX::XMConvertToRadians(angle)) * cos(DirectX::XMConvertToRadians(angle)) * 0.25f) * 0.5f;
-
 	auto const& object_manager = ObjectManager::singleton();
 
 	auto position = transform->world().Translation();
@@ -126,9 +123,7 @@ void K::IceOrb::_Update(float _time)
 	{
 		for (auto i = 0; i < 4; ++i)
 		{
-			angle_ += 130.f;
-
-			angle_ = static_cast<float>(static_cast<int>(angle_) % 360);
+			angle_ += 67.5f;
 
 			auto direction = Vector3::TransformNormal(-Vector3::UnitY, Matrix::CreateRotationZ(-angle_));
 
@@ -138,6 +133,8 @@ void K::IceOrb::_Update(float _time)
 
 			APTR_CAST<IceBolt>(ice_bolt)->set_direction(direction);
 			ice_bolt_transform->set_local_translation(position);
+
+			angle_ = static_cast<float>(static_cast<int>(angle_ + 11.25f) % 360);
 
 			int dir_idx = static_cast<int>(angle_ / 22.5f);
 
@@ -152,13 +149,13 @@ void K::IceOrb::_Update(float _time)
 
 	if (range_ < 0.f && once_flag_)
 	{
+		float temp_angle{};
+
 		for (auto i = 0; i < 16; ++i)
 		{
-			angle_ += 130.f;
+			temp_angle = 22.5f * i;
 
-			angle_ = static_cast<float>(static_cast<int>(angle_) % 360);
-
-			auto direction = Vector3::TransformNormal(-Vector3::UnitY, Matrix::CreateRotationZ(-angle_));
+			auto direction = Vector3::TransformNormal(-Vector3::UnitY, Matrix::CreateRotationZ(-temp_angle));
 
 			auto ice_bolt = object_manager->CreateActor<IceBolt>(TAG{ "IceBolt", 0 });
 			auto const& ice_bolt_transform = CPTR_CAST<Transform>(ice_bolt->FindComponent(TAG{ TRANSFORM, 0 }));
@@ -168,7 +165,7 @@ void K::IceOrb::_Update(float _time)
 			APTR_CAST<IceBolt>(ice_bolt)->set_spin_flag(true);
 			ice_bolt_transform->set_local_translation(position);
 
-			int dir_idx = static_cast<int>(angle_ / 22.5f);
+			int dir_idx = static_cast<int>((static_cast<int>(temp_angle + 11.25f) / 360) / 22.5f);
 
 			ice_bolt_animation_2d->SetCurrentClip("ice_bolt", dir_idx);
 
@@ -183,7 +180,7 @@ void K::IceOrb::_Update(float _time)
 	}
 	else if(once_flag_)
 	{
-		transform->set_local_translation(local_translation + Vector3{ direction_.x, direction_.y * isometric_correction_factor, direction_.z } *speed_ * _time);
+		transform->set_local_translation(local_translation + direction_ * speed_ * _time);
 
 		range_ -= speed_ * _time;
 	}

@@ -26,6 +26,18 @@ void K::DefaultLevel::Initialize()
 			return object_manager->CreateActor<Cow>(_tag);
 		});
 
+		registry_manager->AddActorGenerator({ "Wendigo" }, [&object_manager](TAG const& _tag) -> APTR {
+			return object_manager->CreateActor<Wendigo>(_tag);
+		});
+
+		registry_manager->AddActorGenerator({ "FallenShaman" }, [&object_manager](TAG const& _tag) -> APTR {
+			return object_manager->CreateActor<FallenShaman>(_tag);
+		});
+
+		registry_manager->AddActorGenerator({ "Andariel" }, [&object_manager](TAG const& _tag) -> APTR {
+			return object_manager->CreateActor<Andariel>(_tag);
+		});
+
 		// Map & Monster 로드
 		auto const& path_manager = PathManager::singleton();
 
@@ -96,15 +108,6 @@ void K::DefaultLevel::_Finalize()
 
 void K::DefaultLevel::_Input(float _time)
 {
-	auto const& input_manager = InputManager::singleton();
-	auto const& replication_manager = ReplicationManager::singleton();
-	auto const& connection_manager = ConnectionManager::singleton();
-
-	if (input_manager->KeyDown("Space"))
-	{
-		OutputMemoryStream omstream;
-		replication_manager->SendWorld(omstream); // 여기까지 수행되면 데이터가 omstream에 들어있게 됨
-	}
 }
 
 void K::DefaultLevel::_Update(float _time)

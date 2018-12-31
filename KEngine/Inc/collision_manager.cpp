@@ -52,6 +52,9 @@ void K::CollisionManager::Collision(float _time)
 					if (TAG_STATE::DISABLED == dest->tag_state() || TAG_STATE::DEAD == dest->tag_state())
 						continue;
 
+					if (src->owner()->tag().first == dest->owner()->tag().first)
+						continue;
+
 					if (src->_Collision(dest, _time))
 					{
 						if (src->_IsCollidedCollider(dest))

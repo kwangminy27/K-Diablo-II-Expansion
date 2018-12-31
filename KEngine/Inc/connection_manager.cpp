@@ -125,7 +125,7 @@ void K::WorkerThreadFunc(std::function<void(int, uint8_t*)> const& _function)
 			while (remained > 0)
 			{
 				if (0 == connection_vector.at(key)->packet_size)
-					connection_vector.at(key)->packet_size = *(reinterpret_cast<uint32_t*>(buffer));
+					connection_vector.at(key)->packet_size = buffer[0];
 
 				int required = connection_vector.at(key)->packet_size - connection_vector.at(key)->previous_data;
 

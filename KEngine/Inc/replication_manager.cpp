@@ -5,6 +5,7 @@
 #include "World/layer.h"
 #include "Object/Actor/actor.h"
 #include "registry_manager.h"
+#include "connection_manager.h"
 
 void K::ReplicationManager::Initialize()
 {
@@ -21,42 +22,43 @@ void K::ReplicationManager::Initialize()
 	}
 }
 
-void K::ReplicationManager::SendWorld(OutputMemoryStream& _omstream)
+void K::ReplicationManager::SendActor(int _id)
 {
-	auto size = replicable_actor_list_.size();
-	_omstream.Serialize(size);
-
 	for (auto& actor : replicable_actor_list_)
 	{
-		auto tag = actor->tag();
-		_omstream.Serialize(tag.first);
-		_omstream.Serialize(tag.second);
+		OutputMemoryStream omstream{};
 
-		actor->Serialize(_omstream);
+		auto tag = actor->tag();
+		omstream.Serialize(tag.first);
+		omstream.Serialize(tag.second);
+
+		actor->Serialize(omstream);
+
+		K::SC_PACKET_REPLICATION sc_packet_replication{};
+		sc_packet_replication.size = static_cast<uint8_t>(sizeof(K::SC_PACKET_REPLICATION) + omstream.head());
+		sc_packet_replication.type = K::SC_REPLICATION_CREATE;
+
+		auto const& connection = ConnectionManager::singleton()->connection_vector().at(_id);
+		connection->tcp_socket->Send(&sc_packet_replication, sizeof(K::SC_PACKET_REPLICATION));
+		connection->tcp_socket->Send(omstream.buffer()->data(), omstream.head());
 	}
 }
 
-void K::ReplicationManager::ReceiveWorld(InputMemoryStream& _imstream)
+void K::ReplicationManager::ReceiveActor(InputMemoryStream& _imstream)
 {
 	auto const& world_manager = WorldManager::singleton();
 	auto const& registry_manager = RegistryManager::singleton();
 
 	auto const& layer = world_manager->FindLayer({ "DefaultLayer", 1 });
 
-	size_t size{};
-	_imstream.Serialize(size);
+	TAG tag{};
+	_imstream.Serialize(tag.first);
+	_imstream.Serialize(tag.second);
 
-	for (auto i = 0; i < size; ++i)
-	{
-		TAG tag{};
-		_imstream.Serialize(tag.first);
-		_imstream.Serialize(tag.second);
+	auto actor = registry_manager->FindActorGenerator(tag.first)(tag);
+	actor->Serialize(_imstream);
 
-		auto actor = registry_manager->FindActorGenerator(tag.first)(tag);
-		actor->Serialize(_imstream);
-
-		layer->AddActor(actor);
-	}
+	layer->AddActor(actor);
 }
 
 void K::ReplicationManager::AddActor(APTR const& _actor)

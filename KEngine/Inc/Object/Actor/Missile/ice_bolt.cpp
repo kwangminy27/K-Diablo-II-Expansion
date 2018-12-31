@@ -4,6 +4,7 @@
 #include "Resource/resource_manager.h"
 #include "Rendering/rendering_manager.h"
 #include "Object/object_manager.h"
+#include "Object/Actor/Monster/monster_actor.h"
 #include "Object/Component/transform.h"
 #include "Object/Component/material.h"
 #include "Object/Component/renderer.h"
@@ -39,6 +40,26 @@ void K::IceBolt::Initialize()
 		AddComponent(animation_2d);
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });
+		CPTR_CAST<ColliderAABB>(collider)->AddCallback([](Collider* _src, Collider* _dest, float _time) {
+			auto caching_dest = _dest->owner();
+			auto dest_tag = caching_dest->tag().first;
+			
+			if (dest_tag == "Cow" || dest_tag == "Wendigo" || dest_tag == "FallenShaman" || dest_tag == "Andariel")
+			{
+				if (TAG{ COLLIDER, 0 } == _dest->tag())
+				{
+					APTR_CAST<MonsterActor>(caching_dest)->AddHp(-25.f);
+
+					if (APTR_CAST<MonsterActor>(caching_dest)->hp() <= 0.f)
+					{
+						if(ACTOR_STATE::DEAD != caching_dest->state())
+							caching_dest->set_state(ACTOR_STATE::DEATH);
+					}
+					else
+						caching_dest->set_state(ACTOR_STATE::GET_HIT);
+				}
+			}
+		}, COLLISION_CALLBACK_TYPE::ENTER);
 		AddComponent(collider);
 
 		set_speed(600.f);
@@ -125,16 +146,54 @@ void K::IceBolt::_Update(float _time)
 	{
 		if (range_ <= 1455.f && spin_point_1_)
 		{
-			direction_ = Vector3::TransformNormal(direction_, Matrix::CreateRotationZ(-60.f));
+			direction_ = Vector3::TransformNormal(direction_, Matrix::CreateRotationZ(-90.f));
 
 			angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction_)));
 
 			int dir_idx{};
 
 			if (direction_.x < 0.f)
-				dir_idx = static_cast<int>(angle / 22.5f);
+			{
+				if (angle < 11.25f)
+					dir_idx = 0;
+				else if (angle < 33.75f)
+					dir_idx = 1;
+				else if (angle < 56.25f)
+					dir_idx = 2;
+				else if (angle < 78.25f)
+					dir_idx = 3;
+				else if (angle < 100.75f)
+					dir_idx = 4;
+				else if (angle < 123.25f)
+					dir_idx = 5;
+				else if (angle < 145.75f)
+					dir_idx = 6;
+				else if (angle < 168.25f)
+					dir_idx = 7;
+				else
+					dir_idx = 8;
+			}
 			else
-				dir_idx = 15 - static_cast<int>(angle / 22.5f);
+			{
+				if (angle < 11.25f)
+					dir_idx = 0;
+				else if (angle < 33.75f)
+					dir_idx = 15;
+				else if (angle < 56.25f)
+					dir_idx = 14;
+				else if (angle < 78.25f)
+					dir_idx = 13;
+				else if (angle < 100.75f)
+					dir_idx = 12;
+				else if (angle < 123.25f)
+					dir_idx = 11;
+				else if (angle < 145.75f)
+					dir_idx = 10;
+				else if (angle < 168.25f)
+					dir_idx = 9;
+				else
+					dir_idx = 8;
+			}
 
 			auto const& animation_2d = CPTR_CAST<Animation2D>(FindComponent(TAG{ ANIMATION_2D, 0 }));
 			animation_2d->SetCurrentClip("ice_bolt", dir_idx);
@@ -143,16 +202,54 @@ void K::IceBolt::_Update(float _time)
 		}
 		else if(range_ <= 1410.f && spin_point_2_)
 		{
-			direction_ = Vector3::TransformNormal(direction_, Matrix::CreateRotationZ(-30.f));
+			direction_ = Vector3::TransformNormal(direction_, Matrix::CreateRotationZ(-45.f));
 
 			angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction_)));
 
 			int dir_idx{};
 
 			if (direction_.x < 0.f)
-				dir_idx = static_cast<int>(angle / 22.5f);
+			{
+				if (angle < 11.25f)
+					dir_idx = 0;
+				else if (angle < 33.75f)
+					dir_idx = 1;
+				else if (angle < 56.25f)
+					dir_idx = 2;
+				else if (angle < 78.25f)
+					dir_idx = 3;
+				else if (angle < 100.75f)
+					dir_idx = 4;
+				else if (angle < 123.25)
+					dir_idx = 5;
+				else if (angle < 145.75)
+					dir_idx = 6;
+				else if (angle < 168.25)
+					dir_idx = 7;
+				else
+					dir_idx = 8;
+			}
 			else
-				dir_idx = 15 - static_cast<int>(angle / 22.5f);
+			{
+				if (angle < 11.25f)
+					dir_idx = 0;
+				else if (angle < 33.75f)
+					dir_idx = 15;
+				else if (angle < 56.25f)
+					dir_idx = 14;
+				else if (angle < 78.25f)
+					dir_idx = 13;
+				else if (angle < 100.75f)
+					dir_idx = 12;
+				else if (angle < 123.25)
+					dir_idx = 11;
+				else if (angle < 145.75)
+					dir_idx = 10;
+				else if (angle < 168.25)
+					dir_idx = 9;
+				else
+					dir_idx = 8;
+			}
 
 			auto const& animation_2d = CPTR_CAST<Animation2D>(FindComponent(TAG{ ANIMATION_2D, 0 }));
 			animation_2d->SetCurrentClip("ice_bolt", dir_idx);
@@ -163,7 +260,7 @@ void K::IceBolt::_Update(float _time)
 			transform->set_local_translation(local_translation + Vector3{ direction_.x, direction_.y * isometric_correction_factor, direction_.z } * speed_ * _time);
 	}
 	else
-		transform->set_local_translation(local_translation + Vector3{ direction_.x, direction_.y * isometric_correction_factor, direction_.z } * speed_ * _time);
+		transform->set_local_translation(local_translation + direction_ * speed_ * _time);
 
 	if (range_ < 0.f)
 		set_tag_state(TAG_STATE::DEAD);

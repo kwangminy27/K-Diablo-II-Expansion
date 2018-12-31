@@ -49,7 +49,7 @@ void K::ResourceManager::Initialize()
 			collider_circle_vertices[i] = { cos(DirectX::XMConvertToRadians(i * 10.f)) * 0.5f, sin(DirectX::XMConvertToRadians(i * 10.f)) * 0.5f, 0.f };
 
 		_CreateMesh(
-			COLLIDER_CIRCLE, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+			COLLIDER_CIRCLE, D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP,
 			collider_circle_vertices, sizeof(Vector3), 37, D3D11_USAGE_DEFAULT
 		);
 

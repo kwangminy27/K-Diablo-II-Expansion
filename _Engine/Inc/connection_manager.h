@@ -20,8 +20,8 @@ namespace K
 	{
 		int id;
 		bool connection_flag;
-		uint32_t packet_size;
-		uint32_t previous_data;
+		uint8_t packet_size;
+		uint8_t previous_data;
 		uint8_t buffer[MTU_SIZE];
 		OverlappedEx overlapped_ex;
 		InputMemoryStream imstream;
@@ -41,7 +41,6 @@ namespace K
 		void RunIOCP(std::function<void(int, uint8_t*)> const& _function);
 
 		void HandlePacket(std::function<void(int, uint8_t*)> const& _function, int _id, uint8_t* _packet);
-		void HandlePacket(std::function<void(int, uint8_t*)> const& _function, uint8_t* _packet);
 
 		std::unique_ptr<Connection> const& FindConnection(int _id) const;
 

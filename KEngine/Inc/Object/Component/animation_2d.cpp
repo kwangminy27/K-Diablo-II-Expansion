@@ -51,7 +51,17 @@ void K::Animation2D::Update(float _time)
 				if (callback_)
 					callback_();
 
-				owner()->set_state(ACTOR_STATE::NEUTRAL);
+				switch (owner()->state())
+				{
+				case ACTOR_STATE::DEATH:
+					owner()->set_state(ACTOR_STATE::DEAD);
+					break;
+
+				default:
+					owner()->set_state(ACTOR_STATE::NEUTRAL);
+					break;
+				}
+				
 				break;
 			}
 		}

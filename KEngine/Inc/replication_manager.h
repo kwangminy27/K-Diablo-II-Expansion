@@ -11,8 +11,8 @@ namespace K
 	public:
 		virtual void Initialize() override;
 
-		void SendWorld(OutputMemoryStream& _omstream);
-		void ReceiveWorld(InputMemoryStream& _imstream);
+		void SendActor(int _id);
+		void ReceiveActor(InputMemoryStream& _imstream);
 
 		void AddActor(APTR const& _actor);
 		void RemoveActor(APTR const& _actor);

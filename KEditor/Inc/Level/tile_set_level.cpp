@@ -6,8 +6,8 @@
 
 #include "../MainFrm.h"
 
-K::Vector2 g_mouse_LT{};
-K::Vector2 g_mouse_RB{};
+K::Vector2 g_mouse_LT = K::Vector2{ (1.f / 4) * 2, (1.f / 17) * 14 };
+K::Vector2 g_mouse_RB = K::Vector2{ (1.f / 4) * 3, (1.f / 17) * 15 };
 
 void K::TileSetLevel::Initialize()
 {

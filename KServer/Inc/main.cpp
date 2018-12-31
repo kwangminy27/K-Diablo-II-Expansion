@@ -14,19 +14,25 @@ int WINAPI wWinMain(HINSTANCE _instance, HINSTANCE _prev_instance, PWSTR _cmd_li
 
 	core->RunServer([](int _id, uint8_t* _packet) {
 		auto const& connection_manager = K::ConnectionManager::singleton();
+		auto const& replication_manager = K::ReplicationManager::singleton();
 
-		uint8_t type = _packet[4];
+		uint8_t type = _packet[1];
 
 		if (K::CS_LOGIN == type)
 		{
+			//std::cout << "CS_LOGIN" << std::endl;
+
 			K::CS_PACKET_LOGIN cs_packet_login = *(reinterpret_cast<K::CS_PACKET_LOGIN*>(_packet));
 
-			std::wstring message = L"[System] Client " + std::to_wstring(_id) + L"이(가) 들어왔습니다.";
+			std::wstring message = L"[System] Client " + std::to_wstring(_id) + L"이(가) 접속했습니다.";
 
 			K::SC_PACKET_CHAT sc_packet_chat{};
-			sc_packet_chat.size = sizeof(K::SC_PACKET_CHAT);
+			sc_packet_chat.size = static_cast<uint8_t>(sizeof(K::SC_PACKET_CHAT));
 			sc_packet_chat.type = K::SC_CHAT;
 			sc_packet_chat.id = _id;
+
+			message.resize(K::MAX_MESSAGE_SIZE);
+			message.at(K::MAX_MESSAGE_SIZE - 1) = '\0';
 
 			for (auto i = 0; i < message.size(); ++i)
 			{
@@ -40,13 +46,20 @@ int WINAPI wWinMain(HINSTANCE _instance, HINSTANCE _prev_instance, PWSTR _cmd_li
 				if (connection->connection_flag)
 					connection->tcp_socket->Send(&sc_packet_chat, sizeof(K::SC_PACKET_CHAT));
 			}
+
+			replication_manager->SendActor(_id);
 		}
 		else if (K::CS_CHAT == type)
 		{
+			//std::cout << "CS_CHAT" << std::endl;
+
 			K::CS_PACKET_CHAT cs_packet_chat = *(reinterpret_cast<K::CS_PACKET_CHAT*>(_packet));
 
 			std::wstring client_message = cs_packet_chat.message;
 			
+			client_message.resize(K::MAX_MESSAGE_SIZE);
+			client_message.at(K::MAX_MESSAGE_SIZE - 1) = '\0';
+
 			std::wstring swapped_message{};
 			for (auto i = 0; i < client_message.size(); ++i)
 			{
@@ -58,9 +71,12 @@ int WINAPI wWinMain(HINSTANCE _instance, HINSTANCE _prev_instance, PWSTR _cmd_li
 			std::wstring message = L"Client " + std::to_wstring(_id) + L": " + swapped_message;
 			
 			K::SC_PACKET_CHAT sc_packet_chat{};
-			sc_packet_chat.size = sizeof(K::SC_PACKET_CHAT);
+			sc_packet_chat.size = static_cast<uint8_t>(sizeof(K::SC_PACKET_CHAT));
 			sc_packet_chat.type = K::SC_CHAT;
 			sc_packet_chat.id = _id;
+
+			message.resize(K::MAX_MESSAGE_SIZE);
+			message.at(K::MAX_MESSAGE_SIZE - 1) = '\0';
 
 			for (auto i = 0; i < message.size(); ++i)
 			{

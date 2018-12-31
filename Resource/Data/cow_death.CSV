@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-cow_death,cow_death,1,0,2114,1336,0.5
+cow_death,cow_death,1,2,2114,1336,0.5
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,,
 0,0,151,167,,,

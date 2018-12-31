@@ -40,7 +40,7 @@ void K::ColliderCircle::Update(float _time)
 	relative_info_.center.y = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling().y * 0.5f;
 
 	absolute_info_.center = position + relative_info_.center;
-	absolute_info_.radius = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling().Length() * 0.5f;
+	//absolute_info_.radius = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling().Length() * 0.5f;
 
 	min_ = absolute_info_.center - Vector3{ absolute_info_.radius, absolute_info_.radius, 0.f };
 	max_ = absolute_info_.center + Vector3{ absolute_info_.radius, absolute_info_.radius, 0.f };
@@ -59,7 +59,11 @@ void K::ColliderCircle::Render(float _time)
 	auto collider_position = absolute_info_.center;
 
 	TransformConstantBuffer transform_CB{};
-	transform_CB.world = Matrix::CreateScaling(CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling()) * Matrix::CreateTranslation(collider_position);
+	//transform_CB.world = Matrix::CreateScaling(CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling()) * Matrix::CreateTranslation(collider_position);
+	if (0.f == absolute_info_.radius)
+		transform_CB.world = Matrix::CreateScaling(CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling()) * Matrix::CreateTranslation(collider_position);
+	else
+		transform_CB.world = Matrix::CreateScaling(Vector3{ absolute_info_.radius * 2.f, absolute_info_.radius * 2.f, 0.f }) * Matrix::CreateTranslation(collider_position);
 	transform_CB.view = camera->view();
 	transform_CB.projection = camera->projection();
 	transform_CB.WVP = transform_CB.world * transform_CB.view * transform_CB.projection;

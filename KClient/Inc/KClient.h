@@ -24,6 +24,7 @@
 #include <Object/Component/Collider/collider_oobb.h>
 #include <navigation_manager.h>
 #include <registry_manager.h>
+#include <replication_manager.h>
 
 // Base
 #include "Base/enum.h"

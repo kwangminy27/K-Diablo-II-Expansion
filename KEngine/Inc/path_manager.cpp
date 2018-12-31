@@ -42,12 +42,11 @@ void K::PathManager::_CreateRootPath()
 {
 	std::filesystem::path path_buffer = std::filesystem::current_path();
 
-	path_buffer = path_buffer.parent_path();
-	path_buffer = path_buffer.parent_path();
-
 	bool is_resource_directory{};
 	while (false == is_resource_directory)
 	{
+		path_buffer = path_buffer.parent_path();
+
 		for (auto iter = std::filesystem::begin(std::filesystem::directory_iterator{ path_buffer });
 			iter != std::filesystem::end(std::filesystem::directory_iterator{ path_buffer }); ++iter)
 		{
@@ -57,6 +56,9 @@ void K::PathManager::_CreateRootPath()
 				break;
 			}
 		}
+
+		if (is_resource_directory)
+			break;
 	}
 
 	path_buffer /= "Resource\\";

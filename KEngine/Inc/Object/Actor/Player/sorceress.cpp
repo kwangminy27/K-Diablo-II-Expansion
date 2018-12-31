@@ -159,9 +159,47 @@ void K::Sorceress::_Input(float _time)
 	int dir_idx{};
 
 	if (direction.x < 0.f)
-		dir_idx = static_cast<int>(angle / 22.5f);
+	{
+		if (angle < 11.25f)
+			dir_idx = 0;
+		else if (angle < 33.75f)
+			dir_idx = 1;
+		else if (angle < 56.25f)
+			dir_idx = 2;
+		else if (angle < 78.25f)
+			dir_idx = 3;
+		else if (angle < 100.75f)
+			dir_idx = 4;
+		else if (angle < 123.25f)
+			dir_idx = 5;
+		else if (angle < 145.75f)
+			dir_idx = 6;
+		else if (angle < 168.25f)
+			dir_idx = 7;
+		else
+			dir_idx = 8;
+	}
 	else
-		dir_idx = 15 - static_cast<int>(angle / 22.5f);
+	{
+		if (angle < 11.25f)
+			dir_idx = 0;
+		else if (angle < 33.75f)
+			dir_idx = 15;
+		else if (angle < 56.25f)
+			dir_idx = 14;
+		else if (angle < 78.25f)
+			dir_idx = 13;
+		else if (angle < 100.75f)
+			dir_idx = 12;
+		else if (angle < 123.25f)
+			dir_idx = 11;
+		else if (angle < 145.75f)
+			dir_idx = 10;
+		else if (angle < 168.25f)
+			dir_idx = 9;
+		else
+			dir_idx = 8;
+	}
 
 	if (ACTOR_STATE::NEUTRAL == state())
 	{
@@ -186,9 +224,47 @@ void K::Sorceress::_Input(float _time)
 			angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction)));
 
 			if (direction.x < 0.f)
-				dir_idx = static_cast<int>(angle / 22.5f);
+			{
+				if (angle < 11.25f)
+					dir_idx = 0;
+				else if (angle < 33.75f)
+					dir_idx = 1;
+				else if (angle < 56.25f)
+					dir_idx = 2;
+				else if (angle < 78.25f)
+					dir_idx = 3;
+				else if (angle < 100.75f)
+					dir_idx = 4;
+				else if (angle < 123.25f)
+					dir_idx = 5;
+				else if (angle < 145.75f)
+					dir_idx = 6;
+				else if (angle < 168.25f)
+					dir_idx = 7;
+				else
+					dir_idx = 8;
+			}
 			else
-				dir_idx = 15 - static_cast<int>(angle / 22.5f);
+			{
+				if (angle < 11.25f)
+					dir_idx = 0;
+				else if (angle < 33.75f)
+					dir_idx = 15;
+				else if (angle < 56.25f)
+					dir_idx = 14;
+				else if (angle < 78.25f)
+					dir_idx = 13;
+				else if (angle < 100.75f)
+					dir_idx = 12;
+				else if (angle < 123.25f)
+					dir_idx = 11;
+				else if (angle < 145.75f)
+					dir_idx = 10;
+				else if (angle < 168.25f)
+					dir_idx = 9;
+				else
+					dir_idx = 8;
+			}
 
 			animation_2d->set_callback([&object_manager, &audio_manager, position, direction, dir_idx]() {
 				auto ice_bolt = object_manager->CreateActor<IceBolt>(TAG{ "IceBolt", 0 });
@@ -237,9 +313,47 @@ void K::Sorceress::_Input(float _time)
 			angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction)));
 
 			if (direction.x < 0.f)
-				dir_idx = static_cast<int>(angle / 22.5f);
+			{
+				if (angle < 11.25f)
+					dir_idx = 0;
+				else if (angle < 33.75f)
+					dir_idx = 1;
+				else if (angle < 56.25f)
+					dir_idx = 2;
+				else if (angle < 78.25f)
+					dir_idx = 3;
+				else if (angle < 100.75f)
+					dir_idx = 4;
+				else if (angle < 123.25f)
+					dir_idx = 5;
+				else if (angle < 145.75f)
+					dir_idx = 6;
+				else if (angle < 168.25f)
+					dir_idx = 7;
+				else
+					dir_idx = 8;
+			}
 			else
-				dir_idx = 15 - static_cast<int>(angle / 22.5f);
+			{
+				if (angle < 11.25f)
+					dir_idx = 0;
+				else if (angle < 33.75f)
+					dir_idx = 15;
+				else if (angle < 56.25f)
+					dir_idx = 14;
+				else if (angle < 78.25f)
+					dir_idx = 13;
+				else if (angle < 100.75f)
+					dir_idx = 12;
+				else if (angle < 123.25f)
+					dir_idx = 11;
+				else if (angle < 145.75f)
+					dir_idx = 10;
+				else if (angle < 168.25f)
+					dir_idx = 9;
+				else
+					dir_idx = 8;
+			}
 
 			animation_2d->set_callback([&object_manager, &audio_manager, position, direction, dir_idx]() {
 				auto ice_blast = object_manager->CreateActor<IceBlast>(TAG{ "IceBlast", 0 });
@@ -288,9 +402,47 @@ void K::Sorceress::_Input(float _time)
 			angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction)));
 
 			if (direction.x < 0.f)
-				dir_idx = static_cast<int>(angle / 22.5f);
+			{
+				if (angle < 11.25f)
+					dir_idx = 0;
+				else if (angle < 33.75f)
+					dir_idx = 1;
+				else if (angle < 56.25f)
+					dir_idx = 2;
+				else if (angle < 78.25f)
+					dir_idx = 3;
+				else if (angle < 100.75f)
+					dir_idx = 4;
+				else if (angle < 123.25f)
+					dir_idx = 5;
+				else if (angle < 145.75f)
+					dir_idx = 6;
+				else if (angle < 168.25f)
+					dir_idx = 7;
+				else
+					dir_idx = 8;
+			}
 			else
-				dir_idx = 15 - static_cast<int>(angle / 22.5f);
+			{
+				if (angle < 11.25f)
+					dir_idx = 0;
+				else if (angle < 33.75f)
+					dir_idx = 15;
+				else if (angle < 56.25f)
+					dir_idx = 14;
+				else if (angle < 78.25f)
+					dir_idx = 13;
+				else if (angle < 100.75f)
+					dir_idx = 12;
+				else if (angle < 123.25f)
+					dir_idx = 11;
+				else if (angle < 145.75f)
+					dir_idx = 10;
+				else if (angle < 168.25f)
+					dir_idx = 9;
+				else
+					dir_idx = 8;
+			}
 
 			animation_2d->set_callback([&object_manager, &audio_manager, position, direction, dir_idx]() {
 				auto ice_orb = object_manager->CreateActor<IceOrb>(TAG{ "IceOrb", 0 });

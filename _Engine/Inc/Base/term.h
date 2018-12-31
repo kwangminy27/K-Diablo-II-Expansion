@@ -64,7 +64,7 @@ namespace K
 	//////////////////// Constant ////////////////////
 	const auto MTU_SIZE = 1024;
 	const auto USER_SIZE = 100;
-	const auto MAX_MESSAGE_SIZE = 128;
+	const auto MAX_MESSAGE_SIZE = 64;
 
 	//////////////////// Protocol ////////////////////
 	const auto CS_LOGIN = 1;
@@ -72,34 +72,45 @@ namespace K
 
 	const auto SC_LOGIN = 1;
 	const auto SC_CHAT = 2;
+	const auto SC_REPLICATION_CREATE = 3;
+	const auto SC_REPLICATION_UPDATE = 4;
+	const auto SC_REPLICATION_DESTROY = 5;
 
+#pragma pack(push, 1)
 	struct CS_PACKET_LOGIN
 	{
-		uint32_t size;
+		uint8_t size;
 		uint8_t type;
 	};
 
 	struct SC_PACKET_LOGIN
 	{
-		uint32_t size;
+		uint8_t size;
 		uint8_t type;
 		uint8_t id;
 	};
 
 	struct CS_PACKET_CHAT
 	{
-		uint32_t size;
+		uint8_t size;
 		uint8_t type;
-		wchar_t message[MAX_MESSAGE_SIZE];
+		wchar_t message[64];
 	};
 
 	struct SC_PACKET_CHAT
 	{
-		uint32_t size;
+		uint8_t size;
 		uint8_t type;
 		uint8_t id;
 		wchar_t message[MAX_MESSAGE_SIZE];
 	};
+
+	struct SC_PACKET_REPLICATION
+	{
+		uint8_t size;
+		uint8_t type;
+	};
+#pragma pack(pop)
 
 	////////////////////////////////////////////////////////////
 

@@ -33,22 +33,34 @@ void K::Navigator::Update(float _time)
 	direction_ = destination_ - position;
 	direction_.Normalize();
 
-	auto displacement = transform->local_translation() + direction_ * speed_ * _time;
-	transform->set_local_translation(displacement);
+	auto caching_owner = owner();
 
-	if (Vector3::Distance(displacement, destination_) < 8.f)
+	switch (caching_owner->state())
 	{
-		if (false == move_path_list_.empty())
-		{
-			destination_ = move_path_list_.front();
-			move_path_list_.pop_front();
-		}
-		else
-		{
-			owner()->set_state(ACTOR_STATE::NEUTRAL);
+	case ACTOR_STATE::WALK:
+	case ACTOR_STATE::RUN:
+		auto displacement = transform->local_translation() + direction_ * speed_ * _time;
+		transform->set_local_translation(displacement);
 
-			move_flag_ = false;
+		if (Vector3::Distance(displacement, destination_) < 8.f)
+		{
+			if (false == move_path_list_.empty())
+			{
+				destination_ = move_path_list_.front();
+				move_path_list_.pop_front();
+			}
+			else
+			{
+				owner()->set_state(ACTOR_STATE::NEUTRAL);
+
+				move_flag_ = false;
+			}
 		}
+		break;
+
+	default:
+		ClearPath();
+		break;
 	}
 }
 
@@ -103,6 +115,12 @@ void K::Navigator::set_speed(float _speed)
 void K::Navigator::set_direction(Vector3 const& _direction)
 {
 	direction_ = _direction;
+}
+
+void K::Navigator::ClearPath()
+{
+	move_flag_ = false;
+	move_path_list_.clear();
 }
 
 K::Navigator::Navigator(Navigator const& _other) : Component(_other)

@@ -4,6 +4,7 @@
 #include "Resource/resource_manager.h"
 #include "Rendering/rendering_manager.h"
 #include "Object/object_manager.h"
+#include "Object/Actor/Monster/monster_actor.h"
 #include "Object/Component/transform.h"
 #include "Object/Component/material.h"
 #include "Object/Component/renderer.h"
@@ -39,6 +40,26 @@ void K::IceBlast::Initialize()
 		AddComponent(animation_2d);
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });
+		CPTR_CAST<ColliderAABB>(collider)->AddCallback([](Collider* _src, Collider* _dest, float _time) {
+			auto caching_dest = _dest->owner();
+			auto dest_tag = caching_dest->tag().first;
+
+			if (dest_tag == "Cow" || dest_tag == "Wendigo" || dest_tag == "FallenShaman" || dest_tag == "Andariel")
+			{
+				if (TAG{ COLLIDER, 0 } == _dest->tag())
+				{
+					APTR_CAST<MonsterActor>(caching_dest)->AddHp(-25.f);
+
+					if (APTR_CAST<MonsterActor>(caching_dest)->hp() <= 0.f)
+					{
+						if (ACTOR_STATE::DEAD != caching_dest->state())
+							caching_dest->set_state(ACTOR_STATE::DEATH);
+					}
+					else
+						caching_dest->set_state(ACTOR_STATE::GET_HIT);
+				}
+			}
+		}, COLLISION_CALLBACK_TYPE::ENTER);
 		AddComponent(collider);
 
 		set_speed(1200.f);
@@ -110,9 +131,8 @@ void K::IceBlast::_Update(float _time)
 	auto local_translation = transform->local_translation();
 
 	auto angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction_)));
-	float isometric_correction_factor = sqrtf(1.f - cos(DirectX::XMConvertToRadians(angle)) * cos(DirectX::XMConvertToRadians(angle)) * 0.25f) * 0.5f;
 
-	transform->set_local_translation(local_translation + Vector3{ direction_.x, direction_.y * isometric_correction_factor, direction_.z } *speed_ * _time);
+	transform->set_local_translation(local_translation + direction_ * speed_ * _time);
 
 	range_ -= speed_ * _time;
 

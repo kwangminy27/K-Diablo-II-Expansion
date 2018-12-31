@@ -92,25 +92,6 @@ void K::Core::RunServer(std::function<void(int, uint8_t*)> const& _function)
 	connection_manager->RunIOCP(_function);
 }
 
-void ChatFunc(std::shared_ptr<K::TCPSocket> const& _socket)
-{
-	std::wstring message = K::Core::chat_message();
-
-	K::CS_PACKET_CHAT cs_packet_chat{};
-	cs_packet_chat.size = sizeof(K::CS_PACKET_CHAT);
-	cs_packet_chat.type = K::CS_CHAT;
-	for (auto i = 0; i < message.size(); ++i)
-	{
-		wchar_t temp = message.at(i);
-		temp = htons(temp);
-		memcpy_s(cs_packet_chat.message + i, sizeof(wchar_t), &temp, sizeof(wchar_t));
-	}
-
-	_socket->Send(&cs_packet_chat, sizeof(K::CS_PACKET_CHAT));
-
-	K::Core::chat_message().clear();
-}
-
 void K::Core::RunClient(std::function<void(int, uint8_t*)> const& _function)
 {
 	auto const& connection_manager = ConnectionManager::singleton();
@@ -120,7 +101,7 @@ void K::Core::RunClient(std::function<void(int, uint8_t*)> const& _function)
 	auto client_socket = socket_manager->CreateTCPSocket();
 
 	uint32_t ip_address{};
-	InetPton(AF_INET, L"192.168.219.103", &ip_address);
+	InetPton(AF_INET, L"192.168.1.119", &ip_address);
 	SocketAddress server_address{ ntohl(ip_address), 21027 };
 
 	client_socket->Connect(server_address);
@@ -128,13 +109,13 @@ void K::Core::RunClient(std::function<void(int, uint8_t*)> const& _function)
 	client_socket->SetNonBlockingMode(true);
 
 	CS_PACKET_LOGIN cs_packet_login{};
-	cs_packet_login.size = sizeof(cs_packet_login);
+	cs_packet_login.size = static_cast<uint8_t>(sizeof(cs_packet_login));
 	cs_packet_login.type = K::CS_LOGIN;
 	client_socket->Send(&cs_packet_login, sizeof(CS_PACKET_LOGIN));
 
 	uint8_t packet_buffer[MTU_SIZE]{};
-	uint32_t packet_size{};
-	uint32_t previous_data{};
+	uint8_t packet_size{};
+	uint8_t previous_data{};
 
 	std::unique_ptr<std::thread> chat_thread{};
 
@@ -156,8 +137,25 @@ void K::Core::RunClient(std::function<void(int, uint8_t*)> const& _function)
 			{
 				if (chat_)
 				{
-					chat_thread = std::make_unique<std::thread>(ChatFunc, client_socket);
-					chat_thread->detach();
+					std::wstring message = K::Core::chat_message();
+
+					K::CS_PACKET_CHAT cs_packet_chat{};
+					cs_packet_chat.size = static_cast<uint8_t>(sizeof(K::CS_PACKET_CHAT));
+					cs_packet_chat.type = K::CS_CHAT;
+					
+					message.resize(MAX_MESSAGE_SIZE);
+					message.at(MAX_MESSAGE_SIZE - 1) = '\0';
+
+					for (auto i = 0; i < message.size(); ++i)
+					{
+						wchar_t temp = message.at(i);
+						temp = htons(temp);
+						memcpy_s(cs_packet_chat.message + i, sizeof(wchar_t), &temp, sizeof(wchar_t));
+					}
+
+					client_socket->Send(&cs_packet_chat, sizeof(K::CS_PACKET_CHAT));
+
+					K::Core::chat_message().clear();
 
 					chat_ = false;
 				}
@@ -174,16 +172,26 @@ void K::Core::RunClient(std::function<void(int, uint8_t*)> const& _function)
 
 			while (remained > 0)
 			{
+				//std::cout << "remained: " << remained << std::endl;
+
 				if (0 == packet_size)
-					packet_size = *(reinterpret_cast<uint32_t*>(buffer));
+				{
+					packet_size = buffer_ptr[0];
+					//std::cout << "packet: " << static_cast<int>(packet_size) << std::endl;
+				}
 
 				int required = packet_size - previous_data;
+				//std::cout << "required: " << required << std::endl;
 
 				if (remained >= required)
 				{
+					//std::cout << "패킷 완성" << std::endl;
+
 					memcpy_s(packet_buffer + previous_data, required, buffer_ptr, required);
 
 					connection_manager->HandlePacket(_function, -1, packet_buffer);
+
+					//std::cout << "패킷 처리" << std::endl;
 
 					packet_size = 0;
 					previous_data = 0;
@@ -193,6 +201,8 @@ void K::Core::RunClient(std::function<void(int, uint8_t*)> const& _function)
 				}
 				else
 				{
+					//std::cout << "패킷 준비 중" << std::endl;
+
 					memcpy_s(packet_buffer + previous_data, remained, buffer_ptr, remained);
 
 					previous_data += remained;

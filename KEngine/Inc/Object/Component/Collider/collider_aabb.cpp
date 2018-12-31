@@ -40,7 +40,7 @@ void K::ColliderAABB::Update(float _time)
 	relative_info_.center.y = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling().y * 0.5f;
 
 	absolute_info_.center = position + relative_info_.center;
-	absolute_info_.extent = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling() * 0.5f;
+	//absolute_info_.extent = CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling() * 0.5f;
 
 	min_ = absolute_info_.center - absolute_info_.extent;
 	max_ = absolute_info_.center + absolute_info_.extent;
@@ -59,7 +59,10 @@ void K::ColliderAABB::Render(float _time)
 	auto collider_position = absolute_info_.center;
 
 	TransformConstantBuffer transform_CB{};
-	transform_CB.world = Matrix::CreateScaling(CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling()) * Matrix::CreateTranslation(collider_position);
+	if(Vector3::Zero == absolute_info_.extent)
+		transform_CB.world = Matrix::CreateScaling(CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling()) * Matrix::CreateTranslation(collider_position);
+	else
+		transform_CB.world = Matrix::CreateScaling(absolute_info_.extent) * Matrix::CreateTranslation(collider_position);
 	transform_CB.view = camera->view();
 	transform_CB.projection = camera->projection();
 	transform_CB.WVP = transform_CB.world * transform_CB.view * transform_CB.projection;
