@@ -40,9 +40,6 @@ void K::FrozenArmor::Initialize()
 		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("frozen_armor", -1);
 		AddComponent(animation_2d);
 
-		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });
-		AddComponent(collider);
-
 		life_time_ = 10.f;
 	}
 	catch (std::exception const& _e)

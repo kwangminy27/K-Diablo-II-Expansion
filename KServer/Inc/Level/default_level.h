@@ -17,10 +17,10 @@ namespace K
 
 		virtual void _Finalize() override;
 
-		virtual void _Input(float _time) override;
 		virtual void _Update(float _time) override;
-		virtual void _Collision(float _time) override;
 
+		virtual void __Input(float _time) override;
+		virtual void __Collision(float _time) override;
 		virtual void __Render(float _time) override;
 	};
 }

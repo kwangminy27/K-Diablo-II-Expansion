@@ -44,7 +44,7 @@ void K::ConnectionManager::RunIOCP(std::function<void(int, uint8_t*)> const& _fu
 	std::unique_ptr<std::thread> accept_thread = std::make_unique<std::thread>(AcceptThreadFunc);
 
 	auto const& core = Core::singleton();
-	core->Run();
+	core->ServerRun();
 
 	std::terminate();
 }

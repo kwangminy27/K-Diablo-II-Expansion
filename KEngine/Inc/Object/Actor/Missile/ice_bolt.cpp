@@ -40,25 +40,29 @@ void K::IceBolt::Initialize()
 		AddComponent(animation_2d);
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });
+		CPTR_CAST<ColliderAABB>(collider)->set_owner_type(OWNER_TYPE::MISSILE);
+		CPTR_CAST<ColliderAABB>(collider)->set_relative_info(AABB{ Vector3::Zero, Vector3{ 12.f, 8.f, 0.f }});
 		CPTR_CAST<ColliderAABB>(collider)->AddCallback([](Collider* _src, Collider* _dest, float _time) {
-			auto caching_dest = _dest->owner();
-			auto dest_tag = caching_dest->tag().first;
-			
-			if (dest_tag == "Cow" || dest_tag == "Wendigo" || dest_tag == "FallenShaman" || dest_tag == "Andariel")
-			{
-				if (TAG{ COLLIDER, 0 } == _dest->tag())
-				{
-					APTR_CAST<MonsterActor>(caching_dest)->AddHp(-25.f);
+			if (OWNER_TYPE::MONSTER != _dest->owner_type())
+				return;
 
-					if (APTR_CAST<MonsterActor>(caching_dest)->hp() <= 0.f)
-					{
-						if(ACTOR_STATE::DEAD != caching_dest->state())
-							caching_dest->set_state(ACTOR_STATE::DEATH);
-					}
-					else
-						caching_dest->set_state(ACTOR_STATE::GET_HIT);
-				}
+			auto monster = APTR_CAST<MonsterActor>(_dest->owner());
+
+			switch (monster->state())
+			{
+			case ACTOR_STATE::DEAD:
+			case ACTOR_STATE::DEATH:
+				return;
 			}
+
+			monster->AddHp(-25.f);
+
+			if (monster->hp() <= 0.f)
+				monster->set_state(ACTOR_STATE::DEATH);
+			else
+				monster->set_state(ACTOR_STATE::GET_HIT);
+
+			_src->owner()->set_tag_state(TAG_STATE::DEAD);
 		}, COLLISION_CALLBACK_TYPE::ENTER);
 		AddComponent(collider);
 

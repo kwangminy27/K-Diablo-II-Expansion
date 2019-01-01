@@ -1,9 +1,14 @@
 #include "KEngine.h"
 #include "fallen_shaman.h"
 
+#include "Audio/audio_manager.h"
 #include "Resource/resource_manager.h"
 #include "Rendering/rendering_manager.h"
+#include "World/world_manager.h"
+#include "World/layer.h"
 #include "Object/object_manager.h"
+#include "Object/Actor/Missile/fallen_shaman_missile.h"
+#include "Object/Actor/Missile/fallen_shaman_fireball.h"
 #include "Object/Component/transform.h"
 #include "Object/Component/material.h"
 #include "Object/Component/renderer.h"
@@ -50,27 +55,22 @@ void K::FallenShaman::Initialize()
 		AddComponent(animation_2d);
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });
-		CPTR_CAST<ColliderAABB>(collider)->set_relative_info(AABB{ Vector3::Zero, Vector3{ 17.f, 48.f, 0.f } });
+		CPTR_CAST<ColliderAABB>(collider)->set_relative_info(AABB{ Vector3::Zero, Vector3{ 10.f, 25.f, 0.f } });
+		CPTR_CAST<ColliderAABB>(collider)->set_owner_type(OWNER_TYPE::MONSTER);
 		AddComponent(collider);
 
 		auto view_range = object_manager->CreateComponent<ColliderCircle>(TAG{ COLLIDER, 1 });
+		CPTR_CAST<ColliderAABB>(view_range)->set_owner_type(OWNER_TYPE::VIEW);
 		CPTR_CAST<ColliderCircle>(view_range)->set_relative_info(Circle{ Vector3::Zero, 600.f });
 		CPTR_CAST<ColliderCircle>(view_range)->AddCallback([this](Collider* _src, Collider* _dest, float _time) {
-			if (_src->owner()->tag().first == "Sorceress")
-				set_target(_src->owner());
-			else if (_dest->owner()->tag().first == "Sorceress")
-				set_target(_dest->owner());
+			if (target_.expired())
+			{
+				if (OWNER_TYPE::PLAYER == _dest->owner_type())
+					set_target(_dest->owner());
+			}
 		}, COLLISION_CALLBACK_TYPE::ENTER);
 		CPTR_CAST<ColliderCircle>(view_range)->AddCallback([this](Collider* _src, Collider* _dest, float _time) {
-			if (target_.expired())
-				return;
-
-			auto caching_target = target();
-
-			if (_src->tag() == TAG{ COLLIDER, 0 } && caching_target == _src->owner())
-				set_target(nullptr);
-
-			if (_dest->tag() == TAG{ COLLIDER, 0 } && caching_target == _dest->owner())
+			if (OWNER_TYPE::PLAYER == _dest->owner_type())
 				set_target(nullptr);
 		}, COLLISION_CALLBACK_TYPE::LEAVE);
 		AddComponent(view_range);
@@ -196,11 +196,28 @@ void K::FallenShaman::_Update(float _time)
 	auto const& animation_2d = CPTR_CAST<Animation2D>(FindComponent(TAG{ ANIMATION_2D, 0 }));
 	auto const& navigator = CPTR_CAST<Navigator>(FindComponent(TAG{ NAVIGATOR, 0 }));
 
-	auto direction = navigator->direction();
+	Vector3 direction{};
+
+	if (target_.expired())
+		direction = navigator->direction();
+	else
+	{
+		if (ACTOR_STATE::DEATH != state() && ACTOR_STATE::DEAD != state())
+		{
+			auto caching_target = target();
+
+			auto target_position = CPTR_CAST<Transform>(caching_target->FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
+			auto position = transform->world().Translation();
+
+			direction = target_position - position;
+			direction.Normalize();
+		}
+	}
 
 	auto angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction)));
 
 	int dir_idx{};
+	int _16_dir_idx{};
 
 	if (direction.x < 0.f)
 	{
@@ -229,6 +246,49 @@ void K::FallenShaman::_Update(float _time)
 			dir_idx = 4;
 	}
 
+	if (direction.x < 0.f)
+	{
+		if (angle < 11.25f)
+			_16_dir_idx = 0;
+		else if (angle < 33.75f)
+			_16_dir_idx = 1;
+		else if (angle < 56.25f)
+			_16_dir_idx = 2;
+		else if (angle < 78.25f)
+			_16_dir_idx = 3;
+		else if (angle < 100.75f)
+			_16_dir_idx = 4;
+		else if (angle < 123.25f)
+			_16_dir_idx = 5;
+		else if (angle < 145.75f)
+			_16_dir_idx = 6;
+		else if (angle < 168.25f)
+			_16_dir_idx = 7;
+		else
+			_16_dir_idx = 8;
+	}
+	else
+	{
+		if (angle < 11.25f)
+			_16_dir_idx = 0;
+		else if (angle < 33.75f)
+			_16_dir_idx = 15;
+		else if (angle < 56.25f)
+			_16_dir_idx = 14;
+		else if (angle < 78.25f)
+			_16_dir_idx = 13;
+		else if (angle < 100.75f)
+			_16_dir_idx = 12;
+		else if (angle < 123.25f)
+			_16_dir_idx = 11;
+		else if (angle < 145.75f)
+			_16_dir_idx = 10;
+		else if (angle < 168.25f)
+			_16_dir_idx = 9;
+		else
+			_16_dir_idx = 8;
+	}
+
 	switch (state_)
 	{
 	case K::ACTOR_STATE::ATTACK1:
@@ -236,15 +296,55 @@ void K::FallenShaman::_Update(float _time)
 		break;
 	case K::ACTOR_STATE::ATTACK2:
 		animation_2d->SetCurrentClip("fallen_shaman_attack2", dir_idx);
+
+		if (false == once_flag_array_.at(static_cast<int>(ACTOR_STATE::ATTACK2)) && 0 == animation_2d->frame_idx() % 17)
+		{
+			AudioManager::singleton()->FindSoundEffect("fallen_shaman_fireball")->Play();
+
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::ATTACK2)) = true;
+		}
+		else if (0 != animation_2d->frame_idx() % 17)
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::ATTACK2)) = false;
+
 		break;
 	case K::ACTOR_STATE::GET_HIT:
 		animation_2d->SetCurrentClip("fallen_shaman_get_hit", dir_idx);
+
+		if (false == once_flag_array_.at(static_cast<int>(ACTOR_STATE::GET_HIT)) && 0 == animation_2d->frame_idx() % 5)
+		{
+			std::random_device r{};
+			std::default_random_engine gen{ r() };
+			std::uniform_int_distribution uniform_dist{ 1, 4 };
+			auto number = uniform_dist(gen);
+
+			AudioManager::singleton()->FindSoundEffect("fallen_shaman_gethit" + std::to_string(number))->Play();
+
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::GET_HIT)) = true;
+		}
+		else if (0 != animation_2d->frame_idx() % 5)
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::GET_HIT)) = false;
+
 		break;
 	case K::ACTOR_STATE::DEAD:
 		animation_2d->SetCurrentClip("fallen_shaman_dead", dir_idx);
 		break;
 	case K::ACTOR_STATE::DEATH:
 		animation_2d->SetCurrentClip("fallen_shaman_death", dir_idx);
+
+		if (false == once_flag_array_.at(static_cast<int>(ACTOR_STATE::DEATH)) && 0 == animation_2d->frame_idx() % 21)
+		{
+			std::random_device r{};
+			std::default_random_engine gen{ r() };
+			std::uniform_int_distribution uniform_dist{ 1, 4 };
+			auto number = uniform_dist(gen);
+
+			AudioManager::singleton()->FindSoundEffect("fallen_shaman_death" + std::to_string(number))->Play();
+
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::DEATH)) = true;
+		}
+		else if (0 != animation_2d->frame_idx() % 21)
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::DEATH)) = false;
+
 		break;
 	case K::ACTOR_STATE::NEUTRAL:
 		animation_2d->SetCurrentClip("fallen_shaman_neutral", dir_idx);
@@ -257,4 +357,31 @@ void K::FallenShaman::_Update(float _time)
 		animation_2d->SetCurrentClip("fallen_shaman_walk", dir_idx);
 		break;
 	}
+
+	auto position = transform->world().Translation();
+
+	animation_2d->set_callback([actor_state = state_, dir_idx, _16_dir_idx, position, direction]() {
+		auto const& object_manager = ObjectManager::singleton();
+		auto const& layer = WorldManager::singleton()->FindLayer(TAG{ "DefaultLayer", 1 });
+
+		switch (actor_state)
+		{
+		case ACTOR_STATE::ATTACK2:
+			auto missile_cast = object_manager->CreateActor<FallenShamanMissile>(TAG{ "FallenShamanMissile", 0 });
+			auto const& missile_cast_transform = CPTR_CAST<Transform>(missile_cast->FindComponent(TAG{ TRANSFORM, 0 }));
+			missile_cast_transform->set_local_translation(position);
+			auto const& missile_cast_animation_2d = CPTR_CAST<Animation2D>(missile_cast->FindComponent(TAG{ ANIMATION_2D, 0 }));
+			missile_cast_animation_2d->SetCurrentClip("fallen_shaman_attack2(overlay)", dir_idx);
+			layer->AddActor(missile_cast);
+
+			auto fireball = object_manager->CreateActor<FallenShamanFireball>(TAG{ "FallenShamanFireball", 0 });
+			APTR_CAST<FallenShamanFireball>(fireball)->set_direction(direction);
+			auto const& fireball_transform = CPTR_CAST<Transform>(fireball->FindComponent(TAG{ TRANSFORM, 0 }));
+			fireball_transform->set_local_translation(position);
+			auto const& fireball_animation_2d = CPTR_CAST<Animation2D>(fireball->FindComponent(TAG{ ANIMATION_2D, 0 }));
+			fireball_animation_2d->SetCurrentClip("fallen_shaman_fireball", _16_dir_idx);
+			layer->AddActor(fireball);
+			break;
+		}
+	});
 }

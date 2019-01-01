@@ -13,6 +13,8 @@
 #include "collider_circle.h"
 #include "collider_oobb.h"
 
+extern bool g_debug;
+
 void K::ColliderAABB::Initialize()
 {
 	try
@@ -48,34 +50,37 @@ void K::ColliderAABB::Update(float _time)
 
 void K::ColliderAABB::Render(float _time)
 {
-#ifdef _DEBUG
-	std::shared_ptr<CameraActor> camera{};
+//#ifdef _DEBUG
+	if (g_debug)
+	{
+		std::shared_ptr<CameraActor> camera{};
 
-	if (UI == group_tag_)
-		camera = WorldManager::singleton()->FindCamera(TAG{ UI_CAMERA, 0 });
-	else if (DEFAULT == group_tag_)
-		camera = WorldManager::singleton()->FindCamera(TAG{ DEFAULT_CAMERA, 0 });
+		if (UI == group_tag_)
+			camera = WorldManager::singleton()->FindCamera(TAG{ UI_CAMERA, 0 });
+		else if (DEFAULT == group_tag_)
+			camera = WorldManager::singleton()->FindCamera(TAG{ DEFAULT_CAMERA, 0 });
 
-	auto collider_position = absolute_info_.center;
+		auto collider_position = absolute_info_.center;
 
-	TransformConstantBuffer transform_CB{};
-	if(Vector3::Zero == absolute_info_.extent)
-		transform_CB.world = Matrix::CreateScaling(CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling()) * Matrix::CreateTranslation(collider_position);
-	else
-		transform_CB.world = Matrix::CreateScaling(absolute_info_.extent) * Matrix::CreateTranslation(collider_position);
-	transform_CB.view = camera->view();
-	transform_CB.projection = camera->projection();
-	transform_CB.WVP = transform_CB.world * transform_CB.view * transform_CB.projection;
+		TransformConstantBuffer transform_CB{};
+		if (Vector3::Zero == absolute_info_.extent)
+			transform_CB.world = Matrix::CreateScaling(CPTR_CAST<Transform>(owner()->FindComponent(TAG{ TRANSFORM, 0 }))->world_scaling()) * Matrix::CreateTranslation(collider_position);
+		else
+			transform_CB.world = Matrix::CreateScaling(absolute_info_.extent * 2) * Matrix::CreateTranslation(collider_position);
+		transform_CB.view = camera->view();
+		transform_CB.projection = camera->projection();
+		transform_CB.WVP = transform_CB.world * transform_CB.view * transform_CB.projection;
 
-	transform_CB.world = transform_CB.world.Transpose();
-	transform_CB.view = transform_CB.view.Transpose();
-	transform_CB.projection = transform_CB.projection.Transpose();
-	transform_CB.WVP = transform_CB.WVP.Transpose();
+		transform_CB.world = transform_CB.world.Transpose();
+		transform_CB.view = transform_CB.view.Transpose();
+		transform_CB.projection = transform_CB.projection.Transpose();
+		transform_CB.WVP = transform_CB.WVP.Transpose();
 
-	RenderingManager::singleton()->UpdateConstantBuffer(TRANSFORM, &transform_CB);
+		RenderingManager::singleton()->UpdateConstantBuffer(TRANSFORM, &transform_CB);
 
-	Collider::Render(_time);
-#endif
+		Collider::Render(_time);
+	}
+//#endif
 }
 
 K::CPTR K::ColliderAABB::Clone() const

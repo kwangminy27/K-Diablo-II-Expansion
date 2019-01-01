@@ -157,6 +157,18 @@ void K::DefaultLevel::Initialize()
 		text_5_transform->set_local_translation(Vector3{ 0.f, 150.f, 0.f });
 		text_5->set_ui_flag(true);
 		text_layer->AddActor(text_5);
+
+		auto const& audio_manager = AudioManager::singleton();
+
+		auto const& BGM = audio_manager->FindSoundEffect("BGM");
+		auto BGM_instance = BGM->CreateInstance();
+		BGM_instance->Play(true);
+		audio_manager->AddSoundEffectInstance("BGM", std::move(BGM_instance));
+
+		auto const& rain = audio_manager->FindSoundEffect("rain");
+		auto rain_instance = rain->CreateInstance();
+		rain_instance->Play(true);
+		audio_manager->AddSoundEffectInstance("rain", std::move(rain_instance));
 	}
 	catch (std::exception const& _e)
 	{
@@ -187,6 +199,19 @@ void K::DefaultLevel::_Input(float _time)
 		auto const& sorceress = WorldManager::singleton()->FindActor(player_tag_);
 		APTR_CAST<Sorceress>(sorceress)->set_focus_flag((counter++) % 2);
 	}
+
+	auto const& camera_transform = CPTR_CAST<Transform>(WorldManager::singleton()->FindCamera(TAG{ DEFAULT_CAMERA, 0 })->FindComponent(TAG{ TRANSFORM, 0 }));
+
+	if (input_manager->KeyPressed("Up"))
+		camera_transform->set_local_translation(camera_transform->local_translation() + Vector3::UnitY * 1000.f * _time);
+	if (input_manager->KeyPressed("Left"))
+		camera_transform->set_local_translation(camera_transform->local_translation() - Vector3::UnitX * 1000.f * _time);
+	if (input_manager->KeyPressed("Down"))
+		camera_transform->set_local_translation(camera_transform->local_translation() - Vector3::UnitY * 1000.f * _time);
+	if (input_manager->KeyPressed("Right"))
+		camera_transform->set_local_translation(camera_transform->local_translation() + Vector3::UnitX * 1000.f * _time);
+
+	camera_transform->Update(_time);
 }
 
 void K::DefaultLevel::_Render(float _time)

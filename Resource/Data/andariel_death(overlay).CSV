@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-andariel_death(overlay),andariel_death(overlay),1,0,2323,1288,0.5
+andariel_death(overlay),andariel_death(overlay),1,1,2323,1288,2
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,101,161
 0,0,101,161,,,

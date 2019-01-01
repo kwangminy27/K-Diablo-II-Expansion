@@ -3,6 +3,7 @@
 // KEngine
 #include <KEngine.h>
 #include <core.h>
+#include <Audio/audio_manager.h>
 #include <path_manager.h>
 #include <input_manager.h>
 #include <World/world_manager.h>

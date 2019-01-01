@@ -5,19 +5,22 @@
 #include "Rendering/rendering_manager.h"
 #include "Rendering/shader.h"
 
+extern bool g_debug;
+
 void K::Collider::Render(float _time)
 {
-#ifdef _DEBUG
-	if (collided_collider_list_.empty())
-		color_ = DirectX::Colors::Green.v;
-	else
-		color_ = DirectX::Colors::Red.v;
+	if (g_debug)
+	{
+		if (collided_collider_list_.empty())
+			color_ = DirectX::Colors::Green.v;
+		else
+			color_ = DirectX::Colors::Red.v;
 
-	RenderingManager::singleton()->UpdateConstantBuffer(COLLIDER, &color_);
+		RenderingManager::singleton()->UpdateConstantBuffer(COLLIDER, &color_);
 
-	shader_->SetToShader();
-	mesh_->Render();
-#endif
+		shader_->SetToShader();
+		mesh_->Render();
+	}
 }
 
 void K::Collider::AddCallback(std::function<void(Collider*, Collider*, float)> const& _callback, COLLISION_CALLBACK_TYPE _type)
@@ -25,9 +28,19 @@ void K::Collider::AddCallback(std::function<void(Collider*, Collider*, float)> c
 	callback_list_array_.at(static_cast<int>(_type)).push_back(_callback);
 }
 
+K::OWNER_TYPE K::Collider::owner_type() const
+{
+	return owner_type_;
+}
+
 K::COLLIDER_TYPE K::Collider::type() const
 {
 	return type_;
+}
+
+void K::Collider::set_owner_type(OWNER_TYPE _type)
+{
+	owner_type_ = _type;
 }
 
 void K::Collider::set_group_tag(std::string const& _tag)
@@ -40,6 +53,8 @@ K::Collider::Collider(Collider const& _other) : Component(_other)
 	color_ = _other.color_;
 	mesh_ = _other.mesh_;
 	shader_ = _other.shader_;
+
+	owner_type_ = _other.owner_type_;
 
 	min_ = _other.min_;
 	max_ = _other.max_;
@@ -55,6 +70,8 @@ K::Collider::Collider(Collider&& _other) noexcept : Component(std::move(_other))
 	color_ = std::move(_other.color_);
 	mesh_ = std::move(_other.mesh_);
 	shader_ = std::move(_other.shader_);
+
+	owner_type_ = std::move(_other.owner_type_);
 
 	min_ = std::move(_other.min_);
 	max_ = std::move(_other.max_);

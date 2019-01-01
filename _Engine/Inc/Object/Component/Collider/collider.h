@@ -7,6 +7,14 @@ namespace K
 	class Mesh;
 	class Shader;
 
+	enum class OWNER_TYPE
+	{
+		PLAYER,
+		MONSTER,
+		MISSILE,
+		VIEW
+	};
+
 	enum class COLLIDER_TYPE
 	{
 		POINT,
@@ -58,8 +66,10 @@ namespace K
 
 		void AddCallback(std::function<void(Collider*, Collider*, float)> const& _callback, COLLISION_CALLBACK_TYPE _type);
 
+		OWNER_TYPE owner_type() const;
 		COLLIDER_TYPE type() const;
 
+		void set_owner_type(OWNER_TYPE _type);
 		void set_group_tag(std::string const& _tag);
 
 	protected:
@@ -103,6 +113,8 @@ namespace K
 		Vector4 color_{};
 		std::shared_ptr<Mesh> mesh_{};
 		std::shared_ptr<Shader> shader_{};
+
+		OWNER_TYPE owner_type_{};
 
 		Vector3 min_{};
 		Vector3 max_{};

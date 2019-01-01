@@ -41,9 +41,6 @@ void K::IceCast::Initialize()
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("ice_cast3");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("teleport");
 		AddComponent(animation_2d);
-
-		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });
-		AddComponent(collider);
 	}
 	catch (std::exception const& _e)
 	{

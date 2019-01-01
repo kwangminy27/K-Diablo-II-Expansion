@@ -24,6 +24,8 @@ bool K::Core::chat_{};
 bool K::Core::hangul_{};
 std::wstring K::Core::chat_message_{};
 
+bool g_debug{};
+
 void K::Core::Initialize()
 {
 }
@@ -100,8 +102,12 @@ void K::Core::RunClient(std::function<void(int, uint8_t*)> const& _function)
 
 	auto client_socket = socket_manager->CreateTCPSocket();
 
+	std::wstring ip_address_string{};
+	std::cout << "IP 주소를 입력해주세요. ex) ###.###.###.###" << std::endl;
+	std::wcin >> ip_address_string;
+
 	uint32_t ip_address{};
-	InetPton(AF_INET, L"192.168.1.119", &ip_address);
+	InetPton(AF_INET, ip_address_string.c_str(), &ip_address);
 	SocketAddress server_address{ ntohl(ip_address), 21027 };
 
 	client_socket->Connect(server_address);
@@ -118,6 +124,7 @@ void K::Core::RunClient(std::function<void(int, uint8_t*)> const& _function)
 	uint8_t previous_data{};
 
 	std::unique_ptr<std::thread> chat_thread{};
+	bool chat_init_flag{};
 
 	MSG message{};
 	while (false == shutdown_)
@@ -160,7 +167,12 @@ void K::Core::RunClient(std::function<void(int, uint8_t*)> const& _function)
 					chat_ = false;
 				}
 				else
-					chat_ = true;
+				{
+					if (false == chat_init_flag)
+						chat_init_flag = true;
+					else
+						chat_ = true;
+				}
 			}
 
 			uint8_t buffer[MTU_SIZE]{};
@@ -243,6 +255,9 @@ void K::Core::Logic()
 	if (input_manager->KeyDown("F7"))
 		pause ^= true;
 
+	if (input_manager->KeyDown("F8"))
+		g_debug ^= true;
+
 	static bool caps_lock{};
 	if (input_manager->KeyDown("CapsLock"))
 		caps_lock ^= true;
@@ -259,9 +274,9 @@ void K::Core::Logic()
 
 	float time_delta = time_manager->time_delta() * pause;
 
-	if(false == chat_)
+	if (false == chat_)
 		_Input(time_delta);
-	else if(chat_ && false == hangul_)
+	else if (chat_ && false == hangul_)
 	{
 		if (input_manager->KeyDown("`"))
 		{
@@ -412,7 +427,7 @@ void K::Core::Logic()
 		}
 		if (input_manager->KeyDown("Q"))
 		{
-			if(caps_lock || shift)
+			if (caps_lock || shift)
 				chat_message_.push_back('Q');
 			else
 				chat_message_.push_back('q');
@@ -618,6 +633,35 @@ void K::Core::Logic()
 	_Render(time_delta);
 }
 
+void K::Core::ServerRun()
+{
+	MSG message{};
+	while (!shutdown_)
+	{
+		if (PeekMessage(&message, nullptr, NULL, NULL, PM_REMOVE))
+		{
+			TranslateMessage(&message);
+			DispatchMessage(&message);
+		}
+		else
+			ServerLogic();
+	}
+}
+
+void K::Core::ServerLogic()
+{
+	auto const& time_manager = TimeManager::singleton();
+
+	time_manager->Update();
+
+	float time_delta = time_manager->time_delta();
+
+	_Input(time_delta);
+	_Update(time_delta);
+	_Collision(time_delta);
+	_Render(time_delta);
+}
+
 bool K::Core::shutdown()
 {
 	return shutdown_;
@@ -640,6 +684,8 @@ HWND K::Core::window() const
 
 void K::Core::_Finalize()
 {
+	AudioManager::singleton()->Suspend();
+
 	ConnectionManager::singleton().reset();
 	ReplicationManager::singleton().reset();
 	RegistryManager::singleton().reset();
@@ -705,7 +751,6 @@ LRESULT K::Core::_WindowProc(HWND _window, UINT _message, WPARAM _w_param, LPARA
 
 	case WM_DESTROY:
 		Core::shutdown_ = true;
-		AudioManager::singleton()->Suspend();
 		PostQuitMessage(0);
 		return 0;
 	}

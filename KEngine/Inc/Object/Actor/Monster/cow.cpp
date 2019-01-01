@@ -1,6 +1,7 @@
 #include "KEngine.h"
 #include "cow.h"
 
+#include "Audio/audio_manager.h"
 #include "input_manager.h"
 #include "Resource/resource_manager.h"
 #include "Rendering/rendering_manager.h"
@@ -50,27 +51,22 @@ void K::Cow::Initialize()
 		AddComponent(animation_2d);
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });
-		CPTR_CAST<ColliderAABB>(collider)->set_relative_info(AABB{ Vector3::Zero, Vector3{ 39.f, 104.f, 0.f } });
+		CPTR_CAST<ColliderAABB>(collider)->set_relative_info(AABB{ Vector3::Zero, Vector3{ 20.f, 50.f, 0.f } });
+		CPTR_CAST<ColliderAABB>(collider)->set_owner_type(OWNER_TYPE::MONSTER);
 		AddComponent(collider);
 
 		auto view_range = object_manager->CreateComponent<ColliderCircle>(TAG{ COLLIDER, 1 });
 		CPTR_CAST<ColliderCircle>(view_range)->set_relative_info(Circle{ Vector3::Zero, 400.f });
-		CPTR_CAST<ColliderCircle>(view_range)->AddCallback([this](Collider* _src, Collider* _dest, float _time) {
-			if (_src->owner()->tag().first == "Sorceress")
-				set_target(_src->owner());
-			else if (_dest->owner()->tag().first == "Sorceress")
-				set_target(_dest->owner());
-		}, COLLISION_CALLBACK_TYPE::ENTER);
+		CPTR_CAST<ColliderAABB>(view_range)->set_owner_type(OWNER_TYPE::VIEW);
 		CPTR_CAST<ColliderCircle>(view_range)->AddCallback([this](Collider* _src, Collider* _dest, float _time) {
 			if (target_.expired())
-				return;
-
-			auto caching_target = target();
-
-			if (_src->tag() == TAG{ COLLIDER, 0 } && caching_target == _src->owner())
-				set_target(nullptr);
-
-			if (_dest->tag() == TAG{ COLLIDER, 0 } && caching_target == _dest->owner())
+			{
+				if (OWNER_TYPE::PLAYER == _dest->owner_type())
+					set_target(_dest->owner());
+			}
+		}, COLLISION_CALLBACK_TYPE::ENTER);
+		CPTR_CAST<ColliderCircle>(view_range)->AddCallback([this](Collider* _src, Collider* _dest, float _time) {
+			if (OWNER_TYPE::PLAYER == _dest->owner_type())
 				set_target(nullptr);
 		}, COLLISION_CALLBACK_TYPE::LEAVE);
 		AddComponent(view_range);
@@ -225,18 +221,63 @@ void K::Cow::_Update(float _time)
 	{
 	case K::ACTOR_STATE::ATTACK1:
 		animation_2d->SetCurrentClip("cow_attack1", dir_idx);
+
+		if (false == once_flag_array_.at(static_cast<int>(ACTOR_STATE::ATTACK1)) && 0 == animation_2d->frame_idx() % 19)
+		{
+			std::random_device r{};
+			std::default_random_engine gen{ r() };
+			std::uniform_int_distribution uniform_dist{ 1, 6 };
+			auto number = uniform_dist(gen);
+
+			AudioManager::singleton()->FindSoundEffect("cow_attack" + std::to_string(number))->Play();
+
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::ATTACK1)) = true;
+		}
+		else if (0 != animation_2d->frame_idx() % 19)
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::ATTACK1)) = false;
+
 		break;
 	case K::ACTOR_STATE::ATTACK2:
 		animation_2d->SetCurrentClip("cow_attack2", dir_idx);
 		break;
 	case K::ACTOR_STATE::GET_HIT:
 		animation_2d->SetCurrentClip("cow_get_hit", dir_idx);
+
+		if (false == once_flag_array_.at(static_cast<int>(ACTOR_STATE::GET_HIT)) && 0 == animation_2d->frame_idx() % 5)
+		{
+			std::random_device r{};
+			std::default_random_engine gen{ r() };
+			std::uniform_int_distribution uniform_dist{ 1, 4 };
+			auto number = uniform_dist(gen);
+
+			AudioManager::singleton()->FindSoundEffect("cow_gethit" + std::to_string(number))->Play();
+
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::GET_HIT)) = true;
+		}
+		else if (0 != animation_2d->frame_idx() % 5)
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::GET_HIT)) = false;
+
 		break;
 	case K::ACTOR_STATE::DEAD:
 		animation_2d->SetCurrentClip("cow_dead", dir_idx);
 		break;
 	case K::ACTOR_STATE::DEATH:
 		animation_2d->SetCurrentClip("cow_death", dir_idx);
+
+		if (false == once_flag_array_.at(static_cast<int>(ACTOR_STATE::DEATH)) && 0 == animation_2d->frame_idx() % 14)
+		{
+			std::random_device r{};
+			std::default_random_engine gen{ r() };
+			std::uniform_int_distribution uniform_dist{ 1, 5 };
+			auto number = uniform_dist(gen);
+
+			AudioManager::singleton()->FindSoundEffect("cow_death" + std::to_string(number))->Play();
+
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::DEATH)) = true;
+		}
+		else if (0 != animation_2d->frame_idx() % 14)
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::DEATH)) = false;
+
 		break;
 	case K::ACTOR_STATE::NEUTRAL:
 		animation_2d->SetCurrentClip("cow_neutral", dir_idx);

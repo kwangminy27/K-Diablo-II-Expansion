@@ -176,6 +176,12 @@
     <ClInclude Include="navigation_manager.h" />
     <ClInclude Include="Object\Actor\actor.h" />
     <ClInclude Include="Object\Actor\camera_actor.h" />
+    <ClInclude Include="Object\Actor\Missile\andariel_death_overlay.h" />
+    <ClInclude Include="Object\Actor\Missile\andariel_poisonball.h" />
+    <ClInclude Include="Object\Actor\Missile\andariel_special_cast_overlay.h" />
+    <ClInclude Include="Object\Actor\Missile\fallen_shaman_fireball.h" />
+    <ClInclude Include="Object\Actor\Missile\fallen_shaman_fireball_explosion.h" />
+    <ClInclude Include="Object\Actor\Missile\fallen_shaman_missile.h" />
     <ClInclude Include="Object\Actor\Missile\frost_nova.h" />
     <ClInclude Include="Object\Actor\Missile\frozen_armor.h" />
     <ClInclude Include="Object\Actor\Missile\ice_blast.h" />
@@ -245,6 +251,12 @@
     <ClCompile Include="navigation_manager.cpp" />
     <ClCompile Include="Object\Actor\actor.cpp" />
     <ClCompile Include="Object\Actor\camera_actor.cpp" />
+    <ClCompile Include="Object\Actor\Missile\andariel_death_overlay.cpp" />
+    <ClCompile Include="Object\Actor\Missile\andariel_poisonball.cpp" />
+    <ClCompile Include="Object\Actor\Missile\andariel_special_cast_overlay.cpp" />
+    <ClCompile Include="Object\Actor\Missile\fallen_shaman_fireball.cpp" />
+    <ClCompile Include="Object\Actor\Missile\fallen_shaman_fireball_explosion.cpp" />
+    <ClCompile Include="Object\Actor\Missile\fallen_shaman_missile.cpp" />
     <ClCompile Include="Object\Actor\Missile\frost_nova.cpp" />
     <ClCompile Include="Object\Actor\Missile\frozen_armor.cpp" />
     <ClCompile Include="Object\Actor\Missile\ice_blast.cpp" />

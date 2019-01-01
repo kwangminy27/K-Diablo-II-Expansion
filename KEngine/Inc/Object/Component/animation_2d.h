@@ -25,6 +25,8 @@ namespace K
 		void SetCurrentClip(std::string const& _tag, int _dir_idx);
 		void SetDefaultClip(std::string const& _tag, int _dir_idx);
 
+		uint16_t frame_idx() const;
+
 		void set_callback(std::function<void()> const& _callback);
 
 		static std::shared_ptr<ANIMATION_2D_CLIP_DESC> animation_2d_clip_dummy_;

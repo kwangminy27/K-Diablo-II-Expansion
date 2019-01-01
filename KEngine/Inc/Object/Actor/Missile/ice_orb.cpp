@@ -42,9 +42,6 @@ void K::IceOrb::Initialize()
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("ice_orb_explosion");
 		AddComponent(animation_2d);
 
-		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });
-		AddComponent(collider);
-
 		set_speed(300.f);
 		set_range(600.f);
 	}

@@ -55,11 +55,13 @@ void K::Sorceress::Initialize()
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("sorceress_special_cast");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("sorceress_special1");
 		CPTR_CAST<Animation2D>(animation_2d)->AddClip("sorceress_walk");
-		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("sorceress_walk", 0);
-		CPTR_CAST<Animation2D>(animation_2d)->SetDefaultClip("sorceress_walk", 0);
+		CPTR_CAST<Animation2D>(animation_2d)->SetCurrentClip("sorceress_neutral", 0);
+		CPTR_CAST<Animation2D>(animation_2d)->SetDefaultClip("sorceress_neutral", 0);
 		AddComponent(animation_2d);
 
 		auto collider = object_manager->CreateComponent<ColliderAABB>(TAG{ COLLIDER, 0 });
+		CPTR_CAST<ColliderAABB>(collider)->set_relative_info(AABB{ Vector3::Zero, Vector3{ 15.f, 35.f, 0.f } });
+		CPTR_CAST<ColliderAABB>(collider)->set_owner_type(OWNER_TYPE::PLAYER);
 		AddComponent(collider);
 
 		auto navigator = object_manager->CreateComponent<Navigator>(TAG{ NAVIGATOR, 0 });
@@ -67,6 +69,8 @@ void K::Sorceress::Initialize()
 		AddComponent(navigator);
 
 		set_state(ACTOR_STATE::NEUTRAL);
+
+		set_hp(30000.f);
 	}
 	catch (std::exception const& _e)
 	{
@@ -110,8 +114,6 @@ void K::Sorceress::_Input(float _time)
 	auto const& input_manager = InputManager::singleton();
 	auto const& object_manager = ObjectManager::singleton();
 	auto const& animation_2d = CPTR_CAST<Animation2D>(FindComponent(TAG{ ANIMATION_2D, 0 }));
-
-	auto caching_layer = layer();
 
 	auto position = CPTR_CAST<Transform>(FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();
 	auto mouse_world_position = input_manager->mouse_world_position();
@@ -266,8 +268,8 @@ void K::Sorceress::_Input(float _time)
 					dir_idx = 8;
 			}
 
-			animation_2d->set_callback([&object_manager, &audio_manager, position, direction, dir_idx]() {
-				auto ice_bolt = object_manager->CreateActor<IceBolt>(TAG{ "IceBolt", 0 });
+			animation_2d->set_callback([position, direction, dir_idx]() {
+				auto ice_bolt = ObjectManager::singleton()->CreateActor<IceBolt>(TAG{ "IceBolt", 0 });
 				auto const& ice_bolt_transform = CPTR_CAST<Transform>(ice_bolt->FindComponent(TAG{ TRANSFORM, 0 }));
 				auto const& ice_bolt_animation_2d = CPTR_CAST<Animation2D>(ice_bolt->FindComponent(TAG{ ANIMATION_2D, 0 }));
 
@@ -281,7 +283,7 @@ void K::Sorceress::_Input(float _time)
 
 				std::string skill_name = "ice_bolt" + std::to_string(number);
 
-				audio_manager->FindSoundEffect(skill_name)->Play();
+				AudioManager::singleton()->FindSoundEffect(skill_name)->Play();
 				ice_bolt_animation_2d->SetCurrentClip("ice_bolt", dir_idx);
 
 				auto const& lambda_layer = WorldManager::singleton()->FindLayer(TAG{ "DefaultLayer", 1 });
@@ -355,8 +357,8 @@ void K::Sorceress::_Input(float _time)
 					dir_idx = 8;
 			}
 
-			animation_2d->set_callback([&object_manager, &audio_manager, position, direction, dir_idx]() {
-				auto ice_blast = object_manager->CreateActor<IceBlast>(TAG{ "IceBlast", 0 });
+			animation_2d->set_callback([position, direction, dir_idx]() {
+				auto ice_blast = ObjectManager::singleton()->CreateActor<IceBlast>(TAG{ "IceBlast", 0 });
 				auto const& ice_blast_transform = CPTR_CAST<Transform>(ice_blast->FindComponent(TAG{ TRANSFORM, 0 }));
 				auto const& ice_blast_animation_2d = CPTR_CAST<Animation2D>(ice_blast->FindComponent(TAG{ ANIMATION_2D, 0 }));
 
@@ -370,7 +372,7 @@ void K::Sorceress::_Input(float _time)
 
 				std::string skill_name = "ice_blast" + std::to_string(number);
 
-				audio_manager->FindSoundEffect(skill_name)->Play();
+				AudioManager::singleton()->FindSoundEffect(skill_name)->Play();
 				ice_blast_animation_2d->SetCurrentClip("ice_blast", dir_idx);
 
 				auto const& lambda_layer = WorldManager::singleton()->FindLayer(TAG{ "DefaultLayer", 1 });
@@ -444,8 +446,8 @@ void K::Sorceress::_Input(float _time)
 					dir_idx = 8;
 			}
 
-			animation_2d->set_callback([&object_manager, &audio_manager, position, direction, dir_idx]() {
-				auto ice_orb = object_manager->CreateActor<IceOrb>(TAG{ "IceOrb", 0 });
+			animation_2d->set_callback([position, direction, dir_idx]() {
+				auto ice_orb = ObjectManager::singleton()->CreateActor<IceOrb>(TAG{ "IceOrb", 0 });
 				auto const& ice_orb_transform = CPTR_CAST<Transform>(ice_orb->FindComponent(TAG{ TRANSFORM, 0 }));
 				auto const& ice_orb_animation_2d = CPTR_CAST<Animation2D>(ice_orb->FindComponent(TAG{ ANIMATION_2D, 0 }));
 
@@ -454,7 +456,7 @@ void K::Sorceress::_Input(float _time)
 
 				std::string skill_name = "ice_orb";
 
-				audio_manager->FindSoundEffect(skill_name)->Play();
+				AudioManager::singleton()->FindSoundEffect(skill_name)->Play();
 				ice_orb_animation_2d->SetCurrentClip("ice_orb", -1);
 
 				auto const& lambda_layer = WorldManager::singleton()->FindLayer(TAG{ "DefaultLayer", 1 });
@@ -485,15 +487,15 @@ void K::Sorceress::_Input(float _time)
 
 			angle = DirectX::XMConvertToDegrees(acosf(-Vector3::UnitY.Dot(direction)));
 
-			animation_2d->set_callback([&object_manager, &audio_manager, position]() {
+			animation_2d->set_callback([position]() {
 				auto const& lambda_layer = WorldManager::singleton()->FindLayer(TAG{ "DefaultLayer", 1 });
 
 				std::string skill_name = "frost_nova";
-				audio_manager->FindSoundEffect(skill_name)->Play();
+				AudioManager::singleton()->FindSoundEffect(skill_name)->Play();
 
 				for (auto i = 0; i < 64; ++i)
 				{
-					auto frost_nova = object_manager->CreateActor<FrostNova>(TAG{ "FrostNova", 0 });
+					auto frost_nova = ObjectManager::singleton()->CreateActor<FrostNova>(TAG{ "FrostNova", 0 });
 					auto const& frost_nova_transform = CPTR_CAST<Transform>(frost_nova->FindComponent(TAG{ TRANSFORM, 0 }));
 					auto const& frost_nova_animation_2d = CPTR_CAST<Animation2D>(frost_nova->FindComponent(TAG{ ANIMATION_2D, 0 }));
 
@@ -591,6 +593,21 @@ void K::Sorceress::_Input(float _time)
 		break;
 	case K::ACTOR_STATE::GET_HIT:
 		animation_2d->SetCurrentClip("sorceress_get_hit", dir_idx);
+
+		if (false == once_flag_array_.at(static_cast<int>(ACTOR_STATE::GET_HIT)) && 0 == animation_2d->frame_idx() % 8)
+		{
+			std::random_device r{};
+			std::default_random_engine gen{ r() };
+			std::uniform_int_distribution uniform_dist{ 1, 5 };
+			auto number = uniform_dist(gen);
+
+			AudioManager::singleton()->FindSoundEffect("sorceress_gethit" + std::to_string(number))->Play(2.f, 0.f, 0.f);
+
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::GET_HIT)) = true;
+		}
+		else if (0 != animation_2d->frame_idx() % 8)
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::GET_HIT)) = false;
+
 		break;
 	case K::ACTOR_STATE::DEAD:
 		break;
@@ -601,6 +618,15 @@ void K::Sorceress::_Input(float _time)
 		break;
 	case K::ACTOR_STATE::RUN:
 		animation_2d->SetCurrentClip("sorceress_run", dir_idx);
+
+		if (false == once_flag_array_.at(static_cast<int>(ACTOR_STATE::RUN)) && 0 == animation_2d->frame_idx() % 8)
+		{
+			AudioManager::singleton()->FindSoundEffect("sorceress_run")->Play(2.f, 0.f, 0.f);
+
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::RUN)) = true;
+		}
+		else if (0 != animation_2d->frame_idx() % 8)
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::RUN)) = false;
 		break;
 	case K::ACTOR_STATE::SPECIAL_CAST:
 		animation_2d->SetCurrentClip("sorceress_special_cast", dir_idx);
@@ -610,6 +636,16 @@ void K::Sorceress::_Input(float _time)
 		break;
 	case K::ACTOR_STATE::WALK:
 		animation_2d->SetCurrentClip("sorceress_walk", dir_idx);
+
+		if (false == once_flag_array_.at(static_cast<int>(ACTOR_STATE::WALK)) && 0 == animation_2d->frame_idx() % 8)
+		{
+			AudioManager::singleton()->FindSoundEffect("sorceress_walk")->Play(2.f, 0.f, 0.f);
+
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::WALK)) = true;
+		}
+		else if (0 != animation_2d->frame_idx() % 8)
+			once_flag_array_.at(static_cast<int>(ACTOR_STATE::WALK)) = false;
+
 		break;
 	}
 }

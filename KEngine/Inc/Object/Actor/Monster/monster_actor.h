@@ -36,6 +36,8 @@ namespace K
 
 		virtual void _Finalize() = 0;
 
+		std::array<bool, static_cast<int>(ACTOR_STATE::MAX)> once_flag_array_{};
+
 		float hp_{};
 		float speed_{};
 		Vector3 direction_{};

@@ -333,6 +333,24 @@
     <ClInclude Include="Object\Actor\Missile\ice_cast.h">
       <Filter>12. Object\1. Actor\6. Missile</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\fallen_shaman_missile.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\fallen_shaman_fireball.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\fallen_shaman_fireball_explosion.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\andariel_death_overlay.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\andariel_special_cast_overlay.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Missile\andariel_poisonball.h">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KEngine.cpp">
@@ -516,6 +534,24 @@
       <Filter>12. Object\1. Actor\6. Missile</Filter>
     </ClCompile>
     <ClCompile Include="Object\Actor\Missile\ice_cast.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\fallen_shaman_missile.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\fallen_shaman_fireball.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\fallen_shaman_fireball_explosion.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\andariel_death_overlay.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\andariel_special_cast_overlay.cpp">
+      <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Missile\andariel_poisonball.cpp">
       <Filter>12. Object\1. Actor\6. Missile</Filter>
     </ClCompile>
   </ItemGroup>

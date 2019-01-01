@@ -18,6 +18,9 @@ namespace K
 		void Run();
 		void Logic();
 
+		void ServerRun();
+		void ServerLogic();
+
 		static bool shutdown();
 		static bool chat();
 		static std::wstring& chat_message();

@@ -10,8 +10,8 @@ void K::CollisionManager::Initialize()
 {
 	try
 	{
-		_CreateCollisionGroup(UI, -Vector3{ 10000.f, 10000.f, 0.f }, Vector3{ 10000.f, 10000.f, 1.f }, 25, 25, 1);
-		_CreateCollisionGroup(DEFAULT, -Vector3{ 10000.f, 10000.f, 0.f }, Vector3{ 10000.f, 10000.f, 1.f }, 25, 25, 1);
+		_CreateCollisionGroup(UI, -Vector3{ 10000.f, 10000.f, 0.f }, Vector3{ 10000.f, 10000.f, 1.f }, 40, 40, 1);
+		_CreateCollisionGroup(DEFAULT, -Vector3{ 10000.f, 10000.f, 0.f }, Vector3{ 10000.f, 10000.f, 1.f }, 40, 40, 1);
 	}
 	catch (std::exception const& _e)
 	{
@@ -52,8 +52,38 @@ void K::CollisionManager::Collision(float _time)
 					if (TAG_STATE::DISABLED == dest->tag_state() || TAG_STATE::DEAD == dest->tag_state())
 						continue;
 
-					if (src->owner()->tag().first == dest->owner()->tag().first)
-						continue;
+					auto src_owner_type = src->owner_type();
+					auto dest_owner_type = dest->owner_type();
+
+					// PLAYER, MISSILE, MONSTER, VIEW
+					switch (src_owner_type)
+					{
+					case OWNER_TYPE::MISSILE:
+						switch (dest_owner_type)
+						{
+						case OWNER_TYPE::MISSILE:
+						case OWNER_TYPE::VIEW:
+							continue;
+						}
+						break;
+					case OWNER_TYPE::MONSTER:
+						switch (dest_owner_type)
+						{
+						case OWNER_TYPE::MONSTER:
+						case OWNER_TYPE::VIEW:
+							continue;
+						}
+						break;
+					case OWNER_TYPE::VIEW:
+						switch (dest_owner_type)
+						{
+						case OWNER_TYPE::MISSILE:
+						case OWNER_TYPE::MONSTER:
+						case OWNER_TYPE::VIEW:
+							continue;
+						}
+						break;
+					}
 
 					if (src->_Collision(dest, _time))
 					{
@@ -177,7 +207,7 @@ void K::CollisionManager::_CreateCollisionGroup(std::string const& _tag, Vector3
 	} };
 
 	for (auto i = 0; i < collision_group->total_count; ++i)
-		collision_group->section[i].reserve(100);
+		collision_group->section[i].reserve(1000);
 
 	collision_group_map_.insert(std::make_pair(_tag, std::move(collision_group)));
 }

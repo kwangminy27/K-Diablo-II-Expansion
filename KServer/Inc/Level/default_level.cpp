@@ -106,18 +106,16 @@ void K::DefaultLevel::_Finalize()
 {
 }
 
-void K::DefaultLevel::_Input(float _time)
-{
-}
-
 void K::DefaultLevel::_Update(float _time)
 {
-
 }
 
-void K::DefaultLevel::_Collision(float _time)
+void K::DefaultLevel::__Input(float _time)
 {
+}
 
+void K::DefaultLevel::__Collision(float _time)
+{
 }
 
 void K::DefaultLevel::__Render(float _time)

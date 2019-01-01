@@ -192,6 +192,11 @@ void K::Animation2D::SetDefaultClip(std::string const& _tag, int _dir_idx)
 	default_clip_ = clip;
 }
 
+uint16_t K::Animation2D::frame_idx() const
+{
+	return frame_idx_;
+}
+
 void K::Animation2D::set_callback(std::function<void()> const& _callback)
 {
 	callback_ = _callback;

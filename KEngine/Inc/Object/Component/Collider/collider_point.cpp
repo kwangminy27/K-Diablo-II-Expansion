@@ -14,6 +14,8 @@
 #include "collider_aabb.h"
 #include "collider_oobb.h"
 
+extern bool g_debug;
+
 void K::ColliderPoint::Initialize()
 {
 	try
@@ -46,31 +48,34 @@ void K::ColliderPoint::Update(float _time)
 
 void K::ColliderPoint::Render(float _time)
 {
-#ifdef _DEBUG
-	std::shared_ptr<CameraActor> camera{};
+//#ifdef _DEBUG
+	if (g_debug)
+	{
+		std::shared_ptr<CameraActor> camera{};
 
-	if (UI == group_tag_)
-		camera = WorldManager::singleton()->FindCamera(TAG{ UI_CAMERA, 0 });
-	else if(DEFAULT == group_tag_)
-		camera = WorldManager::singleton()->FindCamera(TAG{ DEFAULT_CAMERA, 0 });
+		if (UI == group_tag_)
+			camera = WorldManager::singleton()->FindCamera(TAG{ UI_CAMERA, 0 });
+		else if (DEFAULT == group_tag_)
+			camera = WorldManager::singleton()->FindCamera(TAG{ DEFAULT_CAMERA, 0 });
 
-	auto collider_position = min_;
+		auto collider_position = min_;
 
-	TransformConstantBuffer transform_CB{};
-	transform_CB.world = Matrix::CreateTranslation(collider_position);
-	transform_CB.view = camera->view();
-	transform_CB.projection = camera->projection();
-	transform_CB.WVP = transform_CB.world * transform_CB.view * transform_CB.projection;
+		TransformConstantBuffer transform_CB{};
+		transform_CB.world = Matrix::CreateTranslation(collider_position);
+		transform_CB.view = camera->view();
+		transform_CB.projection = camera->projection();
+		transform_CB.WVP = transform_CB.world * transform_CB.view * transform_CB.projection;
 
-	transform_CB.world = transform_CB.world.Transpose();
-	transform_CB.view = transform_CB.view.Transpose();
-	transform_CB.projection = transform_CB.projection.Transpose();
-	transform_CB.WVP = transform_CB.WVP.Transpose();
+		transform_CB.world = transform_CB.world.Transpose();
+		transform_CB.view = transform_CB.view.Transpose();
+		transform_CB.projection = transform_CB.projection.Transpose();
+		transform_CB.WVP = transform_CB.WVP.Transpose();
 
-	RenderingManager::singleton()->UpdateConstantBuffer(TRANSFORM, &transform_CB);
+		RenderingManager::singleton()->UpdateConstantBuffer(TRANSFORM, &transform_CB);
 
-	Collider::Render(_time);
-#endif
+		Collider::Render(_time);
+	}
+//#endif
 }
 
 K::CPTR K::ColliderPoint::Clone() const

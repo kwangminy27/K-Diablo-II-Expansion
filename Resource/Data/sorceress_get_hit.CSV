@@ -1,5 +1,5 @@
 CLIP,TEXTURE,TYPE,OPTION,WIDTH,HEIGHT,TIME
-sorceress_get_hit,sorceress_get_hit,1,0,528,1168,0.5
+sorceress_get_hit,sorceress_get_hit,1,2,528,1168,0.5
 ,,,,,,
 LEFT,TOP,RIGHT,BOTTOM,,66,73
 0,0,66,73,,,

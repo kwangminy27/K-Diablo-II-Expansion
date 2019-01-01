@@ -98,6 +98,8 @@ void K::ResourceManager::Initialize()
 		_CreateTexture2D("fallen_shaman_get_hit", L"Main/fallen shaman/fallen_shaman_get_hit.png", TEXTURE_PATH);
 		_CreateTexture2D("fallen_shaman_neutral", L"Main/fallen shaman/fallen_shaman_neutral.png", TEXTURE_PATH);
 		_CreateTexture2D("fallen_shaman_walk", L"Main/fallen shaman/fallen_shaman_walk.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_fireball", L"Main/fallen shaman/fallen_shaman_fireball.png", TEXTURE_PATH);
+		_CreateTexture2D("fallen_shaman_fireball_explosion", L"Main/fallen shaman/fallen_shaman_fireball_explosion.png", TEXTURE_PATH);
 
 		_CreateTexture2D("andariel_attack1", L"Main/andariel/andariel_attack1.png", TEXTURE_PATH);
 		_CreateTexture2D("andariel_death", L"Main/andariel/andariel_death.png", TEXTURE_PATH);
@@ -107,6 +109,7 @@ void K::ResourceManager::Initialize()
 		_CreateTexture2D("andariel_walk", L"Main/andariel/andariel_walk.png", TEXTURE_PATH);
 		_CreateTexture2D("andariel_special_cast", L"Main/andariel/andariel_special_cast.png", TEXTURE_PATH);
 		_CreateTexture2D("andariel_special_cast(overlay)", L"Main/andariel/andariel_special_cast(overlay).png", TEXTURE_PATH);
+		_CreateTexture2D("andariel_poisonball", L"Main/andariel/andariel_poisonball.png", TEXTURE_PATH);
 
 		_CreateTexture2D("akara_neutral", L"Main/akara/akara_neutral.png", TEXTURE_PATH);
 		_CreateTexture2D("akara_walk", L"Main/akara/akara_walk.png", TEXTURE_PATH);
@@ -175,6 +178,8 @@ void K::ResourceManager::Initialize()
 		_CreateAnimation2DClip("fallen_shaman_get_hit", L"fallen_shaman_get_hit.csv", DATA_PATH);
 		_CreateAnimation2DClip("fallen_shaman_neutral", L"fallen_shaman_neutral.csv", DATA_PATH);
 		_CreateAnimation2DClip("fallen_shaman_walk", L"fallen_shaman_walk.csv", DATA_PATH);
+		_CreateAnimation2DClip("fallen_shaman_fireball", L"fallen_shaman_fireball.csv", DATA_PATH);
+		_CreateAnimation2DClip("fallen_shaman_fireball_explosion", L"fallen_shaman_fireball_explosion.csv", DATA_PATH);
 
 		_CreateAnimation2DClip("andariel_attack1", L"andariel_attack1.csv", DATA_PATH);
 		_CreateAnimation2DClip("andariel_death", L"andariel_death.csv", DATA_PATH);
@@ -184,6 +189,7 @@ void K::ResourceManager::Initialize()
 		_CreateAnimation2DClip("andariel_walk", L"andariel_walk.csv", DATA_PATH);
 		_CreateAnimation2DClip("andariel_special_cast", L"andariel_special_cast.csv", DATA_PATH);
 		_CreateAnimation2DClip("andariel_special_cast(overlay)", L"andariel_special_cast(overlay).csv", DATA_PATH);
+		_CreateAnimation2DClip("andariel_poisonball", L"andariel_poisonball.csv", DATA_PATH);
 
 		_CreateAnimation2DClip("akara_neutral", L"akara_neutral.csv", DATA_PATH);
 		_CreateAnimation2DClip("akara_walk", L"akara_walk.csv", DATA_PATH);
