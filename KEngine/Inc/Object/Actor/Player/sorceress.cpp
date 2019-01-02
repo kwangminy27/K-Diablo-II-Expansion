@@ -9,6 +9,7 @@
 #include "World/layer.h"
 #include "Object/object_manager.h"
 #include "Object/Actor/camera_actor.h"
+#include "Object/Actor/Player/sorceress_shadow.h"
 #include "Object/Actor/Missile/ice_cast.h"
 #include "Object/Actor/Missile/ice_bolt.h"
 #include "Object/Actor/Missile/ice_blast.h"
@@ -67,6 +68,13 @@ void K::Sorceress::Initialize()
 		auto navigator = object_manager->CreateComponent<Navigator>(TAG{ NAVIGATOR, 0 });
 		CPTR_CAST<Navigator>(navigator)->set_speed(320.f);
 		AddComponent(navigator);
+
+		auto shadow = object_manager->CreateActor<SorceressShadow>(TAG{ "SorceressShadow", 0 });
+		auto const& shadow_transform = CPTR_CAST<Transform>(shadow->FindComponent(TAG{ TRANSFORM, 0 }));
+		shadow_transform->set_parent_flag(static_cast<uint8_t>(PARENT_FLAG::TRANSLATION));
+		shadow_transform->set_local_translation(Vector3{ 20.f, 5.f, 0.f });
+		shadow_transform->set_local_rotation(Quaternion::CreateFromYawPitchRoll(0.f, 0.f, -30.f));
+		AddChild(shadow);
 
 		set_state(ACTOR_STATE::NEUTRAL);
 
@@ -202,6 +210,8 @@ void K::Sorceress::_Input(float _time)
 		else
 			dir_idx = 8;
 	}
+
+	shadow_dir_idx_ = dir_idx;
 
 	if (ACTOR_STATE::NEUTRAL == state())
 	{
@@ -596,6 +606,8 @@ void K::Sorceress::_Input(float _time)
 
 		if (false == once_flag_array_.at(static_cast<int>(ACTOR_STATE::GET_HIT)) && 0 == animation_2d->frame_idx() % 8)
 		{
+			animation_2d->set_callback([]() {});
+
 			std::random_device r{};
 			std::default_random_engine gen{ r() };
 			std::uniform_int_distribution uniform_dist{ 1, 5 };
@@ -648,6 +660,36 @@ void K::Sorceress::_Input(float _time)
 
 		break;
 	}
+}
+
+void K::Sorceress::_Render(float _time)
+{
+	auto const& material = CPTR_CAST<Material>(FindComponent(TAG{ MATERIAL, 0 }));
+
+	MaterialConstantBuffer material_CB{};
+
+	if (element_time_ <= 0.f)
+		set_element_state(ELEMENT_STATE::NORMAL);
+	else
+		element_time_ -= _time;
+
+	switch (element_state_)
+	{
+	case ELEMENT_STATE::NORMAL:
+		material_CB.diffuse = DirectX::Colors::White.v;
+		break;
+	case ELEMENT_STATE::COLD:
+		material_CB.diffuse = DirectX::Colors::Blue.v;
+		break;
+	case ELEMENT_STATE::FIRE:
+		material_CB.diffuse = DirectX::Colors::Red.v;
+		break;
+	case ELEMENT_STATE::POISON:
+		material_CB.diffuse = DirectX::Colors::Lime.v;
+		break;
+	}
+
+	material->SetMaterialConstantBuffer(material_CB, 0, 0);
 }
 
 void K::Sorceress::set_frozen_armor_flag(bool _flag)

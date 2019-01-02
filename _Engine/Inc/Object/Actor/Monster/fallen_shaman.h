@@ -26,5 +26,6 @@ namespace K
 
 		virtual void _Input(float _time) override;
 		virtual void _Update(float _time) override;
+		virtual void _Render(float _time) override;
 	};
 }

@@ -68,16 +68,16 @@ void K::DefaultLevel::_Input(float _time)
 	auto const& camera_transform = CPTR_CAST<Transform>(WorldManager::singleton()->FindCamera(TAG{ DEFAULT_CAMERA, 0 })->FindComponent(TAG{ TRANSFORM, 0 }));
 
 	if (input_manager->KeyPressed("W"))
-		camera_transform->set_local_translation(camera_transform->local_translation() + Vector3::UnitY * 500.f * _time);
+		camera_transform->set_local_translation(camera_transform->local_translation() + Vector3::UnitY * 1000.f * _time);
 
 	if (input_manager->KeyPressed("S"))
-		camera_transform->set_local_translation(camera_transform->local_translation() - Vector3::UnitY * 500.f * _time);
+		camera_transform->set_local_translation(camera_transform->local_translation() - Vector3::UnitY * 1000.f * _time);
 
 	if (input_manager->KeyPressed("A"))
-		camera_transform->set_local_translation(camera_transform->local_translation() - Vector3::UnitX * 500.f * _time);
+		camera_transform->set_local_translation(camera_transform->local_translation() - Vector3::UnitX * 1000.f * _time);
 
 	if (input_manager->KeyPressed("D"))
-		camera_transform->set_local_translation(camera_transform->local_translation() + Vector3::UnitX * 500.f * _time);
+		camera_transform->set_local_translation(camera_transform->local_translation() + Vector3::UnitX * 1000.f * _time);
 
 	camera_transform->Update(_time);
 
@@ -122,6 +122,21 @@ void K::DefaultLevel::_Input(float _time)
 
 	if (input_manager->KeyPressed("LButton") && (state_ == EDITOR_STATE::TILE))
 	{
+		if (mouse_position.x - (static_cast<LONG>(camera_position.x - static_cast<float>(RESOLUTION::WIDTH) * 0.5f)) < 10)
+			return;
+
+		if (mouse_position.x - (static_cast<LONG>(camera_position.x - static_cast<float>(RESOLUTION::WIDTH) * 0.5f)) > 1190)
+			return;
+
+		if (mouse_position.y - (static_cast<LONG>(camera_position.y - static_cast<float>(RESOLUTION::HEIGHT) * 0.5f)) < 310)
+			return;
+
+		if (mouse_position.y - (static_cast<LONG>(camera_position.y - static_cast<float>(RESOLUTION::HEIGHT) * 0.5f)) > 890)
+			return;
+
+		if (tile_idx.first < 0 || tile_idx.first >= form_view->count_x() || tile_idx.second < 0 || tile_idx.second >= form_view->count_y())
+			return;
+
 		tile_map->SetTileUV(tile_idx, g_mouse_LT, g_mouse_RB);
 	}
 

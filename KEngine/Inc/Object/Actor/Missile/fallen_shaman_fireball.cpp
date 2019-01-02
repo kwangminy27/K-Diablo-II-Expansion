@@ -68,6 +68,8 @@ void K::FallenShamanFireball::Initialize()
 
 			_src->owner()->set_tag_state(TAG_STATE::DEAD);
 
+			player->set_element_state(ELEMENT_STATE::FIRE);
+
 			auto const& object_manager = ObjectManager::singleton();
 
 			auto position = CPTR_CAST<Transform>(player->FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation();

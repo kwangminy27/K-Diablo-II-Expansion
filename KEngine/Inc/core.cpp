@@ -723,6 +723,7 @@ LRESULT K::Core::_WindowProc(HWND _window, UINT _message, WPARAM _w_param, LPARA
 				if (false == chat_message_.empty())
 					chat_message_.pop_back();
 			}
+			else if (VK_RETURN == _w_param) {}
 			else
 				chat_message_.push_back(static_cast<wchar_t>(_w_param));
 		}

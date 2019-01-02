@@ -63,7 +63,7 @@ cbuffer Transform : register(b0)
 
 cbuffer Material : register(b1)
 {
-	float g_diffuse;
+	float4 g_diffuse;
 }
 
 cbuffer Animation2D : register(b2)

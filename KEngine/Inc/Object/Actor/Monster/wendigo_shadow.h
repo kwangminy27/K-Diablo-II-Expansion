@@ -4,7 +4,7 @@
 
 namespace K
 {
-	class K_ENGINE_DLL FallenShaman final : public MonsterActor
+	class K_ENGINE_DLL WendigoShadow final : public MonsterActor
 	{
 		friend class ObjectManager;
 	public:
@@ -16,16 +16,14 @@ namespace K
 		virtual void Serialize(OutputMemoryStream& _omstream) override;
 
 	private:
-		FallenShaman() = default;
-		FallenShaman(FallenShaman const& _other);
-		FallenShaman(FallenShaman&& _other) noexcept;
-		FallenShaman& operator=(FallenShaman const&) = delete;
-		FallenShaman& operator=(FallenShaman&&) noexcept = default;
+		WendigoShadow() = default;
+		WendigoShadow(WendigoShadow const& _other);
+		WendigoShadow(WendigoShadow&& _other) noexcept;
+		WendigoShadow& operator=(WendigoShadow const&) = delete;
+		WendigoShadow& operator=(WendigoShadow&&) noexcept = default;
 
 		virtual void _Finalize() override;
 
-		virtual void _Input(float _time) override;
-		virtual void _Update(float _time) override;
 		virtual void _Render(float _time) override;
 	};
 }

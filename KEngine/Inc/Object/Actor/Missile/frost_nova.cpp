@@ -61,6 +61,9 @@ void K::FrostNova::Initialize()
 				monster->set_state(ACTOR_STATE::DEATH);
 			else
 				monster->set_state(ACTOR_STATE::GET_HIT);
+
+			monster->set_element_state(ELEMENT_STATE::COLD);
+
 		}, COLLISION_CALLBACK_TYPE::ENTER);
 		AddComponent(collider);
 

@@ -351,6 +351,21 @@
     <ClInclude Include="Object\Actor\Missile\andariel_poisonball.h">
       <Filter>12. Object\1. Actor\6. Missile</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Actor\Player\sorceress_shadow.h">
+      <Filter>12. Object\1. Actor\5. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Monster\andariel_shadow.h">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Monster\cow_shadow.h">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Monster\wendigo_shadow.h">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Actor\Monster\fallen_shaman_shadow.h">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KEngine.cpp">
@@ -553,6 +568,21 @@
     </ClCompile>
     <ClCompile Include="Object\Actor\Missile\andariel_poisonball.cpp">
       <Filter>12. Object\1. Actor\6. Missile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Player\sorceress_shadow.cpp">
+      <Filter>12. Object\1. Actor\5. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Monster\andariel_shadow.cpp">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Monster\cow_shadow.cpp">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Monster\wendigo_shadow.cpp">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Actor\Monster\fallen_shaman_shadow.cpp">
+      <Filter>12. Object\1. Actor\3. Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

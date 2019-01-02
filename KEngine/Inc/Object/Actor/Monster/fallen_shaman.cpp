@@ -1,5 +1,6 @@
 #include "KEngine.h"
 #include "fallen_shaman.h"
+#include "fallen_shaman_shadow.h"
 
 #include "Audio/audio_manager.h"
 #include "Resource/resource_manager.h"
@@ -69,15 +70,22 @@ void K::FallenShaman::Initialize()
 					set_target(_dest->owner());
 			}
 		}, COLLISION_CALLBACK_TYPE::ENTER);
-		CPTR_CAST<ColliderCircle>(view_range)->AddCallback([this](Collider* _src, Collider* _dest, float _time) {
-			if (OWNER_TYPE::PLAYER == _dest->owner_type())
-				set_target(nullptr);
-		}, COLLISION_CALLBACK_TYPE::LEAVE);
+		//CPTR_CAST<ColliderCircle>(view_range)->AddCallback([this](Collider* _src, Collider* _dest, float _time) {
+		//	if (OWNER_TYPE::PLAYER == _dest->owner_type())
+		//		set_target(nullptr);
+		//}, COLLISION_CALLBACK_TYPE::LEAVE);
 		AddComponent(view_range);
 
 		auto navigator = object_manager->CreateComponent<Navigator>(TAG{ NAVIGATOR, 0 });
 		CPTR_CAST<Navigator>(navigator)->set_speed(100.f);
 		AddComponent(navigator);
+
+		auto shadow = object_manager->CreateActor<FallenShamanShadow>(TAG{ "FallenShamanShadow", 0 });
+		auto const& shadow_transform = CPTR_CAST<Transform>(shadow->FindComponent(TAG{ TRANSFORM, 0 }));
+		shadow_transform->set_parent_flag(static_cast<uint8_t>(PARENT_FLAG::TRANSLATION));
+		shadow_transform->set_local_translation(Vector3{ 25.f, 0.f, 0.f });
+		shadow_transform->set_local_rotation(Quaternion::CreateFromYawPitchRoll(0.f, 0.f, -30.f));
+		AddChild(shadow);
 
 		set_state(ACTOR_STATE::NEUTRAL);
 
@@ -107,8 +115,8 @@ void K::FallenShaman::Serialize(InputMemoryStream& _imstream)
 	for (auto& component : component_list_)
 		component->Serialize(_imstream);
 
-	for (auto& child : child_list_)
-		child->Serialize(_imstream);
+	//for (auto& child : child_list_)
+	//	child->Serialize(_imstream);
 }
 
 void K::FallenShaman::Serialize(OutputMemoryStream& _omstream)
@@ -116,8 +124,8 @@ void K::FallenShaman::Serialize(OutputMemoryStream& _omstream)
 	for (auto& component : component_list_)
 		component->Serialize(_omstream);
 
-	for (auto& child : child_list_)
-		child->Serialize(_omstream);
+	//for (auto& child : child_list_)
+	//	child->Serialize(_omstream);
 }
 
 K::FallenShaman::FallenShaman(FallenShaman const& _other) : MonsterActor(_other)
@@ -174,7 +182,7 @@ void K::FallenShaman::_Input(float _time)
 			if (distance <= 16.f)
 			{
 				set_state(ACTOR_STATE::ATTACK1);
-						
+
 				navigator->ClearPath();
 			}
 			else if (distance <= 400.f)
@@ -183,6 +191,8 @@ void K::FallenShaman::_Input(float _time)
 
 				navigator->ClearPath();
 			}
+			else if (distance >= 650.f)
+				target_.reset();
 			else
 				set_state(ACTOR_STATE::WALK);
 		}
@@ -289,6 +299,8 @@ void K::FallenShaman::_Update(float _time)
 			_16_dir_idx = 8;
 	}
 
+	shadow_dir_idx_ = dir_idx;
+
 	switch (state_)
 	{
 	case K::ACTOR_STATE::ATTACK1:
@@ -384,4 +396,34 @@ void K::FallenShaman::_Update(float _time)
 			break;
 		}
 	});
+}
+
+void K::FallenShaman::_Render(float _time)
+{
+	auto const& material = CPTR_CAST<Material>(FindComponent(TAG{ MATERIAL, 0 }));
+
+	MaterialConstantBuffer material_CB{};
+
+	if (element_time_ <= 0.f)
+		set_element_state(ELEMENT_STATE::NORMAL);
+	else
+		element_time_ -= _time;
+
+	switch (element_state_)
+	{
+	case ELEMENT_STATE::NORMAL:
+		material_CB.diffuse = DirectX::Colors::White.v;
+		break;
+	case ELEMENT_STATE::COLD:
+		material_CB.diffuse = DirectX::Colors::Blue.v;
+		break;
+	case ELEMENT_STATE::FIRE:
+		material_CB.diffuse = DirectX::Colors::Red.v;
+		break;
+	case ELEMENT_STATE::POISON:
+		material_CB.diffuse = DirectX::Colors::Lime.v;
+		break;
+	}
+
+	material->SetMaterialConstantBuffer(material_CB, 0, 0);
 }

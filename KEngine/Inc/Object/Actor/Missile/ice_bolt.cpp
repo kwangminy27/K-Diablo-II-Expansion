@@ -62,6 +62,8 @@ void K::IceBolt::Initialize()
 			else
 				monster->set_state(ACTOR_STATE::GET_HIT);
 
+			monster->set_element_state(ELEMENT_STATE::COLD);
+
 			_src->owner()->set_tag_state(TAG_STATE::DEAD);
 		}, COLLISION_CALLBACK_TYPE::ENTER);
 		AddComponent(collider);

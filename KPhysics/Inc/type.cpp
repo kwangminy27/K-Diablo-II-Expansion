@@ -1121,7 +1121,7 @@ inline K::Quaternion K::Quaternion::CreateFromYawPitchRoll(float _yaw, float _pi
 	using namespace DirectX;
 
 	Quaternion R{};
-	XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R), XMQuaternionRotationRollPitchYaw(_pitch, _yaw, _roll));
+	XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(&R), XMQuaternionRotationRollPitchYaw(XMConvertToRadians(_pitch), XMConvertToRadians(_yaw), XMConvertToRadians(_roll)));
 
 	return R;
 }

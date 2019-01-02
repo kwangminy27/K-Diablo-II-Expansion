@@ -10,8 +10,8 @@ void K::CollisionManager::Initialize()
 {
 	try
 	{
-		_CreateCollisionGroup(UI, -Vector3{ 10000.f, 10000.f, 0.f }, Vector3{ 10000.f, 10000.f, 1.f }, 40, 40, 1);
-		_CreateCollisionGroup(DEFAULT, -Vector3{ 10000.f, 10000.f, 0.f }, Vector3{ 10000.f, 10000.f, 1.f }, 40, 40, 1);
+		_CreateCollisionGroup(UI, -Vector3{ 10000.f, 10000.f, 0.f }, Vector3{ 10000.f, 10000.f, 1.f }, 25, 25, 1);
+		_CreateCollisionGroup(DEFAULT, -Vector3{ 10000.f, 10000.f, 0.f }, Vector3{ 10000.f, 10000.f, 1.f }, 25, 25, 1);
 	}
 	catch (std::exception const& _e)
 	{

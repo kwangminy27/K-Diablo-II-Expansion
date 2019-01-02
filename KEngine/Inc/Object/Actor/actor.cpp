@@ -76,6 +76,11 @@ void K::Actor::RemoveChild(APTR const& _child)
 	child_list_.remove(_child);
 }
 
+int K::Actor::shadow_dir_idx() const
+{
+	return shadow_dir_idx_;
+}
+
 bool K::Actor::ui_flag() const
 {
 	return ui_flag_;
@@ -84,6 +89,11 @@ bool K::Actor::ui_flag() const
 K::ACTOR_STATE K::Actor::state() const
 {
 	return state_;
+}
+
+K::ELEMENT_STATE K::Actor::element_state() const
+{
+	return element_state_;
 }
 
 std::shared_ptr<K::Level> K::Actor::level() const
@@ -121,6 +131,13 @@ void K::Actor::set_state(ACTOR_STATE _state)
 	state_ = _state;
 }
 
+void K::Actor::set_element_state(ELEMENT_STATE _state)
+{
+	element_time_ = 3.f;
+
+	element_state_ = _state;
+}
+
 void K::Actor::set_parent(APTR const& _actor)
 {
 	parent_ = _actor;
@@ -140,6 +157,7 @@ K::Actor::Actor(Actor const& _other) : Tag(_other)
 {
 	ui_flag_ = _other.ui_flag_;
 	state_ = _other.state_;
+	element_state_ = _other.element_state_;
 	level_ = _other.level_;
 	layer_ = _other.layer_;
 	parent_ = _other.parent_;
@@ -157,6 +175,7 @@ K::Actor::Actor(Actor&& _other) noexcept : Tag(std::move(_other))
 {
 	ui_flag_ = std::move(_other.ui_flag_);
 	state_ = std::move(_other.state_);
+	element_state_ = std::move(_other.element_state_);
 	level_ = std::move(_other.level_);
 	layer_ = std::move(_other.layer_);
 	parent_ = std::move(_other.parent_);

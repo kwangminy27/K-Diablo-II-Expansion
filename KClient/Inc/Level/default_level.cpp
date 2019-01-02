@@ -115,7 +115,7 @@ void K::DefaultLevel::Initialize()
 
 		auto sorceress = object_manager->CreateActor<Sorceress>(player_tag_);
 		APTR_CAST<PlayerActor>(sorceress)->set_focus_flag(true);
-		CPTR_CAST<Transform>(sorceress->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3{ 0.f, 0.f, 0.f });
+		CPTR_CAST<Transform>(sorceress->FindComponent(TAG{ TRANSFORM, 0 }))->set_local_translation(Vector3::Zero);
 		layer->AddActor(sorceress);
 
 		//auto amazon = object_manager->CreateActor<Amazon>(TAG{ "Amazon", object_manager->counter() });

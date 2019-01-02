@@ -66,6 +66,8 @@ void K::AndarielPoisonball::Initialize()
 			else
 				player->set_state(ACTOR_STATE::GET_HIT);
 
+			player->set_element_state(ELEMENT_STATE::POISON);
+
 			_src->owner()->set_tag_state(TAG_STATE::DEAD);
 		}, COLLISION_CALLBACK_TYPE::ENTER);
 		AddComponent(collider);

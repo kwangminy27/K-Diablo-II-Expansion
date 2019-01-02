@@ -62,9 +62,17 @@ void K::Layer::RemoveActor(APTR const& _actor)
 void K::Layer::Sort()
 {
 	actor_list_.sort([](APTR const& _lhs, APTR const& _rhs) {
+		auto is_lhs_shadow = _lhs->tag().first.find("Shadow");
+		auto is_rhs_shadow = _rhs->tag().first.find("Shadow");
+
+		if (std::string::npos != is_lhs_shadow && std::string::npos == is_rhs_shadow)
+			return true;
+		if (std::string::npos == is_lhs_shadow && std::string::npos != is_rhs_shadow)
+			return false;
+
 		auto lhs_y = CPTR_CAST<Transform>(_lhs->FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation().y;
 		auto rhs_y = CPTR_CAST<Transform>(_rhs->FindComponent(TAG{ TRANSFORM, 0 }))->world().Translation().y;
-		
+
 		return lhs_y > rhs_y;
 	});
 }
@@ -173,6 +181,8 @@ void K::Layer::_Collision(float _time)
 
 			for (auto const& child : (*iter)->child_list())
 				child->set_parent(actor_dummy_);
+
+			//std::cout << (*iter)->tag().first << std::endl;
 
 			iter = actor_list_.erase(iter);
 			break;

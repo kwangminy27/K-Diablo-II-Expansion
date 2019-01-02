@@ -87,7 +87,7 @@ void K::Collider::_Finalize()
 	for (auto iter = collided_collider_list_.begin(); iter != collided_collider_list_.end(); ++iter)
 	{
 		(*iter)->_OnCollisionLeave(this, 0.f);
-		_OnCollisionLeave(*iter, 0.f);
+		_OnCollisionLeave(*iter, 0.f); // 몬스터: Finalize -> CollisionLeave -> set_target 시 간헐적으로 문제 발생
 
 		(*iter)->_RemoveCollidedCollider(this);
 	}

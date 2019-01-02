@@ -190,18 +190,23 @@
     <ClInclude Include="Object\Actor\Missile\ice_orb.h" />
     <ClInclude Include="Object\Actor\Missile\missile_actor.h" />
     <ClInclude Include="Object\Actor\Monster\andariel.h" />
+    <ClInclude Include="Object\Actor\Monster\andariel_shadow.h" />
     <ClInclude Include="Object\Actor\Monster\cow.h" />
+    <ClInclude Include="Object\Actor\Monster\cow_shadow.h" />
     <ClInclude Include="Object\Actor\Monster\fallen_shaman.h" />
+    <ClInclude Include="Object\Actor\Monster\fallen_shaman_shadow.h" />
     <ClInclude Include="Object\Actor\Monster\monster_actor.h" />
     <ClInclude Include="Object\Actor\Monster\wendigo.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Object\Actor\Monster\wendigo_shadow.h" />
     <ClInclude Include="Object\Actor\NPC\akara.h" />
     <ClInclude Include="Object\Actor\NPC\npc_actor.h" />
     <ClInclude Include="Object\Actor\Player\amazon.h" />
     <ClInclude Include="Object\Actor\Player\player_actor.h" />
     <ClInclude Include="Object\Actor\Player\sorceress.h" />
+    <ClInclude Include="Object\Actor\Player\sorceress_shadow.h" />
     <ClInclude Include="Object\Actor\tile_actor.h" />
     <ClInclude Include="Object\Actor\tile_map_actor.h" />
     <ClInclude Include="Object\Component\animation_2d.h" />
@@ -265,18 +270,23 @@
     <ClCompile Include="Object\Actor\Missile\ice_orb.cpp" />
     <ClCompile Include="Object\Actor\Missile\missile_actor.cpp" />
     <ClCompile Include="Object\Actor\Monster\andariel.cpp" />
+    <ClCompile Include="Object\Actor\Monster\andariel_shadow.cpp" />
     <ClCompile Include="Object\Actor\Monster\cow.cpp" />
+    <ClCompile Include="Object\Actor\Monster\cow_shadow.cpp" />
     <ClCompile Include="Object\Actor\Monster\fallen_shaman.cpp" />
+    <ClCompile Include="Object\Actor\Monster\fallen_shaman_shadow.cpp" />
     <ClCompile Include="Object\Actor\Monster\monster_actor.cpp" />
     <ClCompile Include="Object\Actor\Monster\wendigo.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Object\Actor\Monster\wendigo_shadow.cpp" />
     <ClCompile Include="Object\Actor\NPC\akara.cpp" />
     <ClCompile Include="Object\Actor\NPC\npc_actor.cpp" />
     <ClCompile Include="Object\Actor\Player\amazon.cpp" />
     <ClCompile Include="Object\Actor\Player\player_actor.cpp" />
     <ClCompile Include="Object\Actor\Player\sorceress.cpp" />
+    <ClCompile Include="Object\Actor\Player\sorceress_shadow.cpp" />
     <ClCompile Include="Object\Actor\tile_actor.cpp" />
     <ClCompile Include="Object\Actor\tile_map_actor.cpp" />
     <ClCompile Include="Object\Component\animation_2d.cpp" />
